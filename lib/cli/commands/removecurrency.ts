@@ -1,5 +1,5 @@
 import { Arguments, Argv } from 'yargs';
-import { RemoveCurrencyRequest } from '../../proto/xudrpc_pb';
+import { RemoveCurrencyRequest } from '../../proto/opendexrpc_pb';
 import { callback, loadXudClient } from '../command';
 
 export const command = 'removecurrency <currency>';

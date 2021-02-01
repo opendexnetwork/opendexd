@@ -5,7 +5,7 @@ import (
 	// "github.com/ExchangeUnion/xud-simulation/connexttest"
 	"time"
 
-	"github.com/ExchangeUnion/xud-simulation/xudrpc"
+	"github.com/ExchangeUnion/xud-simulation/opendexrpc"
 	"github.com/ExchangeUnion/xud-simulation/xudtest"
 )
 
@@ -117,7 +117,7 @@ func testP2PIncorrectPubKey(net *xudtest.NetworkHarness, ht *harnessTest) {
 	// Alice connects to Bob while expecting an incorrect public key.
 	incorrectPubKey := net.Bob.PubKey() + "Q"
 	destNodeURI := fmt.Sprintf("%v@%v", incorrectPubKey, net.Bob.Cfg.P2PAddr())
-	reqConn := &xudrpc.ConnectRequest{NodeUri: destNodeURI}
+	reqConn := &opendexrpc.ConnectRequest{NodeUri: destNodeURI}
 
 	// Bob should reject the connection since Alice signed her handshake data
 	// specifying a different public key target then his.
@@ -136,14 +136,14 @@ func testP2PBanUnban(net *xudtest.NetworkHarness, ht *harnessTest) {
 	ht.act.ban(net.Alice, net.Bob)
 
 	// Alice should not attempt to connect to Bob while he is banned.
-	reqConn := &xudrpc.ConnectRequest{NodeUri: net.Bob.NodeURI()}
+	reqConn := &opendexrpc.ConnectRequest{NodeUri: net.Bob.NodeURI()}
 	_, err := net.Alice.Client.Connect(ht.ctx, reqConn)
 	ht.assert.Error(err)
 	ht.assert.Contains(err.Error(), fmt.Sprintf(
 		"could not connect to node %v because it is banned", net.Bob.PubKey()))
 
 	// If Bob connects to Alice, he should get rejected.
-	reqConn = &xudrpc.ConnectRequest{NodeUri: net.Alice.NodeURI()}
+	reqConn = &opendexrpc.ConnectRequest{NodeUri: net.Alice.NodeURI()}
 	_, err = net.Bob.Client.Connect(ht.ctx, reqConn)
 	ht.assert.Error(err)
 	ht.assert.Contains(err.Error(), fmt.Sprintf(
@@ -168,14 +168,14 @@ func testP2PAlreadyConnected(net *xudtest.NetworkHarness, ht *harnessTest) {
 	ht.act.verifyConnectivity(net.Alice, net.Bob)
 
 	// Alice should not attempt to connect to Bob while they are already connected.
-	reqConn := &xudrpc.ConnectRequest{NodeUri: net.Bob.NodeURI()}
+	reqConn := &opendexrpc.ConnectRequest{NodeUri: net.Bob.NodeURI()}
 	_, err := net.Alice.Client.Connect(ht.ctx, reqConn)
 	ht.assert.Error(err)
 	ht.assert.Contains(err.Error(), fmt.Sprintf(
 		"node %v at %v already connected", net.Bob.PubKey(), net.Bob.Cfg.P2PAddr()))
 
 	// Bob should not attempt to connect to Alice while they are already connected.
-	reqConn = &xudrpc.ConnectRequest{NodeUri: net.Alice.NodeURI()}
+	reqConn = &opendexrpc.ConnectRequest{NodeUri: net.Alice.NodeURI()}
 	_, err = net.Bob.Client.Connect(ht.ctx, reqConn)
 	ht.assert.Error(err)
 	ht.assert.Contains(err.Error(), fmt.Sprintf(
@@ -193,20 +193,20 @@ func testOrderBroadcastAndInvalidation(net *xudtest.NetworkHarness, ht *harnessT
 	ht.act.connect(net.Alice, net.Bob)
 	ht.act.verifyConnectivity(net.Alice, net.Bob)
 
-	req := &xudrpc.PlaceOrderRequest{
+	req := &opendexrpc.PlaceOrderRequest{
 		Price:    0.02,
 		Quantity: 1000000,
 		PairId:   "LTC/BTC",
 		OrderId:  "testOrderBroadcastAndInvalidation",
-		Side:     xudrpc.OrderSide_BUY,
+		Side:     opendexrpc.OrderSide_BUY,
 	}
 
 	order := ht.act.placeOrderAndBroadcast(net.Alice, net.Bob, req)
-	_, err := net.Alice.Client.GetBalance(ht.ctx, &xudrpc.GetBalanceRequest{Currency: "BTC"})
+	_, err := net.Alice.Client.GetBalance(ht.ctx, &opendexrpc.GetBalanceRequest{Currency: "BTC"})
 	ht.assert.NoError(err)
 
 	ht.act.removeOrderAndInvalidate(net.Alice, net.Bob, order)
-	_, err = net.Alice.Client.GetBalance(ht.ctx, &xudrpc.GetBalanceRequest{Currency: "BTC"})
+	_, err = net.Alice.Client.GetBalance(ht.ctx, &opendexrpc.GetBalanceRequest{Currency: "BTC"})
 	ht.assert.NoError(err)
 
 	// Cleanup.
@@ -219,12 +219,12 @@ func testInternalMatchAndInvalidation(net *xudtest.NetworkHarness, ht *harnessTe
 	ht.act.verifyConnectivity(net.Alice, net.Bob)
 
 	// Place an order on Alice.
-	req := &xudrpc.PlaceOrderRequest{
+	req := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "internal_maker_order_id",
 		Price:    0.02,
 		Quantity: 1000000,
 		PairId:   "LTC/BTC",
-		Side:     xudrpc.OrderSide_BUY,
+		Side:     opendexrpc.OrderSide_BUY,
 	}
 	order := ht.act.placeOrderAndBroadcast(net.Alice, net.Bob, req)
 
@@ -255,20 +255,20 @@ func testRuntimeAddPairActiveOrders(net *xudtest.NetworkHarness, ht *harnessTest
 	ht.act.verifyConnectivity(net.Alice, net.Bob)
 
 	// Re-add the pairs/currencies to Alice after peer connection was already established.
-	ht.act.addCurrency(net.Alice, "BTC", xudrpc.Currency_LND, "", 8)
-	ht.act.addCurrency(net.Alice, "LTC", xudrpc.Currency_LND, "", 8)
+	ht.act.addCurrency(net.Alice, "BTC", opendexrpc.Currency_LND, "", 8)
+	ht.act.addCurrency(net.Alice, "LTC", opendexrpc.Currency_LND, "", 8)
 	// TODO(karl): enable connext V2 simulation tests
-	// ht.act.addCurrency(net.Alice, "ETH", xudrpc.Currency_CONNEXT, connexttest.ETHTokenAddress, 18)
+	// ht.act.addCurrency(net.Alice, "ETH", opendexrpc.Currency_CONNEXT, connexttest.ETHTokenAddress, 18)
 	ht.act.addPair(net.Alice, "LTC", "BTC")
 	// ht.act.addPair(net.Alice, "BTC", "ETH")
 
 	// Place LTC/BTC order on Alice.
-	req := &xudrpc.PlaceOrderRequest{
+	req := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "maker_order_id",
 		Price:    0.02,
 		Quantity: 1000000,
 		PairId:   "LTC/BTC",
-		Side:     xudrpc.OrderSide_BUY,
+		Side:     opendexrpc.OrderSide_BUY,
 	}
 	res, err := net.Alice.Client.PlaceOrderSync(ht.ctx, req)
 	ht.assert.NoError(err)
@@ -279,8 +279,8 @@ func testRuntimeAddPairActiveOrders(net *xudtest.NetworkHarness, ht *harnessTest
 
 	// Bob should receive the order once his LTC/BTC pair is re-added.
 	bobOrdersChan := subscribeOrders(ht.ctx, net.Bob)
-	ht.act.addCurrency(net.Bob, "BTC", xudrpc.Currency_LND, "", 8)
-	ht.act.addCurrency(net.Bob, "LTC", xudrpc.Currency_LND, "", 8)
+	ht.act.addCurrency(net.Bob, "BTC", opendexrpc.Currency_LND, "", 8)
+	ht.act.addCurrency(net.Bob, "LTC", opendexrpc.Currency_LND, "", 8)
 	ht.act.addPair(net.Bob, "LTC", "BTC")
 
 	e := <-bobOrdersChan
@@ -294,12 +294,12 @@ func testRuntimeAddPairActiveOrders(net *xudtest.NetworkHarness, ht *harnessTest
 
 	// Place BTC/ETH order on Alice.
 	/*
-		req = &xudrpc.PlaceOrderRequest{
+		req = &opendexrpc.PlaceOrderRequest{
 			OrderId:  "maker_order_id",
 			Price:    40,
 			Quantity: 100,
 			PairId:   "BTC/ETH",
-			Side:     xudrpc.OrderSide_BUY,
+			Side:     opendexrpc.OrderSide_BUY,
 		}
 		res, err = net.Alice.Client.PlaceOrderSync(ht.ctx, req)
 		ht.assert.NoError(err)
@@ -310,7 +310,7 @@ func testRuntimeAddPairActiveOrders(net *xudtest.NetworkHarness, ht *harnessTest
 
 		// Bob should receive the order once his BTC/ETH pair is re-added.
 		bobOrdersChan = subscribeOrders(ht.ctx, net.Bob)
-		ht.act.addCurrency(net.Bob, "ETH", xudrpc.Currency_CONNEXT, connexttest.ETHTokenAddress, 18)
+		ht.act.addCurrency(net.Bob, "ETH", opendexrpc.Currency_CONNEXT, connexttest.ETHTokenAddress, 18)
 		ht.act.addPair(net.Bob, "BTC", "ETH")
 
 		e = <-bobOrdersChan
@@ -333,22 +333,22 @@ func testOrderMatchingAndSwap(net *xudtest.NetworkHarness, ht *harnessTest) {
 	ht.act.verifyConnectivity(net.Alice, net.Bob)
 
 	// Place an order on Alice.
-	req := &xudrpc.PlaceOrderRequest{
+	req := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "maker_order_id",
 		Price:    0.02,
 		Quantity: 1000000,
 		PairId:   "LTC/BTC",
-		Side:     xudrpc.OrderSide_BUY,
+		Side:     opendexrpc.OrderSide_BUY,
 	}
 	ht.act.placeOrderAndBroadcast(net.Alice, net.Bob, req)
 
 	// Place a matching order on Bob.
-	req = &xudrpc.PlaceOrderRequest{
+	req = &opendexrpc.PlaceOrderRequest{
 		OrderId:  "taker_order_id",
 		Price:    req.Price,
 		Quantity: req.Quantity,
 		PairId:   req.PairId,
-		Side:     xudrpc.OrderSide_SELL,
+		Side:     opendexrpc.OrderSide_SELL,
 	}
 	ht.act.placeOrderAndSwap(net.Bob, net.Alice, req)
 
@@ -362,22 +362,22 @@ func testDustOrderDiscarded(net *xudtest.NetworkHarness, ht *harnessTest) {
 	ht.act.verifyConnectivity(net.Alice, net.Bob)
 
 	// Place an order on Alice.
-	req := &xudrpc.PlaceOrderRequest{
+	req := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "maker_order_id",
 		Price:    0.02,
 		Quantity: 10000,
 		PairId:   "LTC/BTC",
-		Side:     xudrpc.OrderSide_BUY,
+		Side:     opendexrpc.OrderSide_BUY,
 	}
 	ht.act.placeOrderAndBroadcast(net.Alice, net.Bob, req)
 
 	// Place a matching order on Bob.
-	req = &xudrpc.PlaceOrderRequest{
+	req = &opendexrpc.PlaceOrderRequest{
 		OrderId:  "taker_order_id",
 		Price:    req.Price,
 		Quantity: 10099,
 		PairId:   req.PairId,
-		Side:     xudrpc.OrderSide_SELL,
+		Side:     opendexrpc.OrderSide_SELL,
 	}
 
 	aliceOrderChan := subscribeOrders(ht.ctx, net.Alice)
@@ -422,12 +422,12 @@ func testOrderReplacement(net *xudtest.NetworkHarness, ht *harnessTest) {
 	var replacedOrderID = "replaced_order_id"
 
 	// Place an order on Alice.
-	req := &xudrpc.PlaceOrderRequest{
+	req := &opendexrpc.PlaceOrderRequest{
 		OrderId:  replacedOrderID,
 		Price:    originalPrice,
 		Quantity: originalQuantity,
 		PairId:   "LTC/BTC",
-		Side:     xudrpc.OrderSide_BUY,
+		Side:     opendexrpc.OrderSide_BUY,
 	}
 	ht.act.placeOrderAndBroadcast(net.Alice, net.Bob, req)
 
@@ -435,7 +435,7 @@ func testOrderReplacement(net *xudtest.NetworkHarness, ht *harnessTest) {
 	bobOrderChan := subscribeOrders(ht.ctx, net.Bob)
 
 	// Replace the order on Alice
-	req = &xudrpc.PlaceOrderRequest{
+	req = &opendexrpc.PlaceOrderRequest{
 		ReplaceOrderId: replacedOrderID,
 		Price:          newPrice,
 		Quantity:       newQuantity,
@@ -496,42 +496,42 @@ func testMultiHopSwap(net *xudtest.NetworkHarness, ht *harnessTest) {
 	ht.act.verifyConnectivity(net.Alice, net.Dave)
 
 	// Place a buy order on Alice.
-	req := &xudrpc.PlaceOrderRequest{
+	req := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "maker_order_id",
 		Price:    0.02,
 		Quantity: 1000000,
 		PairId:   "LTC/BTC",
-		Side:     xudrpc.OrderSide_BUY,
+		Side:     opendexrpc.OrderSide_BUY,
 	}
 	ht.act.placeOrderAndBroadcast(net.Alice, net.Dave, req)
 
 	// Place a matching order on Dave.
-	req = &xudrpc.PlaceOrderRequest{
+	req = &opendexrpc.PlaceOrderRequest{
 		OrderId:  "taker_order_id",
 		Price:    req.Price,
 		Quantity: req.Quantity,
 		PairId:   req.PairId,
-		Side:     xudrpc.OrderSide_SELL,
+		Side:     opendexrpc.OrderSide_SELL,
 	}
 	ht.act.placeOrderAndSwap(net.Dave, net.Alice, req)
 
 	// Place a sell order on Dave.
-	req = &xudrpc.PlaceOrderRequest{
+	req = &opendexrpc.PlaceOrderRequest{
 		OrderId:  "maker_order_id2",
 		Price:    req.Price,
 		Quantity: req.Quantity,
 		PairId:   req.PairId,
-		Side:     xudrpc.OrderSide_SELL,
+		Side:     opendexrpc.OrderSide_SELL,
 	}
 	ht.act.placeOrderAndBroadcast(net.Dave, net.Alice, req)
 
 	// Place a matching order on Alice.
-	req = &xudrpc.PlaceOrderRequest{
+	req = &opendexrpc.PlaceOrderRequest{
 		OrderId:  "taker_order_id2",
 		Price:    req.Price,
 		Quantity: req.Quantity,
 		PairId:   req.PairId,
-		Side:     xudrpc.OrderSide_BUY,
+		Side:     opendexrpc.OrderSide_BUY,
 	}
 	ht.act.placeOrderAndSwap(net.Alice, net.Dave, req)
 

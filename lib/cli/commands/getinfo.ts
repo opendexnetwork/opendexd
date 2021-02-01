@@ -2,7 +2,7 @@ import { Arguments } from 'yargs';
 import Table, { VerticalTable } from 'cli-table3';
 import colors from 'colors/safe';
 import { callback, loadXudClient } from '../command';
-import { GetInfoRequest, GetInfoResponse, LndInfo, ConnextInfo } from '../../proto/xudrpc_pb';
+import { GetInfoRequest, GetInfoResponse, LndInfo, ConnextInfo } from '../../proto/opendexrpc_pb';
 
 const displayLndInfo = (asset: string, info: LndInfo.AsObject) => {
   const basicInfotable = new Table() as VerticalTable;

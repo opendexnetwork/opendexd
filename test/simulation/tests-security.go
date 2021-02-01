@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/ExchangeUnion/xud-simulation/lntest"
-	"github.com/ExchangeUnion/xud-simulation/xudrpc"
+	"github.com/ExchangeUnion/xud-simulation/opendexrpc"
 	"github.com/ExchangeUnion/xud-simulation/xudtest"
 	"github.com/lightningnetwork/lnd/lnrpc"
 )
@@ -83,12 +83,12 @@ func testTakerStallingOnSwapAccepted(net *xudtest.NetworkHarness, ht *harnessTes
 	ht.act.verifyConnectivity(net.Alice, net.Bob)
 
 	// Place an order on Bob.
-	bobOrderReq := &xudrpc.PlaceOrderRequest{
+	bobOrderReq := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "taker_stalling_on_swap_accepted",
 		Price:    0.02,
 		Quantity: 1000000,
 		PairId:   "LTC/BTC",
-		Side:     xudrpc.OrderSide_BUY,
+		Side:     opendexrpc.OrderSide_BUY,
 	}
 	bobOrder := ht.act.placeOrderAndBroadcast(net.Bob, net.Alice, bobOrderReq)
 
@@ -96,12 +96,12 @@ func testTakerStallingOnSwapAccepted(net *xudtest.NetworkHarness, ht *harnessTes
 	bobSwapFailuresChan := subscribeSwapFailures(ht.ctx, net.Bob, false)
 
 	// Place a matching order on Alice.
-	aliceOrderReq := &xudrpc.PlaceOrderRequest{
+	aliceOrderReq := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "taker_stalling_on_swap_accepted",
 		Price:    bobOrderReq.Price,
 		Quantity: bobOrderReq.Quantity,
 		PairId:   bobOrderReq.PairId,
-		Side:     xudrpc.OrderSide_SELL,
+		Side:     opendexrpc.OrderSide_SELL,
 	}
 	res, err := net.Alice.Client.PlaceOrderSync(ht.ctx, aliceOrderReq)
 	ht.assert.NoError(err)
@@ -122,12 +122,12 @@ func testTakerStallingOnSwapAccepted(net *xudtest.NetworkHarness, ht *harnessTes
 
 	// Cleanup.
 
-	removalRes, err := net.Bob.Client.RemoveOrder(ht.ctx, &xudrpc.RemoveOrderRequest{OrderId: bobOrderReq.OrderId})
+	removalRes, err := net.Bob.Client.RemoveOrder(ht.ctx, &opendexrpc.RemoveOrderRequest{OrderId: bobOrderReq.OrderId})
 	ht.assert.NoError(err)
 	ht.assert.NotNil(removalRes)
 	ht.assert.Equal(removalRes.QuantityOnHold, uint64(0))
 
-	removalRes, err = net.Alice.Client.RemoveOrder(ht.ctx, &xudrpc.RemoveOrderRequest{OrderId: aliceOrderReq.OrderId})
+	removalRes, err = net.Alice.Client.RemoveOrder(ht.ctx, &opendexrpc.RemoveOrderRequest{OrderId: aliceOrderReq.OrderId})
 	ht.assert.NoError(err)
 	ht.assert.NotNil(removalRes)
 	ht.assert.Equal(removalRes.QuantityOnHold, uint64(0))
@@ -146,12 +146,12 @@ func testMakerStallingAfter1stHTLC(net *xudtest.NetworkHarness, ht *harnessTest)
 	ht.act.verifyConnectivity(net.Alice, net.Bob)
 
 	// Place an order on Alice.
-	aliceOrderReq := &xudrpc.PlaceOrderRequest{
+	aliceOrderReq := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "maker_stalling_after_1st_htlc",
 		Price:    0.02,
 		Quantity: 1000000,
 		PairId:   "LTC/BTC",
-		Side:     xudrpc.OrderSide_BUY,
+		Side:     opendexrpc.OrderSide_BUY,
 	}
 	aliceOrder := ht.act.placeOrderAndBroadcast(net.Alice, net.Bob, aliceOrderReq)
 
@@ -159,12 +159,12 @@ func testMakerStallingAfter1stHTLC(net *xudtest.NetworkHarness, ht *harnessTest)
 	aliceSwapFailuresChan := subscribeSwapFailures(ht.ctx, net.Alice, false)
 
 	// Place a matching order on Bob.
-	bobOrderReq := &xudrpc.PlaceOrderRequest{
+	bobOrderReq := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "maker_stalling_after_1st_htlc",
 		Price:    aliceOrderReq.Price,
 		Quantity: aliceOrderReq.Quantity,
 		PairId:   aliceOrderReq.PairId,
-		Side:     xudrpc.OrderSide_SELL,
+		Side:     opendexrpc.OrderSide_SELL,
 	}
 
 	res, err := net.Bob.Client.PlaceOrderSync(ht.ctx, bobOrderReq)
@@ -186,12 +186,12 @@ func testMakerStallingAfter1stHTLC(net *xudtest.NetworkHarness, ht *harnessTest)
 
 	// Cleanup.
 
-	removalRes, err := net.Alice.Client.RemoveOrder(ht.ctx, &xudrpc.RemoveOrderRequest{OrderId: aliceOrderReq.OrderId})
+	removalRes, err := net.Alice.Client.RemoveOrder(ht.ctx, &opendexrpc.RemoveOrderRequest{OrderId: aliceOrderReq.OrderId})
 	ht.assert.NoError(err)
 	ht.assert.NotNil(removalRes)
 	ht.assert.Equal(removalRes.QuantityOnHold, uint64(0))
 
-	removalRes, err = net.Bob.Client.RemoveOrder(ht.ctx, &xudrpc.RemoveOrderRequest{OrderId: bobOrderReq.OrderId})
+	removalRes, err = net.Bob.Client.RemoveOrder(ht.ctx, &opendexrpc.RemoveOrderRequest{OrderId: bobOrderReq.OrderId})
 	ht.assert.NoError(err)
 	ht.assert.NotNil(removalRes)
 	ht.assert.Equal(removalRes.QuantityOnHold, uint64(0))
@@ -230,12 +230,12 @@ func testMakerShutdownAfter1stHTLC(net *xudtest.NetworkHarness, ht *harnessTest)
 	ht.act.verifyConnectivity(net.Alice, net.Bob)
 
 	// Place an order on Alice.
-	aliceOrderReq := &xudrpc.PlaceOrderRequest{
+	aliceOrderReq := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "maker_shutdown_after_1st_htlc",
 		Price:    0.02,
 		Quantity: 1000000,
 		PairId:   "LTC/BTC",
-		Side:     xudrpc.OrderSide_BUY,
+		Side:     opendexrpc.OrderSide_BUY,
 	}
 	_ = ht.act.placeOrderAndBroadcast(net.Alice, net.Bob, aliceOrderReq)
 
@@ -243,12 +243,12 @@ func testMakerShutdownAfter1stHTLC(net *xudtest.NetworkHarness, ht *harnessTest)
 	aliceSwapFailuresChan := subscribeSwapFailures(ht.ctx, net.Alice, false)
 
 	// Place a matching order on Bob.
-	bobOrderReq := &xudrpc.PlaceOrderRequest{
+	bobOrderReq := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "maker_shutdown_after_1st_htlc",
 		Price:    aliceOrderReq.Price,
 		Quantity: aliceOrderReq.Quantity,
 		PairId:   aliceOrderReq.PairId,
-		Side:     xudrpc.OrderSide_SELL,
+		Side:     opendexrpc.OrderSide_SELL,
 	}
 
 	res, err := net.Bob.Client.PlaceOrderSync(ht.ctx, bobOrderReq)
@@ -269,7 +269,7 @@ func testMakerShutdownAfter1stHTLC(net *xudtest.NetworkHarness, ht *harnessTest)
 
 	// Cleanup.
 
-	removalRes, err := net.Bob.Client.RemoveOrder(ht.ctx, &xudrpc.RemoveOrderRequest{OrderId: bobOrderReq.OrderId})
+	removalRes, err := net.Bob.Client.RemoveOrder(ht.ctx, &opendexrpc.RemoveOrderRequest{OrderId: bobOrderReq.OrderId})
 	ht.assert.NoError(err)
 	ht.assert.NotNil(removalRes)
 	ht.assert.Equal(removalRes.QuantityOnHold, uint64(0))
@@ -367,12 +367,12 @@ func testTakerStallingAfter2ndHTLC(net *xudtest.NetworkHarness, ht *harnessTest)
 	ht.act.verifyConnectivity(net.Alice, net.Bob)
 
 	// Place an order on Bob.
-	bobOrderReq := &xudrpc.PlaceOrderRequest{
+	bobOrderReq := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "taker_stalling_2nd_htlc",
 		Price:    0.02,
 		Quantity: 1000000,
 		PairId:   "LTC/BTC",
-		Side:     xudrpc.OrderSide_BUY,
+		Side:     opendexrpc.OrderSide_BUY,
 	}
 	bobOrder := ht.act.placeOrderAndBroadcast(net.Bob, net.Alice, bobOrderReq)
 
@@ -380,12 +380,12 @@ func testTakerStallingAfter2ndHTLC(net *xudtest.NetworkHarness, ht *harnessTest)
 	bobSwapFailuresChan := subscribeSwapFailures(ht.ctx, net.Bob, false)
 
 	// Place a matching order on Alice.
-	aliceOrderReq := &xudrpc.PlaceOrderRequest{
+	aliceOrderReq := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "taker_stalling_2nd_htlc",
 		Price:    bobOrderReq.Price,
 		Quantity: bobOrderReq.Quantity,
 		PairId:   bobOrderReq.PairId,
-		Side:     xudrpc.OrderSide_SELL,
+		Side:     opendexrpc.OrderSide_SELL,
 	}
 	res, err := net.Alice.Client.PlaceOrderSync(ht.ctx, aliceOrderReq)
 	ht.assert.NoError(err)
@@ -399,7 +399,7 @@ func testTakerStallingAfter2ndHTLC(net *xudtest.NetworkHarness, ht *harnessTest)
 
 	// Cleanup.
 
-	removalRes, err := net.Alice.Client.RemoveOrder(ht.ctx, &xudrpc.RemoveOrderRequest{OrderId: aliceOrderReq.OrderId})
+	removalRes, err := net.Alice.Client.RemoveOrder(ht.ctx, &opendexrpc.RemoveOrderRequest{OrderId: aliceOrderReq.OrderId})
 	ht.assert.NoError(err)
 	ht.assert.NotNil(removalRes)
 	ht.assert.Equal(removalRes.QuantityOnHold, uint64(0))
@@ -483,7 +483,7 @@ func testTakerStallingAfter2ndHTLC(net *xudtest.NetworkHarness, ht *harnessTest)
 	ht.assert.True(walletDiff < onchainFeesThreshold,
 		"alice ltc wallet balance mismatch (prev: %v, current: %v)", alicePrevBalance.ltc.wallet.TotalBalance, aliceBalance.ltc.wallet.TotalBalance)
 
-	removalRes, err = net.Bob.Client.RemoveOrder(ht.ctx, &xudrpc.RemoveOrderRequest{OrderId: bobOrderReq.OrderId})
+	removalRes, err = net.Bob.Client.RemoveOrder(ht.ctx, &opendexrpc.RemoveOrderRequest{OrderId: bobOrderReq.OrderId})
 	ht.assert.NoError(err)
 	ht.assert.NotNil(removalRes)
 	ht.assert.Equal(removalRes.QuantityOnHold, uint64(0))
@@ -522,12 +522,12 @@ func testTakerShutdownAfter2ndHTLC(net *xudtest.NetworkHarness, ht *harnessTest)
 	ht.act.verifyConnectivity(net.Alice, net.Bob)
 
 	// Place an order on Bob.
-	bobOrderReq := &xudrpc.PlaceOrderRequest{
+	bobOrderReq := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "taker_shutdown_after_2nd_htlc",
 		Price:    0.02,
 		Quantity: 1000000,
 		PairId:   "LTC/BTC",
-		Side:     xudrpc.OrderSide_BUY,
+		Side:     opendexrpc.OrderSide_BUY,
 	}
 	bobOrder := ht.act.placeOrderAndBroadcast(net.Bob, net.Alice, bobOrderReq)
 
@@ -535,12 +535,12 @@ func testTakerShutdownAfter2ndHTLC(net *xudtest.NetworkHarness, ht *harnessTest)
 	bobSwapFailuresChan := subscribeSwapFailures(ht.ctx, net.Bob, false)
 
 	// Place a matching order on Alice.
-	aliceOrderReq := &xudrpc.PlaceOrderRequest{
+	aliceOrderReq := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "taker_shutdown_after_2nd_htlc",
 		Price:    bobOrderReq.Price,
 		Quantity: bobOrderReq.Quantity,
 		PairId:   bobOrderReq.PairId,
-		Side:     xudrpc.OrderSide_SELL,
+		Side:     opendexrpc.OrderSide_SELL,
 	}
 	_, err = net.Alice.Client.PlaceOrderSync(ht.ctx, aliceOrderReq)
 	ht.assert.Error(err)
@@ -628,7 +628,7 @@ func testTakerShutdownAfter2ndHTLC(net *xudtest.NetworkHarness, ht *harnessTest)
 	ht.assert.True(walletDiff < onchainFeesThreshold,
 		"alice ltc wallet balance mismatch (prev: %v, current: %v)", alicePrevBalance.ltc.wallet.TotalBalance, aliceBalance.ltc.wallet.TotalBalance)
 
-	removalRes, err := net.Bob.Client.RemoveOrder(ht.ctx, &xudrpc.RemoveOrderRequest{OrderId: bobOrderReq.OrderId})
+	removalRes, err := net.Bob.Client.RemoveOrder(ht.ctx, &opendexrpc.RemoveOrderRequest{OrderId: bobOrderReq.OrderId})
 	ht.assert.NoError(err)
 	ht.assert.NotNil(removalRes)
 	ht.assert.Equal(removalRes.QuantityOnHold, uint64(0))
@@ -645,12 +645,12 @@ func testTakerStallingAfterSwapSucceeded(net *xudtest.NetworkHarness, ht *harnes
 	ht.act.verifyConnectivity(net.Alice, net.Bob)
 
 	// Place an order on Bob.
-	bobOrderReq := &xudrpc.PlaceOrderRequest{
+	bobOrderReq := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "taker_stalling_after_swap_succeeded",
 		Price:    0.02,
 		Quantity: 1000000,
 		PairId:   "LTC/BTC",
-		Side:     xudrpc.OrderSide_BUY,
+		Side:     opendexrpc.OrderSide_BUY,
 	}
 	bobOrder := ht.act.placeOrderAndBroadcast(net.Bob, net.Alice, bobOrderReq)
 
@@ -658,12 +658,12 @@ func testTakerStallingAfterSwapSucceeded(net *xudtest.NetworkHarness, ht *harnes
 	bobSwapsChan := subscribeSwaps(ht.ctx, net.Bob, false)
 
 	// Place a matching order on Alice.
-	aliceOrderReq := &xudrpc.PlaceOrderRequest{
+	aliceOrderReq := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "taker_stalling_after_swap_succeeded",
 		Price:    bobOrderReq.Price,
 		Quantity: bobOrderReq.Quantity,
 		PairId:   bobOrderReq.PairId,
-		Side:     xudrpc.OrderSide_SELL,
+		Side:     opendexrpc.OrderSide_SELL,
 	}
 	res, err := net.Alice.Client.PlaceOrderSync(ht.ctx, aliceOrderReq)
 	ht.assert.NoError(err)

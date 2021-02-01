@@ -2,7 +2,7 @@ import Table, { HorizontalTable } from 'cli-table3';
 import colors from 'colors/safe';
 import { Arguments, Argv } from 'yargs';
 import { Owner } from '../../constants/enums';
-import { ListOrdersRequest, ListOrdersResponse, Order } from '../../proto/xudrpc_pb';
+import { ListOrdersRequest, ListOrdersResponse, Order } from '../../proto/opendexrpc_pb';
 import { callback, loadXudClient } from '../command';
 import { satsToCoinsStr } from '../utils';
 

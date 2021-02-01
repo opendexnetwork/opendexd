@@ -1,5 +1,5 @@
 import { Arguments, Argv } from 'yargs';
-import { RemoveAllOrdersRequest, RemoveAllOrdersResponse } from '../../proto/xudrpc_pb';
+import { RemoveAllOrdersRequest, RemoveAllOrdersResponse } from '../../proto/opendexrpc_pb';
 import { callback, loadXudClient } from '../command';
 
 export const command = 'removeallorders';

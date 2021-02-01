@@ -1,7 +1,7 @@
 import { Arguments } from 'yargs';
 import readline from 'readline';
 import { callback, loadXudInitClient } from '../command';
-import { UnlockNodeRequest, UnlockNodeResponse } from '../../proto/xudrpc_pb';
+import { UnlockNodeRequest, UnlockNodeResponse } from '../../proto/opendexrpc_pb';
 
 export const command = 'unlock';
 

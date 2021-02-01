@@ -1,5 +1,5 @@
 import { Arguments, Argv } from 'yargs';
-import { RemoveOrderRequest, RemoveOrderResponse } from '../../proto/xudrpc_pb';
+import { RemoveOrderRequest, RemoveOrderResponse } from '../../proto/opendexrpc_pb';
 import { callback, loadXudClient } from '../command';
 import { coinsToSats, satsToCoinsStr } from '../utils';
 

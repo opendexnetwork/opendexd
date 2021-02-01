@@ -1,6 +1,6 @@
 import { Arguments } from 'yargs';
 import { callback, loadXudClient } from '../command';
-import { ShutdownRequest } from '../../proto/xudrpc_pb';
+import { ShutdownRequest } from '../../proto/opendexrpc_pb';
 
 export const command = 'shutdown';
 

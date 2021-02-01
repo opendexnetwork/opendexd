@@ -1,7 +1,7 @@
 import Table, { HorizontalTable } from 'cli-table3';
 import colors from 'colors/safe';
 import { Arguments, Argv } from 'yargs';
-import { Role, Trade, TradeHistoryRequest, TradeHistoryResponse, OrderSide } from '../../proto/xudrpc_pb';
+import { Role, Trade, TradeHistoryRequest, TradeHistoryResponse, OrderSide } from '../../proto/opendexrpc_pb';
 import { callback, loadXudClient } from '../command';
 import { satsToCoinsStr, trim } from '../utils';
 

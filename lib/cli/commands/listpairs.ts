@@ -1,7 +1,7 @@
 import { Arguments } from 'yargs';
 import Table, { HorizontalTable } from 'cli-table3';
 import colors from 'colors/safe';
-import { ListPairsRequest, ListPairsResponse } from '../../proto/xudrpc_pb';
+import { ListPairsRequest, ListPairsResponse } from '../../proto/opendexrpc_pb';
 import { callback, loadXudClient } from '../command';
 
 const HEADERS = [colors.blue('Trading pair')];

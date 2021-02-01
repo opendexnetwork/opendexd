@@ -1,7 +1,7 @@
 import { ServiceError, status } from '@grpc/grpc-js';
 import { Arguments, Argv } from 'yargs';
-import { XudClient } from 'lib/proto/xudrpc_grpc_pb';
-import * as xudrpc from '../../proto/xudrpc_pb';
+import { XudClient } from 'lib/proto/opendexrpc_grpc_pb';
+import * as opendexrpc from '../../proto/opendexrpc_pb';
 import { setTimeoutPromise } from '../../utils/utils';
 import { loadXudClient } from '../command';
 
@@ -43,10 +43,10 @@ const ensureConnection = async (argv: Arguments, printError?: boolean) => {
 };
 
 const streamOrders = (argv: Arguments<any>) => {
-  const ordersReqeust = new xudrpc.SubscribeOrdersRequest();
+  const ordersReqeust = new opendexrpc.SubscribeOrdersRequest();
   ordersReqeust.setExisting(argv.existing);
   const ordersSubscription = client.subscribeOrders(ordersReqeust);
-  ordersSubscription.on('data', (orderUpdate: xudrpc.OrderUpdate) => {
+  ordersSubscription.on('data', (orderUpdate: opendexrpc.OrderUpdate) => {
     if (orderUpdate.getOrder() !== undefined) {
       console.log(`Order added: ${JSON.stringify(orderUpdate.getOrder()!.toObject())}`);
     } else if (orderUpdate.getOrderRemoval() !== undefined) {
@@ -67,21 +67,21 @@ const streamOrders = (argv: Arguments<any>) => {
     await ensureConnection(argv);
   });
 
-  const swapsRequest = new xudrpc.SubscribeSwapsRequest();
+  const swapsRequest = new opendexrpc.SubscribeSwapsRequest();
   swapsRequest.setIncludeTaker(true);
   const swapsSubscription = client.subscribeSwaps(swapsRequest);
-  swapsSubscription.on('data', (swapSuccess: xudrpc.SwapSuccess) => {
+  swapsSubscription.on('data', (swapSuccess: opendexrpc.SwapSuccess) => {
     console.log(`Order swapped: ${JSON.stringify(swapSuccess.toObject())}`);
   });
 
-  const swapsAcceptedRequest = new xudrpc.SubscribeSwapsAcceptedRequest();
+  const swapsAcceptedRequest = new opendexrpc.SubscribeSwapsAcceptedRequest();
   const swapsAcceptedSubscription = client.subscribeSwapsAccepted(swapsAcceptedRequest);
-  swapsAcceptedSubscription.on('data', (swapAccepted: xudrpc.SwapAccepted) => {
+  swapsAcceptedSubscription.on('data', (swapAccepted: opendexrpc.SwapAccepted) => {
     console.log(`Swap deal accepted: ${JSON.stringify(swapAccepted.toObject())}`);
   });
 
   const swapFailuresSubscription = client.subscribeSwapFailures(swapsRequest);
-  swapFailuresSubscription.on('data', (swapFailure: xudrpc.SwapFailure) => {
+  swapFailuresSubscription.on('data', (swapFailure: opendexrpc.SwapFailure) => {
     console.log(`Swap failed: ${JSON.stringify(swapFailure.toObject())}`);
   });
 

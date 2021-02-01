@@ -1,6 +1,6 @@
 import { Arguments, Argv } from 'yargs';
 import { SwapClientType } from '../../constants/enums';
-import { Currency } from '../../proto/xudrpc_pb';
+import { Currency } from '../../proto/opendexrpc_pb';
 import { callback, loadXudClient } from '../command';
 
 export const command = 'addcurrency <currency> <swap_client> [decimal_places] [token_address]';

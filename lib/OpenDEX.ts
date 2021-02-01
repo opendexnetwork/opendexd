@@ -2,10 +2,9 @@ import { AssertionError } from 'assert';
 import { EventEmitter } from 'events';
 import { promises as fs } from 'fs';
 import path from 'path';
-import { Subscription } from 'rxjs';
 import bootstrap from './bootstrap';
 import Config from './Config';
-import { SwapClientType, OpenDEXnetwork } from './constants/enums';
+import { SwapClientType } from './constants/enums';
 import DB from './db/DB';
 import GrpcServer from './grpc/GrpcServer';
 import HttpServer from './http/HttpServer';
@@ -17,7 +16,6 @@ import InitService from './service/InitService';
 import Service from './service/Service';
 import SwapClientManager from './swaps/SwapClientManager';
 import Swaps from './swaps/Swaps';
-import { createSimnetChannels } from './utils/simnet-connext-channels';
 import { UnitConverter } from './utils/UnitConverter';
 
 const { version }: { version: string } = require('../package.json');
@@ -42,7 +40,6 @@ class OpenDEX extends EventEmitter {
   private swaps!: Swaps;
   private shuttingDown = false;
   private swapClientManager?: SwapClientManager;
-  private simnetChannels$?: Subscription;
 
   /**
    * Create an OpenDEX daemon.
@@ -221,34 +218,6 @@ class OpenDEX extends EventEmitter {
         await this.httpServer.listen(this.config.http.port, this.config.http.host);
       }
 
-      // if we're running in simnet mode and Connext is enabled we'll
-      // attempt to request funds from the faucet and open a channel
-      // to the node once we have received the on-chain funds
-      if (this.config.network === OpenDEXnetwork.SimNet && this.swapClientManager.connextClient?.isOperational()) {
-        this.simnetChannels$ = createSimnetChannels({
-          channels: [
-            {
-              currency: 'ETH',
-              // amount of currency to put in the channel
-              channelAmount: 1000000000,
-              // minimum channelBalance threshold
-              minChannelAmount: 100000000,
-            },
-          ],
-          retryInterval: 10000,
-        }).subscribe({
-          next: (currency) => {
-            this.logger.info(`Connext wallet funded and channel opened for ${currency}`);
-          },
-          error: (e) => {
-            this.logger.error(`Failed to fund Connext wallet and open a channel: ${e}`);
-          },
-          complete: () => {
-            this.logger.info('Stopped monitoring Connext balances for automatic funding and channel creation');
-          },
-        });
-      }
-
       // initialize rpc server last
       if (this.rpcServer) {
         this.rpcServer.grpcService.setService(this.service);
@@ -271,8 +240,6 @@ class OpenDEX extends EventEmitter {
 
     // TODO: ensure we are not in the middle of executing any trades
     const closePromises: Promise<void>[] = [];
-
-    this.simnetChannels$?.unsubscribe();
 
     if (this.swapClientManager) {
       this.swapClientManager.close();

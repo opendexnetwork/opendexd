@@ -14,7 +14,7 @@ import (
 	"time"
 
 	"github.com/ExchangeUnion/xud-simulation/lntest"
-	"github.com/ExchangeUnion/xud-simulation/xudrpc"
+	"github.com/ExchangeUnion/xud-simulation/opendexrpc"
 	"github.com/ExchangeUnion/xud-simulation/xudtest"
 	ltcchaincfg "github.com/ltcsuite/ltcd/chaincfg"
 	ltcchainhash "github.com/ltcsuite/ltcd/chaincfg/chainhash"
@@ -75,7 +75,7 @@ func TestIntegration(t *testing.T) {
 	carolDavidLtcChanPoint, err := openLtcChannel(ctx, xudNetwork.LndLtcNetwork, xudNetwork.Carol.LndLtcNode, xudNetwork.Dave.LndLtcNode, amt, pushAmt)
 	assert.NoError(err)
 
-	initialStates := make(map[int]*xudrpc.GetInfoResponse)
+	initialStates := make(map[int]*opendexrpc.GetInfoResponse)
 	for i, testCase := range integrationTestCases {
 		success := t.Run(testCase.name, func(t1 *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), time.Duration(cfg.Timeout))
@@ -99,13 +99,13 @@ func TestIntegration(t *testing.T) {
 		// so that tests won't be affected by preceding ones.
 		if i == 0 {
 			for num, node := range xudNetwork.ActiveNodes {
-				res, err := node.Client.GetInfo(ctx, &xudrpc.GetInfoRequest{})
+				res, err := node.Client.GetInfo(ctx, &opendexrpc.GetInfoRequest{})
 				assert.NoError(err)
 				initialStates[num] = res
 			}
 		} else {
 			for num, node := range xudNetwork.ActiveNodes {
-				res, err := node.Client.GetInfo(ctx, &xudrpc.GetInfoRequest{})
+				res, err := node.Client.GetInfo(ctx, &opendexrpc.GetInfoRequest{})
 				assert.NoError(err)
 				initialState, ok := initialStates[num]
 				assert.True(ok)

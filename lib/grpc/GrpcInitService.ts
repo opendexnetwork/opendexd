@@ -1,6 +1,6 @@
 /* tslint:disable no-null-keyword */
 import * as grpc from '@grpc/grpc-js';
-import * as xudrpc from '../proto/xudrpc_pb';
+import * as opendexrpc from '../proto/opendexrpc_pb';
 import InitService from '../service/InitService';
 import getGrpcError from './getGrpcError';
 
@@ -41,7 +41,7 @@ class GrpcInitService implements grpc.UntypedServiceImplementation {
   /**
    * See [[InitService.createNode]]
    */
-  public createNode: grpc.handleUnaryCall<xudrpc.CreateNodeRequest, xudrpc.CreateNodeResponse> = async (
+  public createNode: grpc.handleUnaryCall<opendexrpc.CreateNodeRequest, opendexrpc.CreateNodeResponse> = async (
     call,
     callback,
   ) => {
@@ -52,7 +52,7 @@ class GrpcInitService implements grpc.UntypedServiceImplementation {
       const { mnemonic, initializedLndWallets, initializedConnext } = await this.initService.createNode(
         call.request.toObject(),
       );
-      const response = new xudrpc.CreateNodeResponse();
+      const response = new opendexrpc.CreateNodeResponse();
       if (mnemonic) {
         response.setSeedMnemonicList(mnemonic);
       }
@@ -69,7 +69,7 @@ class GrpcInitService implements grpc.UntypedServiceImplementation {
   /**
    * See [[InitService.unlockNode]]
    */
-  public unlockNode: grpc.handleUnaryCall<xudrpc.UnlockNodeRequest, xudrpc.UnlockNodeResponse> = async (
+  public unlockNode: grpc.handleUnaryCall<opendexrpc.UnlockNodeRequest, opendexrpc.UnlockNodeResponse> = async (
     call,
     callback,
   ) => {
@@ -78,7 +78,7 @@ class GrpcInitService implements grpc.UntypedServiceImplementation {
     }
     try {
       const unlockNodeResult = await this.initService.unlockNode(call.request.toObject());
-      const response = new xudrpc.UnlockNodeResponse();
+      const response = new opendexrpc.UnlockNodeResponse();
       response.setUnlockedLndsList(unlockNodeResult.unlockedLndClients);
       response.setLockedLndsList(unlockNodeResult.lockedLndClients);
 
@@ -91,7 +91,7 @@ class GrpcInitService implements grpc.UntypedServiceImplementation {
   /**
    * See [[InitService.restoreNode]]
    */
-  public restoreNode: grpc.handleUnaryCall<xudrpc.RestoreNodeRequest, xudrpc.RestoreNodeResponse> = async (
+  public restoreNode: grpc.handleUnaryCall<opendexrpc.RestoreNodeRequest, opendexrpc.RestoreNodeResponse> = async (
     call,
     callback,
   ) => {
@@ -110,7 +110,7 @@ class GrpcInitService implements grpc.UntypedServiceImplementation {
         lndBackupsMap,
       });
 
-      const response = new xudrpc.RestoreNodeResponse();
+      const response = new opendexrpc.RestoreNodeResponse();
       response.setRestoredConnext(initializedConnext);
       response.setRestoredLndsList(initializedLndWallets);
 

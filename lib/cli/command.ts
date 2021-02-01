@@ -3,12 +3,12 @@ import fs from 'fs';
 import path from 'path';
 import { Arguments } from 'yargs';
 import Config from '../Config';
-import * as xudGrpc from '../proto/xudrpc_grpc_pb';
+import * as openDEXrpc from '../proto/opendexrpc_grpc_pb';
 
 // @ts-ignore
-const XudClient = grpc.makeClientConstructor(xudGrpc['xudrpc.Xud'], 'XudService');
+const XudClient = grpc.makeClientConstructor(openDEXrpc['opendexrpc.Xud'], 'XudService');
 // @ts-ignore
-const XudInitClient = grpc.makeClientConstructor(xudGrpc['xudrpc.XudInit'], 'XudInitService');
+const XudInitClient = grpc.makeClientConstructor(openDEXrpc['opendexrpc.XudInit'], 'XudInitService');
 
 /**
  * Attempts to load the xud configuration file to dynamically determine the
@@ -60,7 +60,7 @@ const getTlsCert = (certPath: string) => {
  * A generic function to instantiate an XU client.
  * @param argv the command line arguments
  */
-export const loadXudClient = async (argv: Arguments<any>): Promise<xudGrpc.XudClient> => {
+export const loadXudClient = async (argv: Arguments<any>): Promise<openDEXrpc.XudClient> => {
   await loadXudConfig(argv);
 
   const certPath = argv.tlscertpath || path.join(argv.opendexdir, 'tls.cert');
@@ -70,7 +70,7 @@ export const loadXudClient = async (argv: Arguments<any>): Promise<xudGrpc.XudCl
   return new XudClient(`${argv.rpchost}:${argv.rpcport}`, credentials) as any;
 };
 
-export const loadXudInitClient = async (argv: Arguments<any>): Promise<xudGrpc.XudInitClient> => {
+export const loadXudInitClient = async (argv: Arguments<any>): Promise<openDEXrpc.XudInitClient> => {
   await loadXudConfig(argv);
 
   const certPath = argv.tlscertpath || path.join(argv.opendexdir, 'tls.cert');

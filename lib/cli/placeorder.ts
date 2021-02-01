@@ -1,5 +1,5 @@
 import { Arguments, Argv } from 'yargs';
-import { XudClient } from 'lib/proto/xudrpc_grpc_pb';
+import { XudClient } from 'lib/proto/opendexrpc_grpc_pb';
 import {
   Order,
   OrderSide,
@@ -8,7 +8,7 @@ import {
   PlaceOrderResponse,
   SwapFailure,
   SwapSuccess,
-} from '../proto/xudrpc_pb';
+} from '../proto/opendexrpc_pb';
 import { callback, loadXudClient } from './command';
 import { coinsToSats, satsToCoinsStr } from './utils';
 import { checkDecimalPlaces } from '../utils/utils';

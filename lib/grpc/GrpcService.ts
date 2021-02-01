@@ -5,17 +5,17 @@ import { take } from 'rxjs/operators';
 import { SwapFailureReason } from '../constants/enums';
 import { LndInfo } from '../lndclient/types';
 import { isOwnOrder, Order, OrderPortion, PlaceOrderEventType, PlaceOrderResult } from '../orderbook/types';
-import * as xudrpc from '../proto/xudrpc_pb';
+import * as opendexrpc from '../proto/opendexrpc_pb';
 import Service from '../service/Service';
 import { ServiceOrder, ServicePlaceOrderEvent } from '../service/types';
 import { SwapAccepted, SwapFailure, SwapSuccess } from '../swaps/types';
 import getGrpcError from './getGrpcError';
 
 /**
- * Creates an xudrpc Order message from an [[Order]].
+ * Creates an opendexrpc Order message from an [[Order]].
  */
 const createServiceOrder = (order: ServiceOrder) => {
-  const grpcOrder = new xudrpc.Order();
+  const grpcOrder = new opendexrpc.Order();
   grpcOrder.setCreatedAt(order.createdAt);
   grpcOrder.setId(order.id);
   if (order.hold) {
@@ -25,7 +25,7 @@ const createServiceOrder = (order: ServiceOrder) => {
     grpcOrder.setLocalId(order.localId);
   }
   grpcOrder.setIsOwnOrder(order.isOwnOrder);
-  const nodeIdentifier = new xudrpc.NodeIdentifier();
+  const nodeIdentifier = new opendexrpc.NodeIdentifier();
   nodeIdentifier.setNodePubKey(order.nodeIdentifier.nodePubKey);
   if (order.nodeIdentifier.alias) {
     nodeIdentifier.setAlias(order.nodeIdentifier.alias);
@@ -43,7 +43,7 @@ const createServiceOrder = (order: ServiceOrder) => {
 };
 
 const createOrder = (order: Order) => {
-  const grpcOrder = new xudrpc.Order();
+  const grpcOrder = new opendexrpc.Order();
   grpcOrder.setCreatedAt(order.createdAt);
   grpcOrder.setId(order.id);
   if (isOwnOrder(order)) {
@@ -51,7 +51,7 @@ const createOrder = (order: Order) => {
     grpcOrder.setLocalId(order.localId);
     grpcOrder.setIsOwnOrder(true);
   } else {
-    const nodeIdentifier = new xudrpc.NodeIdentifier();
+    const nodeIdentifier = new opendexrpc.NodeIdentifier();
     nodeIdentifier.setNodePubKey(order.peerPubKey);
     grpcOrder.setNodeIdentifier(nodeIdentifier);
     grpcOrder.setIsOwnOrder(false);
@@ -59,15 +59,15 @@ const createOrder = (order: Order) => {
   grpcOrder.setPairId(order.pairId);
   grpcOrder.setPrice(order.price);
   grpcOrder.setQuantity(order.quantity);
-  grpcOrder.setSide(order.isBuy ? xudrpc.OrderSide.BUY : xudrpc.OrderSide.SELL);
+  grpcOrder.setSide(order.isBuy ? opendexrpc.OrderSide.BUY : opendexrpc.OrderSide.SELL);
   return grpcOrder;
 };
 
 /**
- * Creates an xudrpc SwapSuccess message from a [[SwapSuccess]].
+ * Creates an opendexrpc SwapSuccess message from a [[SwapSuccess]].
  */
 const createSwapSuccess = (result: SwapSuccess) => {
-  const swapSuccess = new xudrpc.SwapSuccess();
+  const swapSuccess = new opendexrpc.SwapSuccess();
   swapSuccess.setOrderId(result.orderId);
   swapSuccess.setLocalId(result.localId);
   swapSuccess.setPairId(result.pairId);
@@ -85,10 +85,10 @@ const createSwapSuccess = (result: SwapSuccess) => {
 };
 
 /**
- * Creates an xudrpc SwapFailure message from a [[SwapFailure]].
+ * Creates an opendexrpc SwapFailure message from a [[SwapFailure]].
  */
 const createSwapFailure = (swapFailure: SwapFailure) => {
-  const grpcSwapFailure = new xudrpc.SwapFailure();
+  const grpcSwapFailure = new opendexrpc.SwapFailure();
   grpcSwapFailure.setOrderId(swapFailure.orderId);
   grpcSwapFailure.setPairId(swapFailure.pairId);
   grpcSwapFailure.setPeerPubKey(swapFailure.peerPubKey);
@@ -98,10 +98,10 @@ const createSwapFailure = (swapFailure: SwapFailure) => {
 };
 
 /**
- * Creates an xudrpc SwapAccepted message from a [[SwapAccepted]].
+ * Creates an opendexrpc SwapAccepted message from a [[SwapAccepted]].
  */
 const createSwapAccepted = (swapAccepted: SwapAccepted) => {
-  const grpcSwapAccepted = new xudrpc.SwapAccepted();
+  const grpcSwapAccepted = new opendexrpc.SwapAccepted();
   grpcSwapAccepted.setOrderId(swapAccepted.orderId);
   grpcSwapAccepted.setLocalId(swapAccepted.localId);
   grpcSwapAccepted.setQuantity(swapAccepted.quantity);
@@ -117,10 +117,10 @@ const createSwapAccepted = (swapAccepted: SwapAccepted) => {
 };
 
 /**
- * Creates an xudrpc PlaceOrderResponse message from a [[PlaceOrderResult]].
+ * Creates an opendexrpc PlaceOrderResponse message from a [[PlaceOrderResult]].
  */
 const createPlaceOrderResponse = (result: PlaceOrderResult) => {
-  const response = new xudrpc.PlaceOrderResponse();
+  const response = new opendexrpc.PlaceOrderResponse();
 
   const internalMatches = result.internalMatches.map((match) => createOrder(match));
   response.setInternalMatchesList(internalMatches);
@@ -139,10 +139,10 @@ const createPlaceOrderResponse = (result: PlaceOrderResult) => {
 };
 
 /**
- * Creates an xudrpc PlaceOrderEvent message from a [[PlaceOrderEvent]].
+ * Creates an opendexrpc PlaceOrderEvent message from a [[PlaceOrderEvent]].
  */
 const createPlaceOrderEvent = (e: ServicePlaceOrderEvent) => {
-  const placeOrderEvent = new xudrpc.PlaceOrderEvent();
+  const placeOrderEvent = new opendexrpc.PlaceOrderEvent();
   switch (e.type) {
     case PlaceOrderEventType.Match:
       placeOrderEvent.setMatch(createServiceOrder(e.order!));
@@ -223,13 +223,13 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.addCurrency]]
    */
-  public addCurrency: grpc.handleUnaryCall<xudrpc.Currency, xudrpc.AddCurrencyResponse> = async (call, callback) => {
+  public addCurrency: grpc.handleUnaryCall<opendexrpc.Currency, opendexrpc.AddCurrencyResponse> = async (call, callback) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
     try {
       await this.service.addCurrency(call.request.toObject());
-      const response = new xudrpc.AddCurrencyResponse();
+      const response = new opendexrpc.AddCurrencyResponse();
 
       callback(null, response);
     } catch (err) {
@@ -240,13 +240,13 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.addPair]]
    */
-  public addPair: grpc.handleUnaryCall<xudrpc.AddPairRequest, xudrpc.AddPairResponse> = async (call, callback) => {
+  public addPair: grpc.handleUnaryCall<opendexrpc.AddPairRequest, opendexrpc.AddPairResponse> = async (call, callback) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
     try {
       await this.service.addPair(call.request.toObject());
-      const response = new xudrpc.AddPairResponse();
+      const response = new opendexrpc.AddPairResponse();
 
       callback(null, response);
     } catch (err) {
@@ -257,7 +257,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.closeChannel]]
    */
-  public closeChannel: grpc.handleUnaryCall<xudrpc.CloseChannelRequest, xudrpc.CloseChannelResponse> = async (
+  public closeChannel: grpc.handleUnaryCall<opendexrpc.CloseChannelRequest, opendexrpc.CloseChannelResponse> = async (
     call,
     callback,
   ) => {
@@ -266,7 +266,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     }
     try {
       const txIds = await this.service.closeChannel(call.request.toObject());
-      const response = new xudrpc.CloseChannelResponse();
+      const response = new opendexrpc.CloseChannelResponse();
       response.setTransactionIdsList(txIds);
 
       callback(null, response);
@@ -278,7 +278,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.removeOrder]]
    */
-  public removeOrder: grpc.handleUnaryCall<xudrpc.RemoveOrderRequest, xudrpc.RemoveOrderResponse> = async (
+  public removeOrder: grpc.handleUnaryCall<opendexrpc.RemoveOrderRequest, opendexrpc.RemoveOrderResponse> = async (
     call,
     callback,
   ) => {
@@ -289,7 +289,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
       const { removedQuantity, remainingQuantity, onHoldQuantity, pairId } = this.service.removeOrder(
         call.request.toObject(),
       );
-      const response = new xudrpc.RemoveOrderResponse();
+      const response = new opendexrpc.RemoveOrderResponse();
       response.setQuantityOnHold(onHoldQuantity);
       response.setRemainingQuantity(remainingQuantity);
       response.setRemovedQuantity(removedQuantity);
@@ -303,7 +303,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.removeAllOrders]]
    */
-  public removeAllOrders: grpc.handleUnaryCall<xudrpc.RemoveAllOrdersRequest, xudrpc.RemoveAllOrdersResponse> = async (
+  public removeAllOrders: grpc.handleUnaryCall<opendexrpc.RemoveAllOrdersRequest, opendexrpc.RemoveAllOrdersResponse> = async (
     _,
     callback,
   ) => {
@@ -313,7 +313,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     try {
       const { removedOrderLocalIds, onHoldOrderLocalIds } = await this.service.removeAllOrders();
 
-      const response = new xudrpc.RemoveAllOrdersResponse();
+      const response = new opendexrpc.RemoveAllOrdersResponse();
       response.setRemovedOrderIdsList(removedOrderLocalIds);
       response.setOnHoldOrderIdsList(onHoldOrderLocalIds);
 
@@ -326,7 +326,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.getBalance]]
    */
-  public getBalance: grpc.handleUnaryCall<xudrpc.GetBalanceRequest, xudrpc.GetBalanceResponse> = async (
+  public getBalance: grpc.handleUnaryCall<opendexrpc.GetBalanceRequest, opendexrpc.GetBalanceResponse> = async (
     call,
     callback,
   ) => {
@@ -335,10 +335,10 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     }
     try {
       const balanceResponse = await this.service.getBalance(call.request.toObject());
-      const response = new xudrpc.GetBalanceResponse();
+      const response = new opendexrpc.GetBalanceResponse();
       const balancesMap = response.getBalancesMap();
       balanceResponse.forEach((balanceObj, currency) => {
-        const balance = new xudrpc.Balance();
+        const balance = new opendexrpc.Balance();
         balance.setTotalBalance(balanceObj.totalBalance);
         balance.setChannelBalance(balanceObj.channelBalance);
         balance.setPendingChannelBalance(balanceObj.pendingChannelBalance);
@@ -356,7 +356,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.tradingLimits]]
    */
-  public tradingLimits: grpc.handleUnaryCall<xudrpc.TradingLimitsRequest, xudrpc.TradingLimitsResponse> = async (
+  public tradingLimits: grpc.handleUnaryCall<opendexrpc.TradingLimitsRequest, opendexrpc.TradingLimitsResponse> = async (
     call,
     callback,
   ) => {
@@ -365,10 +365,10 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     }
     try {
       const tradingLimitsResponse = await this.service.tradingLimits(call.request.toObject());
-      const response = new xudrpc.TradingLimitsResponse();
+      const response = new opendexrpc.TradingLimitsResponse();
       const limitsMap = response.getLimitsMap();
       tradingLimitsResponse.forEach((tradingLimitsObj, currency) => {
-        const tradingLimits = new xudrpc.TradingLimits();
+        const tradingLimits = new opendexrpc.TradingLimits();
         tradingLimits.setMaxSell(tradingLimitsObj.maxSell);
         tradingLimits.setMaxBuy(tradingLimitsObj.maxBuy);
         tradingLimits.setReservedSell(tradingLimitsObj.reservedSell);
@@ -384,7 +384,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.openChannel]]
    */
-  public openChannel: grpc.handleUnaryCall<xudrpc.OpenChannelRequest, xudrpc.OpenChannelResponse> = async (
+  public openChannel: grpc.handleUnaryCall<opendexrpc.OpenChannelRequest, opendexrpc.OpenChannelResponse> = async (
     call,
     callback,
   ) => {
@@ -393,7 +393,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     }
     try {
       const txId = await this.service.openChannel(call.request.toObject());
-      const response = new xudrpc.OpenChannelResponse();
+      const response = new opendexrpc.OpenChannelResponse();
       response.setTransactionId(txId);
 
       callback(null, response);
@@ -405,14 +405,14 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.connect]]
    */
-  public connect: grpc.handleUnaryCall<xudrpc.ConnectRequest, xudrpc.ConnectResponse> = async (call, callback) => {
+  public connect: grpc.handleUnaryCall<opendexrpc.ConnectRequest, opendexrpc.ConnectResponse> = async (call, callback) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
     try {
       const { nodeUri } = call.request.toObject();
       await this.service.connect({ nodeUri, retryConnecting: false });
-      const response = new xudrpc.ConnectResponse();
+      const response = new opendexrpc.ConnectResponse();
       callback(null, response);
     } catch (err) {
       callback(getGrpcError(err), null);
@@ -422,7 +422,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.walletDeposit]]
    */
-  public walletDeposit: grpc.handleUnaryCall<xudrpc.DepositRequest, xudrpc.DepositResponse> = async (
+  public walletDeposit: grpc.handleUnaryCall<opendexrpc.DepositRequest, opendexrpc.DepositResponse> = async (
     call,
     callback,
   ) => {
@@ -431,7 +431,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     }
     try {
       const address = await this.service.walletDeposit(call.request.toObject());
-      const response = new xudrpc.DepositResponse();
+      const response = new opendexrpc.DepositResponse();
       response.setAddress(address);
       callback(null, response);
     } catch (err) {
@@ -442,13 +442,13 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.deposit]]
    */
-  public deposit: grpc.handleUnaryCall<xudrpc.DepositRequest, xudrpc.DepositResponse> = async (call, callback) => {
+  public deposit: grpc.handleUnaryCall<opendexrpc.DepositRequest, opendexrpc.DepositResponse> = async (call, callback) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
     try {
       const address = await this.service.deposit(call.request.toObject());
-      const response = new xudrpc.DepositResponse();
+      const response = new opendexrpc.DepositResponse();
       response.setAddress(address);
       callback(null, response);
     } catch (err) {
@@ -459,7 +459,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.walletWithdraw]]
    */
-  public walletWithdraw: grpc.handleUnaryCall<xudrpc.WithdrawRequest, xudrpc.WithdrawResponse> = async (
+  public walletWithdraw: grpc.handleUnaryCall<opendexrpc.WithdrawRequest, opendexrpc.WithdrawResponse> = async (
     call,
     callback,
   ) => {
@@ -468,7 +468,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     }
     try {
       const txId = await this.service.walletWithdraw(call.request.toObject());
-      const response = new xudrpc.WithdrawResponse();
+      const response = new opendexrpc.WithdrawResponse();
       response.setTransactionId(txId);
       callback(null, response);
     } catch (err) {
@@ -479,13 +479,13 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.ban]]
    */
-  public ban: grpc.handleUnaryCall<xudrpc.BanRequest, xudrpc.BanResponse> = async (call, callback) => {
+  public ban: grpc.handleUnaryCall<opendexrpc.BanRequest, opendexrpc.BanResponse> = async (call, callback) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
     try {
       await this.service.ban(call.request.toObject());
-      const response = new xudrpc.BanResponse();
+      const response = new opendexrpc.BanResponse();
       callback(null, response);
     } catch (err) {
       callback(getGrpcError(err), null);
@@ -495,13 +495,13 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.unban]]
    */
-  public unban: grpc.handleUnaryCall<xudrpc.UnbanRequest, xudrpc.UnbanResponse> = async (call, callback) => {
+  public unban: grpc.handleUnaryCall<opendexrpc.UnbanRequest, opendexrpc.UnbanResponse> = async (call, callback) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
     try {
       await this.service.unban(call.request.toObject());
-      const response = new xudrpc.UnbanResponse();
+      const response = new opendexrpc.UnbanResponse();
       callback(null, response);
     } catch (err) {
       callback(getGrpcError(err), null);
@@ -511,7 +511,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.executeSwap]]
    */
-  public executeSwap: grpc.handleUnaryCall<xudrpc.ExecuteSwapRequest, xudrpc.SwapSuccess> = async (call, callback) => {
+  public executeSwap: grpc.handleUnaryCall<opendexrpc.ExecuteSwapRequest, opendexrpc.SwapSuccess> = async (call, callback) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
@@ -562,13 +562,13 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.getInfo]]
    */
-  public getInfo: grpc.handleUnaryCall<xudrpc.GetInfoRequest, xudrpc.GetInfoResponse> = async (_, callback) => {
+  public getInfo: grpc.handleUnaryCall<opendexrpc.GetInfoRequest, opendexrpc.GetInfoResponse> = async (_, callback) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
     try {
       const getInfoResponse = await this.service.getInfo();
-      const response = new xudrpc.GetInfoResponse();
+      const response = new opendexrpc.GetInfoResponse();
       response.setNodePubKey(getInfoResponse.nodePubKey);
       response.setUrisList(getInfoResponse.uris);
       response.setNumPairs(getInfoResponse.numPairs);
@@ -577,12 +577,12 @@ class GrpcService implements grpc.UntypedServiceImplementation {
       response.setAlias(getInfoResponse.alias);
       response.setNetwork(getInfoResponse.network);
 
-      const getLndInfo = (lndInfo: LndInfo): xudrpc.LndInfo => {
-        const lnd = new xudrpc.LndInfo();
+      const getLndInfo = (lndInfo: LndInfo): opendexrpc.LndInfo => {
+        const lnd = new opendexrpc.LndInfo();
         if (lndInfo.blockheight) lnd.setBlockheight(lndInfo.blockheight);
         if (lndInfo.chains) {
-          const chains: xudrpc.Chain[] = lndInfo.chains.map((chain) => {
-            const xudChain = new xudrpc.Chain();
+          const chains: opendexrpc.Chain[] = lndInfo.chains.map((chain) => {
+            const xudChain = new opendexrpc.Chain();
             xudChain.setChain(chain.chain);
             xudChain.setNetwork(chain.network);
             return xudChain;
@@ -590,7 +590,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
           lnd.setChainsList(chains);
         }
         if (lndInfo.channels) {
-          const channels = new xudrpc.Channels();
+          const channels = new opendexrpc.Channels();
           channels.setActive(lndInfo.channels.active);
           channels.setPending(lndInfo.channels.pending);
           channels.setClosed(lndInfo.channels.closed);
@@ -609,7 +609,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
       });
 
       if (getInfoResponse.connext) {
-        const connext = new xudrpc.ConnextInfo();
+        const connext = new opendexrpc.ConnextInfo();
         connext.setStatus(getInfoResponse.connext.status);
         if (getInfoResponse.connext.address) connext.setAddress(getInfoResponse.connext.address);
         if (getInfoResponse.connext.version) connext.setVersion(getInfoResponse.connext.version);
@@ -617,7 +617,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
         response.setConnext(connext);
       }
 
-      const orders = new xudrpc.OrdersCount();
+      const orders = new opendexrpc.OrdersCount();
       orders.setOwn(getInfoResponse.orders.own);
       orders.setPeer(getInfoResponse.orders.peer);
       response.setOrders(orders);
@@ -631,7 +631,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.getMnemonic]]
    */
-  public getMnemonic: grpc.handleUnaryCall<xudrpc.GetMnemonicRequest, xudrpc.GetMnemonicResponse> = async (
+  public getMnemonic: grpc.handleUnaryCall<opendexrpc.GetMnemonicRequest, opendexrpc.GetMnemonicResponse> = async (
     _,
     callback,
   ) => {
@@ -640,7 +640,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     }
     try {
       const mnemonic = await this.service.getMnemonic();
-      const response = new xudrpc.GetMnemonicResponse();
+      const response = new opendexrpc.GetMnemonicResponse();
       response.setSeedMnemonicList(mnemonic);
       callback(null, response);
     } catch (err) {
@@ -651,7 +651,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.getNodeInfo]]
    */
-  public getNodeInfo: grpc.handleUnaryCall<xudrpc.GetNodeInfoRequest, xudrpc.GetNodeInfoResponse> = async (
+  public getNodeInfo: grpc.handleUnaryCall<opendexrpc.GetNodeInfoRequest, opendexrpc.GetNodeInfoResponse> = async (
     call,
     callback,
   ) => {
@@ -660,7 +660,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     }
     try {
       const { banned, reputationScore } = await this.service.getNodeInfo(call.request.toObject());
-      const response = new xudrpc.GetNodeInfoResponse();
+      const response = new opendexrpc.GetNodeInfoResponse();
       if (banned) {
         response.setBanned(banned);
       }
@@ -674,23 +674,23 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.listOrders]]
    */
-  public listOrders: grpc.handleUnaryCall<xudrpc.ListOrdersRequest, xudrpc.ListOrdersResponse> = (call, callback) => {
+  public listOrders: grpc.handleUnaryCall<opendexrpc.ListOrdersRequest, opendexrpc.ListOrdersResponse> = (call, callback) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
     try {
       const listOrdersResponse = this.service.listOrders(call.request.toObject());
-      const response = new xudrpc.ListOrdersResponse();
+      const response = new opendexrpc.ListOrdersResponse();
 
       const listOrdersList = <T extends ServiceOrder>(orders: T[]) => {
-        const ordersList: xudrpc.Order[] = [];
+        const ordersList: opendexrpc.Order[] = [];
         orders.forEach((order) => ordersList.push(createServiceOrder(order)));
         return ordersList;
       };
 
       const ordersMap = response.getOrdersMap();
       listOrdersResponse.forEach((orderArrays, pairId) => {
-        const orders = new xudrpc.Orders();
+        const orders = new opendexrpc.Orders();
         orders.setBuyOrdersList(listOrdersList(orderArrays.buyArray));
         orders.setSellOrdersList(listOrdersList(orderArrays.sellArray));
 
@@ -706,7 +706,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.listCurrencies]]
    */
-  public listCurrencies: grpc.handleUnaryCall<xudrpc.ListCurrenciesRequest, xudrpc.ListCurrenciesResponse> = (
+  public listCurrencies: grpc.handleUnaryCall<opendexrpc.ListCurrenciesRequest, opendexrpc.ListCurrenciesResponse> = (
     _,
     callback,
   ) => {
@@ -715,10 +715,10 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     }
     try {
       const currencies = this.service.listCurrencies();
-      const response = new xudrpc.ListCurrenciesResponse();
+      const response = new opendexrpc.ListCurrenciesResponse();
 
       currencies.forEach((currency) => {
-        const resultCurrency = new xudrpc.Currency();
+        const resultCurrency = new opendexrpc.Currency();
         resultCurrency.setDecimalPlaces(currency.decimalPlaces);
         resultCurrency.setCurrency(currency.id);
         if (currency.tokenAddress) {
@@ -737,13 +737,13 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.listPairs]]
    */
-  public listPairs: grpc.handleUnaryCall<xudrpc.ListPairsRequest, xudrpc.ListPairsResponse> = (_, callback) => {
+  public listPairs: grpc.handleUnaryCall<opendexrpc.ListPairsRequest, opendexrpc.ListPairsResponse> = (_, callback) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
     try {
       const listPairsResponse = this.service.listPairs();
-      const response = new xudrpc.ListPairsResponse();
+      const response = new opendexrpc.ListPairsResponse();
       response.setPairsList(listPairsResponse);
 
       callback(null, response);
@@ -755,7 +755,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.tradeHistory]]
    */
-  public tradeHistory: grpc.handleUnaryCall<xudrpc.TradeHistoryRequest, xudrpc.TradeHistoryResponse> = async (
+  public tradeHistory: grpc.handleUnaryCall<opendexrpc.TradeHistoryRequest, opendexrpc.TradeHistoryResponse> = async (
     call,
     callback,
   ) => {
@@ -764,9 +764,9 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     }
     try {
       const trades = await this.service.tradeHistory(call.request.toObject());
-      const response = new xudrpc.TradeHistoryResponse();
-      const tradesList: xudrpc.Trade[] = trades.map((trade) => {
-        const grpcTrade = new xudrpc.Trade();
+      const response = new opendexrpc.TradeHistoryResponse();
+      const tradesList: opendexrpc.Trade[] = trades.map((trade) => {
+        const grpcTrade = new opendexrpc.Trade();
         grpcTrade.setMakerOrder(createServiceOrder(trade.makerOrder));
         if (trade.takerOrder) {
           grpcTrade.setTakerOrder(createServiceOrder(trade.takerOrder));
@@ -781,7 +781,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
         grpcTrade.setRole(trade.role as number);
         grpcTrade.setExecutedAt(trade.executedAt);
         if (trade.counterparty) {
-          const counterparty = new xudrpc.NodeIdentifier();
+          const counterparty = new opendexrpc.NodeIdentifier();
           counterparty.setNodePubKey(trade.counterparty.nodePubKey);
           if (trade.counterparty.alias) {
             counterparty.setAlias(trade.counterparty.alias);
@@ -802,16 +802,16 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.listPeers]]
    */
-  public listPeers: grpc.handleUnaryCall<xudrpc.ListPeersRequest, xudrpc.ListPeersResponse> = (_, callback) => {
+  public listPeers: grpc.handleUnaryCall<opendexrpc.ListPeersRequest, opendexrpc.ListPeersResponse> = (_, callback) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
     try {
       const listPeersResponse = this.service.listPeers();
-      const response = new xudrpc.ListPeersResponse();
-      const peers: xudrpc.Peer[] = [];
+      const response = new opendexrpc.ListPeersResponse();
+      const peers: opendexrpc.Peer[] = [];
       listPeersResponse.forEach((peer) => {
-        const grpcPeer = new xudrpc.Peer();
+        const grpcPeer = new opendexrpc.Peer();
         grpcPeer.setAddress(peer.address);
         grpcPeer.setInbound(peer.inbound);
         grpcPeer.setNodePubKey(peer.nodePubKey || '');
@@ -825,7 +825,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
         }
         if (peer.lndUris) {
           for (const key of Object.keys(peer.lndUris)) {
-            const grpcUri = new xudrpc.Peer.LndUris();
+            const grpcUri = new opendexrpc.Peer.LndUris();
             grpcUri.setCurrency(key);
             grpcUri.getUriList().push(...(peer.lndUris[key] || []));
             grpcPeer.getLndUrisList().push(grpcUri);
@@ -843,23 +843,23 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     }
   };
 
-  public orderBook: grpc.handleUnaryCall<xudrpc.OrderBookRequest, xudrpc.OrderBookResponse> = (call, callback) => {
+  public orderBook: grpc.handleUnaryCall<opendexrpc.OrderBookRequest, opendexrpc.OrderBookResponse> = (call, callback) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
     try {
       const orderBookResponse = this.service.orderbook(call.request.toObject());
-      const response = new xudrpc.OrderBookResponse();
+      const response = new opendexrpc.OrderBookResponse();
 
       const createBucket = (bucket: { price: number; quantity: number }) => {
-        const grpcBucket = new xudrpc.OrderBookResponse.Bucket();
+        const grpcBucket = new opendexrpc.OrderBookResponse.Bucket();
         grpcBucket.setPrice(bucket.price);
         grpcBucket.setQuantity(bucket.quantity);
         return grpcBucket;
       };
 
       orderBookResponse.forEach((orderBookBuckets, currency) => {
-        const buckets = new xudrpc.OrderBookResponse.Buckets();
+        const buckets = new opendexrpc.OrderBookResponse.Buckets();
         const buyBuckets = orderBookBuckets.buyBuckets.map(createBucket);
         const sellBuckets = orderBookBuckets.sellBuckets.map(createBucket);
         buckets.setBuyBucketsList(buyBuckets);
@@ -876,7 +876,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.placeOrder]]
    */
-  public placeOrder: grpc.handleServerStreamingCall<xudrpc.PlaceOrderRequest, xudrpc.PlaceOrderEvent> = async (
+  public placeOrder: grpc.handleServerStreamingCall<opendexrpc.PlaceOrderRequest, opendexrpc.PlaceOrderEvent> = async (
     call,
   ) => {
     if (!this.service) {
@@ -901,7 +901,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.placeOrder]]
    */
-  public placeOrderSync: grpc.handleUnaryCall<xudrpc.PlaceOrderRequest, xudrpc.PlaceOrderResponse> = async (
+  public placeOrderSync: grpc.handleUnaryCall<opendexrpc.PlaceOrderRequest, opendexrpc.PlaceOrderResponse> = async (
     call,
     callback,
   ) => {
@@ -919,7 +919,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.addCurrency]]
    */
-  public removeCurrency: grpc.handleUnaryCall<xudrpc.RemoveCurrencyRequest, xudrpc.RemoveCurrencyResponse> = async (
+  public removeCurrency: grpc.handleUnaryCall<opendexrpc.RemoveCurrencyRequest, opendexrpc.RemoveCurrencyResponse> = async (
     call,
     callback,
   ) => {
@@ -928,7 +928,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     }
     try {
       await this.service.removeCurrency(call.request.toObject());
-      const response = new xudrpc.RemoveCurrencyResponse();
+      const response = new opendexrpc.RemoveCurrencyResponse();
 
       callback(null, response);
     } catch (err) {
@@ -939,7 +939,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.addPair]]
    */
-  public removePair: grpc.handleUnaryCall<xudrpc.RemovePairRequest, xudrpc.RemovePairResponse> = async (
+  public removePair: grpc.handleUnaryCall<opendexrpc.RemovePairRequest, opendexrpc.RemovePairResponse> = async (
     call,
     callback,
   ) => {
@@ -948,7 +948,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     }
     try {
       await this.service.removePair(call.request.toObject());
-      const response = new xudrpc.RemovePairResponse();
+      const response = new opendexrpc.RemovePairResponse();
 
       callback(null, response);
     } catch (err) {
@@ -959,7 +959,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.discoverNodes]]
    */
-  public discoverNodes: grpc.handleUnaryCall<xudrpc.DiscoverNodesRequest, xudrpc.DiscoverNodesResponse> = async (
+  public discoverNodes: grpc.handleUnaryCall<opendexrpc.DiscoverNodesRequest, opendexrpc.DiscoverNodesResponse> = async (
     call,
     callback,
   ) => {
@@ -969,7 +969,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     try {
       const numNodes = await this.service.discoverNodes(call.request.toObject());
 
-      const response = new xudrpc.DiscoverNodesResponse();
+      const response = new opendexrpc.DiscoverNodesResponse();
       response.setNumNodes(numNodes);
 
       callback(null, response);
@@ -978,7 +978,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     }
   };
 
-  public setLogLevel: grpc.handleUnaryCall<xudrpc.SetLogLevelRequest, xudrpc.SetLogLevelResponse> = async (
+  public setLogLevel: grpc.handleUnaryCall<opendexrpc.SetLogLevelRequest, opendexrpc.SetLogLevelResponse> = async (
     call,
     callback,
   ) => {
@@ -988,14 +988,14 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     try {
       await this.service.setLogLevel(call.request.toObject());
 
-      const response = new xudrpc.SetLogLevelResponse();
+      const response = new opendexrpc.SetLogLevelResponse();
       callback(null, response);
     } catch (err) {
       callback(getGrpcError(err), null);
     }
   };
 
-  public changePassword: grpc.handleUnaryCall<xudrpc.ChangePasswordRequest, xudrpc.ChangePasswordResponse> = async (
+  public changePassword: grpc.handleUnaryCall<opendexrpc.ChangePasswordRequest, opendexrpc.ChangePasswordResponse> = async (
     call,
     callback,
   ) => {
@@ -1005,20 +1005,20 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     try {
       await this.service.changePassword(call.request.toObject());
 
-      const response = new xudrpc.ChangePasswordResponse();
+      const response = new opendexrpc.ChangePasswordResponse();
       callback(null, response);
     } catch (err) {
       callback(getGrpcError(err), null);
     }
   };
 
-  public shutdown: grpc.handleUnaryCall<xudrpc.ShutdownRequest, xudrpc.ShutdownResponse> = (_, callback) => {
+  public shutdown: grpc.handleUnaryCall<opendexrpc.ShutdownRequest, opendexrpc.ShutdownResponse> = (_, callback) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
     try {
       this.service.shutdown();
-      const response = new xudrpc.ShutdownResponse();
+      const response = new opendexrpc.ShutdownResponse();
       callback(null, response);
     } catch (err) {
       callback(getGrpcError(err), null);
@@ -1028,7 +1028,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /*
    * See [[Service.subscribeOrders]]
    */
-  public subscribeOrders: grpc.handleServerStreamingCall<xudrpc.SubscribeOrdersRequest, xudrpc.OrderUpdate> = (
+  public subscribeOrders: grpc.handleServerStreamingCall<opendexrpc.SubscribeOrdersRequest, opendexrpc.OrderUpdate> = (
     call,
   ) => {
     if (!this.service) {
@@ -1039,11 +1039,11 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     this.service.subscribeOrders(
       call.request.toObject(),
       (order?: ServiceOrder, orderRemoval?: OrderPortion) => {
-        const orderUpdate = new xudrpc.OrderUpdate();
+        const orderUpdate = new opendexrpc.OrderUpdate();
         if (order) {
           orderUpdate.setOrder(createServiceOrder(order));
         } else if (orderRemoval) {
-          const grpcOrderRemoval = new xudrpc.OrderRemoval();
+          const grpcOrderRemoval = new opendexrpc.OrderRemoval();
           grpcOrderRemoval.setPairId(orderRemoval.pairId);
           grpcOrderRemoval.setOrderId(orderRemoval.id);
           grpcOrderRemoval.setQuantity(orderRemoval.quantity);
@@ -1060,7 +1060,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /*
    * See [[Service.subscribeSwapFailures]]
    */
-  public subscribeSwapFailures: grpc.handleServerStreamingCall<xudrpc.SubscribeSwapsRequest, xudrpc.SwapFailure> = (
+  public subscribeSwapFailures: grpc.handleServerStreamingCall<opendexrpc.SubscribeSwapsRequest, opendexrpc.SwapFailure> = (
     call,
   ) => {
     if (!this.service) {
@@ -1081,7 +1081,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /*
    * See [[Service.subscribeSwaps]]
    */
-  public subscribeSwaps: grpc.handleServerStreamingCall<xudrpc.SubscribeSwapsRequest, xudrpc.SwapSuccess> = (call) => {
+  public subscribeSwaps: grpc.handleServerStreamingCall<opendexrpc.SubscribeSwapsRequest, opendexrpc.SwapSuccess> = (call) => {
     if (!this.service) {
       call.emit('error', { code: grpc.status.UNAVAILABLE, message: 'xud is starting', name: 'NotReadyError' });
       return;
@@ -1101,8 +1101,8 @@ class GrpcService implements grpc.UntypedServiceImplementation {
    * See [[Service.subscribeSwapFailures]]
    */
   public subscribeSwapsAccepted: grpc.handleServerStreamingCall<
-    xudrpc.SubscribeSwapsAcceptedRequest,
-    xudrpc.SwapAccepted
+    opendexrpc.SubscribeSwapsAcceptedRequest,
+    opendexrpc.SwapAccepted
   > = (call) => {
     if (!this.service) {
       call.emit('error', { code: grpc.status.UNAVAILABLE, message: 'xud is starting', name: 'NotReadyError' });

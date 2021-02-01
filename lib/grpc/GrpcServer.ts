@@ -4,7 +4,7 @@ import { promises as fs } from 'fs';
 import { md, pki } from 'node-forge';
 import { hostname } from 'os';
 import Logger from '../Logger';
-import * as xudGrpc from '../proto/xudrpc_grpc_pb';
+import * as opendexGrpc from '../proto/opendexrpc_grpc_pb';
 import errors from './errors';
 import GrpcInitService from './GrpcInitService';
 import GrpcService from './GrpcService';
@@ -21,9 +21,9 @@ class GrpcServer {
     this.grpcInitService = new GrpcInitService();
     this.grpcService = new GrpcService();
     // @ts-ignore
-    this.server.addService(xudGrpc['xudrpc.XudInit'], this.grpcInitService);
+    this.server.addService(opendexGrpc['opendexrpc.XudInit'], this.grpcInitService);
     // @ts-ignore
-    this.server.addService(xudGrpc['xudrpc.Xud'], this.grpcService);
+    this.server.addService(opendexGrpc['opendexrpc.Xud'], this.grpcService);
 
     this.server.use(async (ctx: any, next: any) => {
       logger.trace(`received call ${ctx.service.path}`);

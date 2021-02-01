@@ -3,125 +3,125 @@
 
 ## Table of Contents
 
-- [xudrpc.proto](#xudrpc.proto)
-    - [AddCurrencyResponse](#xudrpc.AddCurrencyResponse)
-    - [AddPairRequest](#xudrpc.AddPairRequest)
-    - [AddPairResponse](#xudrpc.AddPairResponse)
-    - [Balance](#xudrpc.Balance)
-    - [BanRequest](#xudrpc.BanRequest)
-    - [BanResponse](#xudrpc.BanResponse)
-    - [Chain](#xudrpc.Chain)
-    - [ChangePasswordRequest](#xudrpc.ChangePasswordRequest)
-    - [ChangePasswordResponse](#xudrpc.ChangePasswordResponse)
-    - [Channels](#xudrpc.Channels)
-    - [CloseChannelRequest](#xudrpc.CloseChannelRequest)
-    - [CloseChannelResponse](#xudrpc.CloseChannelResponse)
-    - [ConnectRequest](#xudrpc.ConnectRequest)
-    - [ConnectResponse](#xudrpc.ConnectResponse)
-    - [ConnextInfo](#xudrpc.ConnextInfo)
-    - [CreateNodeRequest](#xudrpc.CreateNodeRequest)
-    - [CreateNodeResponse](#xudrpc.CreateNodeResponse)
-    - [Currency](#xudrpc.Currency)
-    - [DepositRequest](#xudrpc.DepositRequest)
-    - [DepositResponse](#xudrpc.DepositResponse)
-    - [DiscoverNodesRequest](#xudrpc.DiscoverNodesRequest)
-    - [DiscoverNodesResponse](#xudrpc.DiscoverNodesResponse)
-    - [ExecuteSwapRequest](#xudrpc.ExecuteSwapRequest)
-    - [GetBalanceRequest](#xudrpc.GetBalanceRequest)
-    - [GetBalanceResponse](#xudrpc.GetBalanceResponse)
-    - [GetBalanceResponse.BalancesEntry](#xudrpc.GetBalanceResponse.BalancesEntry)
-    - [GetInfoRequest](#xudrpc.GetInfoRequest)
-    - [GetInfoResponse](#xudrpc.GetInfoResponse)
-    - [GetInfoResponse.LndEntry](#xudrpc.GetInfoResponse.LndEntry)
-    - [GetMnemonicRequest](#xudrpc.GetMnemonicRequest)
-    - [GetMnemonicResponse](#xudrpc.GetMnemonicResponse)
-    - [GetNodeInfoRequest](#xudrpc.GetNodeInfoRequest)
-    - [GetNodeInfoResponse](#xudrpc.GetNodeInfoResponse)
-    - [ListCurrenciesRequest](#xudrpc.ListCurrenciesRequest)
-    - [ListCurrenciesResponse](#xudrpc.ListCurrenciesResponse)
-    - [ListOrdersRequest](#xudrpc.ListOrdersRequest)
-    - [ListOrdersResponse](#xudrpc.ListOrdersResponse)
-    - [ListOrdersResponse.OrdersEntry](#xudrpc.ListOrdersResponse.OrdersEntry)
-    - [ListPairsRequest](#xudrpc.ListPairsRequest)
-    - [ListPairsResponse](#xudrpc.ListPairsResponse)
-    - [ListPeersRequest](#xudrpc.ListPeersRequest)
-    - [ListPeersResponse](#xudrpc.ListPeersResponse)
-    - [LndInfo](#xudrpc.LndInfo)
-    - [NodeIdentifier](#xudrpc.NodeIdentifier)
-    - [OpenChannelRequest](#xudrpc.OpenChannelRequest)
-    - [OpenChannelResponse](#xudrpc.OpenChannelResponse)
-    - [Order](#xudrpc.Order)
-    - [OrderBookRequest](#xudrpc.OrderBookRequest)
-    - [OrderBookResponse](#xudrpc.OrderBookResponse)
-    - [OrderBookResponse.Bucket](#xudrpc.OrderBookResponse.Bucket)
-    - [OrderBookResponse.Buckets](#xudrpc.OrderBookResponse.Buckets)
-    - [OrderBookResponse.BucketsEntry](#xudrpc.OrderBookResponse.BucketsEntry)
-    - [OrderRemoval](#xudrpc.OrderRemoval)
-    - [OrderUpdate](#xudrpc.OrderUpdate)
-    - [Orders](#xudrpc.Orders)
-    - [OrdersCount](#xudrpc.OrdersCount)
-    - [Peer](#xudrpc.Peer)
-    - [Peer.LndPubKeysEntry](#xudrpc.Peer.LndPubKeysEntry)
-    - [Peer.LndUris](#xudrpc.Peer.LndUris)
-    - [PlaceOrderEvent](#xudrpc.PlaceOrderEvent)
-    - [PlaceOrderRequest](#xudrpc.PlaceOrderRequest)
-    - [PlaceOrderResponse](#xudrpc.PlaceOrderResponse)
-    - [RemoveAllOrdersRequest](#xudrpc.RemoveAllOrdersRequest)
-    - [RemoveAllOrdersResponse](#xudrpc.RemoveAllOrdersResponse)
-    - [RemoveCurrencyRequest](#xudrpc.RemoveCurrencyRequest)
-    - [RemoveCurrencyResponse](#xudrpc.RemoveCurrencyResponse)
-    - [RemoveOrderRequest](#xudrpc.RemoveOrderRequest)
-    - [RemoveOrderResponse](#xudrpc.RemoveOrderResponse)
-    - [RemovePairRequest](#xudrpc.RemovePairRequest)
-    - [RemovePairResponse](#xudrpc.RemovePairResponse)
-    - [RestoreNodeRequest](#xudrpc.RestoreNodeRequest)
-    - [RestoreNodeRequest.LndBackupsEntry](#xudrpc.RestoreNodeRequest.LndBackupsEntry)
-    - [RestoreNodeResponse](#xudrpc.RestoreNodeResponse)
-    - [SetLogLevelRequest](#xudrpc.SetLogLevelRequest)
-    - [SetLogLevelResponse](#xudrpc.SetLogLevelResponse)
-    - [ShutdownRequest](#xudrpc.ShutdownRequest)
-    - [ShutdownResponse](#xudrpc.ShutdownResponse)
-    - [SubscribeOrdersRequest](#xudrpc.SubscribeOrdersRequest)
-    - [SubscribeSwapsAcceptedRequest](#xudrpc.SubscribeSwapsAcceptedRequest)
-    - [SubscribeSwapsRequest](#xudrpc.SubscribeSwapsRequest)
-    - [SwapAccepted](#xudrpc.SwapAccepted)
-    - [SwapFailure](#xudrpc.SwapFailure)
-    - [SwapSuccess](#xudrpc.SwapSuccess)
-    - [Trade](#xudrpc.Trade)
-    - [TradeHistoryRequest](#xudrpc.TradeHistoryRequest)
-    - [TradeHistoryResponse](#xudrpc.TradeHistoryResponse)
-    - [TradingLimits](#xudrpc.TradingLimits)
-    - [TradingLimitsRequest](#xudrpc.TradingLimitsRequest)
-    - [TradingLimitsResponse](#xudrpc.TradingLimitsResponse)
-    - [TradingLimitsResponse.LimitsEntry](#xudrpc.TradingLimitsResponse.LimitsEntry)
-    - [UnbanRequest](#xudrpc.UnbanRequest)
-    - [UnbanResponse](#xudrpc.UnbanResponse)
-    - [UnlockNodeRequest](#xudrpc.UnlockNodeRequest)
-    - [UnlockNodeResponse](#xudrpc.UnlockNodeResponse)
-    - [WithdrawRequest](#xudrpc.WithdrawRequest)
-    - [WithdrawResponse](#xudrpc.WithdrawResponse)
+- [opendexrpc.proto](#opendexrpc.proto)
+    - [AddCurrencyResponse](#opendexrpc.AddCurrencyResponse)
+    - [AddPairRequest](#opendexrpc.AddPairRequest)
+    - [AddPairResponse](#opendexrpc.AddPairResponse)
+    - [Balance](#opendexrpc.Balance)
+    - [BanRequest](#opendexrpc.BanRequest)
+    - [BanResponse](#opendexrpc.BanResponse)
+    - [Chain](#opendexrpc.Chain)
+    - [ChangePasswordRequest](#opendexrpc.ChangePasswordRequest)
+    - [ChangePasswordResponse](#opendexrpc.ChangePasswordResponse)
+    - [Channels](#opendexrpc.Channels)
+    - [CloseChannelRequest](#opendexrpc.CloseChannelRequest)
+    - [CloseChannelResponse](#opendexrpc.CloseChannelResponse)
+    - [ConnectRequest](#opendexrpc.ConnectRequest)
+    - [ConnectResponse](#opendexrpc.ConnectResponse)
+    - [ConnextInfo](#opendexrpc.ConnextInfo)
+    - [CreateNodeRequest](#opendexrpc.CreateNodeRequest)
+    - [CreateNodeResponse](#opendexrpc.CreateNodeResponse)
+    - [Currency](#opendexrpc.Currency)
+    - [DepositRequest](#opendexrpc.DepositRequest)
+    - [DepositResponse](#opendexrpc.DepositResponse)
+    - [DiscoverNodesRequest](#opendexrpc.DiscoverNodesRequest)
+    - [DiscoverNodesResponse](#opendexrpc.DiscoverNodesResponse)
+    - [ExecuteSwapRequest](#opendexrpc.ExecuteSwapRequest)
+    - [GetBalanceRequest](#opendexrpc.GetBalanceRequest)
+    - [GetBalanceResponse](#opendexrpc.GetBalanceResponse)
+    - [GetBalanceResponse.BalancesEntry](#opendexrpc.GetBalanceResponse.BalancesEntry)
+    - [GetInfoRequest](#opendexrpc.GetInfoRequest)
+    - [GetInfoResponse](#opendexrpc.GetInfoResponse)
+    - [GetInfoResponse.LndEntry](#opendexrpc.GetInfoResponse.LndEntry)
+    - [GetMnemonicRequest](#opendexrpc.GetMnemonicRequest)
+    - [GetMnemonicResponse](#opendexrpc.GetMnemonicResponse)
+    - [GetNodeInfoRequest](#opendexrpc.GetNodeInfoRequest)
+    - [GetNodeInfoResponse](#opendexrpc.GetNodeInfoResponse)
+    - [ListCurrenciesRequest](#opendexrpc.ListCurrenciesRequest)
+    - [ListCurrenciesResponse](#opendexrpc.ListCurrenciesResponse)
+    - [ListOrdersRequest](#opendexrpc.ListOrdersRequest)
+    - [ListOrdersResponse](#opendexrpc.ListOrdersResponse)
+    - [ListOrdersResponse.OrdersEntry](#opendexrpc.ListOrdersResponse.OrdersEntry)
+    - [ListPairsRequest](#opendexrpc.ListPairsRequest)
+    - [ListPairsResponse](#opendexrpc.ListPairsResponse)
+    - [ListPeersRequest](#opendexrpc.ListPeersRequest)
+    - [ListPeersResponse](#opendexrpc.ListPeersResponse)
+    - [LndInfo](#opendexrpc.LndInfo)
+    - [NodeIdentifier](#opendexrpc.NodeIdentifier)
+    - [OpenChannelRequest](#opendexrpc.OpenChannelRequest)
+    - [OpenChannelResponse](#opendexrpc.OpenChannelResponse)
+    - [Order](#opendexrpc.Order)
+    - [OrderBookRequest](#opendexrpc.OrderBookRequest)
+    - [OrderBookResponse](#opendexrpc.OrderBookResponse)
+    - [OrderBookResponse.Bucket](#opendexrpc.OrderBookResponse.Bucket)
+    - [OrderBookResponse.Buckets](#opendexrpc.OrderBookResponse.Buckets)
+    - [OrderBookResponse.BucketsEntry](#opendexrpc.OrderBookResponse.BucketsEntry)
+    - [OrderRemoval](#opendexrpc.OrderRemoval)
+    - [OrderUpdate](#opendexrpc.OrderUpdate)
+    - [Orders](#opendexrpc.Orders)
+    - [OrdersCount](#opendexrpc.OrdersCount)
+    - [Peer](#opendexrpc.Peer)
+    - [Peer.LndPubKeysEntry](#opendexrpc.Peer.LndPubKeysEntry)
+    - [Peer.LndUris](#opendexrpc.Peer.LndUris)
+    - [PlaceOrderEvent](#opendexrpc.PlaceOrderEvent)
+    - [PlaceOrderRequest](#opendexrpc.PlaceOrderRequest)
+    - [PlaceOrderResponse](#opendexrpc.PlaceOrderResponse)
+    - [RemoveAllOrdersRequest](#opendexrpc.RemoveAllOrdersRequest)
+    - [RemoveAllOrdersResponse](#opendexrpc.RemoveAllOrdersResponse)
+    - [RemoveCurrencyRequest](#opendexrpc.RemoveCurrencyRequest)
+    - [RemoveCurrencyResponse](#opendexrpc.RemoveCurrencyResponse)
+    - [RemoveOrderRequest](#opendexrpc.RemoveOrderRequest)
+    - [RemoveOrderResponse](#opendexrpc.RemoveOrderResponse)
+    - [RemovePairRequest](#opendexrpc.RemovePairRequest)
+    - [RemovePairResponse](#opendexrpc.RemovePairResponse)
+    - [RestoreNodeRequest](#opendexrpc.RestoreNodeRequest)
+    - [RestoreNodeRequest.LndBackupsEntry](#opendexrpc.RestoreNodeRequest.LndBackupsEntry)
+    - [RestoreNodeResponse](#opendexrpc.RestoreNodeResponse)
+    - [SetLogLevelRequest](#opendexrpc.SetLogLevelRequest)
+    - [SetLogLevelResponse](#opendexrpc.SetLogLevelResponse)
+    - [ShutdownRequest](#opendexrpc.ShutdownRequest)
+    - [ShutdownResponse](#opendexrpc.ShutdownResponse)
+    - [SubscribeOrdersRequest](#opendexrpc.SubscribeOrdersRequest)
+    - [SubscribeSwapsAcceptedRequest](#opendexrpc.SubscribeSwapsAcceptedRequest)
+    - [SubscribeSwapsRequest](#opendexrpc.SubscribeSwapsRequest)
+    - [SwapAccepted](#opendexrpc.SwapAccepted)
+    - [SwapFailure](#opendexrpc.SwapFailure)
+    - [SwapSuccess](#opendexrpc.SwapSuccess)
+    - [Trade](#opendexrpc.Trade)
+    - [TradeHistoryRequest](#opendexrpc.TradeHistoryRequest)
+    - [TradeHistoryResponse](#opendexrpc.TradeHistoryResponse)
+    - [TradingLimits](#opendexrpc.TradingLimits)
+    - [TradingLimitsRequest](#opendexrpc.TradingLimitsRequest)
+    - [TradingLimitsResponse](#opendexrpc.TradingLimitsResponse)
+    - [TradingLimitsResponse.LimitsEntry](#opendexrpc.TradingLimitsResponse.LimitsEntry)
+    - [UnbanRequest](#opendexrpc.UnbanRequest)
+    - [UnbanResponse](#opendexrpc.UnbanResponse)
+    - [UnlockNodeRequest](#opendexrpc.UnlockNodeRequest)
+    - [UnlockNodeResponse](#opendexrpc.UnlockNodeResponse)
+    - [WithdrawRequest](#opendexrpc.WithdrawRequest)
+    - [WithdrawResponse](#opendexrpc.WithdrawResponse)
   
-    - [Currency.SwapClient](#xudrpc.Currency.SwapClient)
-    - [ListOrdersRequest.Owner](#xudrpc.ListOrdersRequest.Owner)
-    - [LogLevel](#xudrpc.LogLevel)
-    - [OrderSide](#xudrpc.OrderSide)
-    - [Role](#xudrpc.Role)
+    - [Currency.SwapClient](#opendexrpc.Currency.SwapClient)
+    - [ListOrdersRequest.Owner](#opendexrpc.ListOrdersRequest.Owner)
+    - [LogLevel](#opendexrpc.LogLevel)
+    - [OrderSide](#opendexrpc.OrderSide)
+    - [Role](#opendexrpc.Role)
   
-    - [Xud](#xudrpc.Xud)
-    - [XudInit](#xudrpc.XudInit)
+    - [Xud](#opendexrpc.Xud)
+    - [XudInit](#opendexrpc.XudInit)
   
 - [Scalar Value Types](#scalar-value-types)
 
 
 
-<a name="xudrpc.proto"></a>
+<a name="opendexrpc.proto"></a>
 <p align="right"><a href="#top">Top</a></p>
 
-## xudrpc.proto
+## opendexrpc.proto
 
 
 
-<a name="xudrpc.AddCurrencyResponse"></a>
+<a name="opendexrpc.AddCurrencyResponse"></a>
 
 ### AddCurrencyResponse
 
@@ -131,7 +131,7 @@
 
 
 
-<a name="xudrpc.AddPairRequest"></a>
+<a name="opendexrpc.AddPairRequest"></a>
 
 ### AddPairRequest
 
@@ -147,7 +147,7 @@
 
 
 
-<a name="xudrpc.AddPairResponse"></a>
+<a name="opendexrpc.AddPairResponse"></a>
 
 ### AddPairResponse
 
@@ -157,7 +157,7 @@
 
 
 
-<a name="xudrpc.Balance"></a>
+<a name="opendexrpc.Balance"></a>
 
 ### Balance
 
@@ -177,7 +177,7 @@
 
 
 
-<a name="xudrpc.BanRequest"></a>
+<a name="opendexrpc.BanRequest"></a>
 
 ### BanRequest
 
@@ -192,7 +192,7 @@
 
 
 
-<a name="xudrpc.BanResponse"></a>
+<a name="opendexrpc.BanResponse"></a>
 
 ### BanResponse
 
@@ -202,7 +202,7 @@
 
 
 
-<a name="xudrpc.Chain"></a>
+<a name="opendexrpc.Chain"></a>
 
 ### Chain
 
@@ -218,7 +218,7 @@
 
 
 
-<a name="xudrpc.ChangePasswordRequest"></a>
+<a name="opendexrpc.ChangePasswordRequest"></a>
 
 ### ChangePasswordRequest
 
@@ -234,7 +234,7 @@
 
 
 
-<a name="xudrpc.ChangePasswordResponse"></a>
+<a name="opendexrpc.ChangePasswordResponse"></a>
 
 ### ChangePasswordResponse
 
@@ -244,7 +244,7 @@
 
 
 
-<a name="xudrpc.Channels"></a>
+<a name="opendexrpc.Channels"></a>
 
 ### Channels
 
@@ -262,7 +262,7 @@
 
 
 
-<a name="xudrpc.CloseChannelRequest"></a>
+<a name="opendexrpc.CloseChannelRequest"></a>
 
 ### CloseChannelRequest
 
@@ -282,7 +282,7 @@
 
 
 
-<a name="xudrpc.CloseChannelResponse"></a>
+<a name="opendexrpc.CloseChannelResponse"></a>
 
 ### CloseChannelResponse
 
@@ -297,7 +297,7 @@
 
 
 
-<a name="xudrpc.ConnectRequest"></a>
+<a name="opendexrpc.ConnectRequest"></a>
 
 ### ConnectRequest
 
@@ -312,7 +312,7 @@
 
 
 
-<a name="xudrpc.ConnectResponse"></a>
+<a name="opendexrpc.ConnectResponse"></a>
 
 ### ConnectResponse
 
@@ -322,7 +322,7 @@
 
 
 
-<a name="xudrpc.ConnextInfo"></a>
+<a name="opendexrpc.ConnextInfo"></a>
 
 ### ConnextInfo
 
@@ -340,7 +340,7 @@
 
 
 
-<a name="xudrpc.CreateNodeRequest"></a>
+<a name="opendexrpc.CreateNodeRequest"></a>
 
 ### CreateNodeRequest
 
@@ -348,14 +348,14 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| password | [string](#string) |  | The password in utf-8 with which to encrypt the new xud node key as well as any uninitialized underlying wallets. |
+| password | [string](#string) |  | The password in utf-8 with which to encrypt the new opendex node key as well as any uninitialized underlying wallets. |
 
 
 
 
 
 
-<a name="xudrpc.CreateNodeResponse"></a>
+<a name="opendexrpc.CreateNodeResponse"></a>
 
 ### CreateNodeResponse
 
@@ -363,7 +363,7 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| seed_mnemonic | [string](#string) | repeated | The 24 word mnemonic to recover the xud identity key and underlying wallets |
+| seed_mnemonic | [string](#string) | repeated | The 24 word mnemonic to recover the opendex identity key and underlying wallets |
 | initialized_lnds | [string](#string) | repeated | The list of lnd clients that were initialized. |
 | initialized_connext | [bool](#bool) |  | Whether the connext wallet was initialized. |
 
@@ -372,7 +372,7 @@
 
 
 
-<a name="xudrpc.Currency"></a>
+<a name="opendexrpc.Currency"></a>
 
 ### Currency
 
@@ -381,7 +381,7 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | currency | [string](#string) |  | The ticker symbol for this currency such as BTC, LTC, ETH, etc... |
-| swap_client | [Currency.SwapClient](#xudrpc.Currency.SwapClient) |  | The payment channel network client to use for executing swaps. |
+| swap_client | [Currency.SwapClient](#opendexrpc.Currency.SwapClient) |  | The payment channel network client to use for executing swaps. |
 | token_address | [string](#string) |  | The contract address for layered tokens such as ERC20. |
 | decimal_places | [uint32](#uint32) |  | The number of places to the right of the decimal point of the smallest subunit of the currency. For example, BTC, LTC, and others where the smallest subunits (satoshis) are 0.00000001 full units (bitcoins) have 8 decimal places. ETH has 18. This can be thought of as the base 10 exponent of the smallest subunit expressed as a positive integer. A default value of 8 is used if unspecified. |
 
@@ -390,7 +390,7 @@
 
 
 
-<a name="xudrpc.DepositRequest"></a>
+<a name="opendexrpc.DepositRequest"></a>
 
 ### DepositRequest
 
@@ -405,7 +405,7 @@
 
 
 
-<a name="xudrpc.DepositResponse"></a>
+<a name="opendexrpc.DepositResponse"></a>
 
 ### DepositResponse
 
@@ -420,7 +420,7 @@
 
 
 
-<a name="xudrpc.DiscoverNodesRequest"></a>
+<a name="opendexrpc.DiscoverNodesRequest"></a>
 
 ### DiscoverNodesRequest
 
@@ -435,7 +435,7 @@
 
 
 
-<a name="xudrpc.DiscoverNodesResponse"></a>
+<a name="opendexrpc.DiscoverNodesResponse"></a>
 
 ### DiscoverNodesResponse
 
@@ -450,7 +450,7 @@
 
 
 
-<a name="xudrpc.ExecuteSwapRequest"></a>
+<a name="opendexrpc.ExecuteSwapRequest"></a>
 
 ### ExecuteSwapRequest
 
@@ -468,7 +468,7 @@
 
 
 
-<a name="xudrpc.GetBalanceRequest"></a>
+<a name="opendexrpc.GetBalanceRequest"></a>
 
 ### GetBalanceRequest
 
@@ -483,7 +483,7 @@
 
 
 
-<a name="xudrpc.GetBalanceResponse"></a>
+<a name="opendexrpc.GetBalanceResponse"></a>
 
 ### GetBalanceResponse
 
@@ -491,14 +491,14 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| balances | [GetBalanceResponse.BalancesEntry](#xudrpc.GetBalanceResponse.BalancesEntry) | repeated | A map between currency ticker symbols and their balances. |
+| balances | [GetBalanceResponse.BalancesEntry](#opendexrpc.GetBalanceResponse.BalancesEntry) | repeated | A map between currency ticker symbols and their balances. |
 
 
 
 
 
 
-<a name="xudrpc.GetBalanceResponse.BalancesEntry"></a>
+<a name="opendexrpc.GetBalanceResponse.BalancesEntry"></a>
 
 ### GetBalanceResponse.BalancesEntry
 
@@ -507,14 +507,14 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | key | [string](#string) |  |  |
-| value | [Balance](#xudrpc.Balance) |  |  |
+| value | [Balance](#opendexrpc.Balance) |  |  |
 
 
 
 
 
 
-<a name="xudrpc.GetInfoRequest"></a>
+<a name="opendexrpc.GetInfoRequest"></a>
 
 ### GetInfoRequest
 
@@ -524,7 +524,7 @@
 
 
 
-<a name="xudrpc.GetInfoResponse"></a>
+<a name="opendexrpc.GetInfoResponse"></a>
 
 ### GetInfoResponse
 
@@ -532,24 +532,24 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| version | [string](#string) |  | The version of this instance of xud. |
+| version | [string](#string) |  | The version of this instance of opendex. |
 | node_pub_key | [string](#string) |  | The node pub key of this node. |
 | uris | [string](#string) | repeated | A list of uris that can be used to connect to this node. These are shared with peers. |
 | num_peers | [uint32](#uint32) |  | The number of currently connected peers. |
 | num_pairs | [uint32](#uint32) |  | The number of supported trading pairs. |
-| orders | [OrdersCount](#xudrpc.OrdersCount) |  | The number of active, standing orders in the order book. |
-| lnd | [GetInfoResponse.LndEntry](#xudrpc.GetInfoResponse.LndEntry) | repeated |  |
-| alias | [string](#string) |  | The alias of this instance of xud. |
+| orders | [OrdersCount](#opendexrpc.OrdersCount) |  | The number of active, standing orders in the order book. |
+| lnd | [GetInfoResponse.LndEntry](#opendexrpc.GetInfoResponse.LndEntry) | repeated |  |
+| alias | [string](#string) |  | The alias of this instance of opendex. |
 | network | [string](#string) |  | The network of this node. |
 | pending_swap_hashes | [string](#string) | repeated |  |
-| connext | [ConnextInfo](#xudrpc.ConnextInfo) |  |  |
+| connext | [ConnextInfo](#opendexrpc.ConnextInfo) |  |  |
 
 
 
 
 
 
-<a name="xudrpc.GetInfoResponse.LndEntry"></a>
+<a name="opendexrpc.GetInfoResponse.LndEntry"></a>
 
 ### GetInfoResponse.LndEntry
 
@@ -558,14 +558,14 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | key | [string](#string) |  |  |
-| value | [LndInfo](#xudrpc.LndInfo) |  |  |
+| value | [LndInfo](#opendexrpc.LndInfo) |  |  |
 
 
 
 
 
 
-<a name="xudrpc.GetMnemonicRequest"></a>
+<a name="opendexrpc.GetMnemonicRequest"></a>
 
 ### GetMnemonicRequest
 
@@ -575,7 +575,7 @@
 
 
 
-<a name="xudrpc.GetMnemonicResponse"></a>
+<a name="opendexrpc.GetMnemonicResponse"></a>
 
 ### GetMnemonicResponse
 
@@ -590,7 +590,7 @@
 
 
 
-<a name="xudrpc.GetNodeInfoRequest"></a>
+<a name="opendexrpc.GetNodeInfoRequest"></a>
 
 ### GetNodeInfoRequest
 
@@ -605,7 +605,7 @@
 
 
 
-<a name="xudrpc.GetNodeInfoResponse"></a>
+<a name="opendexrpc.GetNodeInfoResponse"></a>
 
 ### GetNodeInfoResponse
 
@@ -621,7 +621,7 @@
 
 
 
-<a name="xudrpc.ListCurrenciesRequest"></a>
+<a name="opendexrpc.ListCurrenciesRequest"></a>
 
 ### ListCurrenciesRequest
 
@@ -631,7 +631,7 @@
 
 
 
-<a name="xudrpc.ListCurrenciesResponse"></a>
+<a name="opendexrpc.ListCurrenciesResponse"></a>
 
 ### ListCurrenciesResponse
 
@@ -639,14 +639,14 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| currencies | [Currency](#xudrpc.Currency) | repeated | The list of available currencies in the orderbook. |
+| currencies | [Currency](#opendexrpc.Currency) | repeated | The list of available currencies in the orderbook. |
 
 
 
 
 
 
-<a name="xudrpc.ListOrdersRequest"></a>
+<a name="opendexrpc.ListOrdersRequest"></a>
 
 ### ListOrdersRequest
 
@@ -655,7 +655,7 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | pair_id | [string](#string) |  | The trading pair for which to retrieve orders. |
-| owner | [ListOrdersRequest.Owner](#xudrpc.ListOrdersRequest.Owner) |  | Whether only own, only peer or both orders should be included in result. |
+| owner | [ListOrdersRequest.Owner](#opendexrpc.ListOrdersRequest.Owner) |  | Whether only own, only peer or both orders should be included in result. |
 | limit | [uint32](#uint32) |  | The maximum number of orders to return from each side of the order book. |
 | include_aliases | [bool](#bool) |  | Whether to include the node aliases of owners of the orders. |
 
@@ -664,7 +664,7 @@
 
 
 
-<a name="xudrpc.ListOrdersResponse"></a>
+<a name="opendexrpc.ListOrdersResponse"></a>
 
 ### ListOrdersResponse
 
@@ -672,14 +672,14 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| orders | [ListOrdersResponse.OrdersEntry](#xudrpc.ListOrdersResponse.OrdersEntry) | repeated | A map between pair ids and their buy and sell orders. |
+| orders | [ListOrdersResponse.OrdersEntry](#opendexrpc.ListOrdersResponse.OrdersEntry) | repeated | A map between pair ids and their buy and sell orders. |
 
 
 
 
 
 
-<a name="xudrpc.ListOrdersResponse.OrdersEntry"></a>
+<a name="opendexrpc.ListOrdersResponse.OrdersEntry"></a>
 
 ### ListOrdersResponse.OrdersEntry
 
@@ -688,14 +688,14 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | key | [string](#string) |  |  |
-| value | [Orders](#xudrpc.Orders) |  |  |
+| value | [Orders](#opendexrpc.Orders) |  |  |
 
 
 
 
 
 
-<a name="xudrpc.ListPairsRequest"></a>
+<a name="opendexrpc.ListPairsRequest"></a>
 
 ### ListPairsRequest
 
@@ -705,7 +705,7 @@
 
 
 
-<a name="xudrpc.ListPairsResponse"></a>
+<a name="opendexrpc.ListPairsResponse"></a>
 
 ### ListPairsResponse
 
@@ -720,7 +720,7 @@
 
 
 
-<a name="xudrpc.ListPeersRequest"></a>
+<a name="opendexrpc.ListPeersRequest"></a>
 
 ### ListPeersRequest
 
@@ -730,7 +730,7 @@
 
 
 
-<a name="xudrpc.ListPeersResponse"></a>
+<a name="opendexrpc.ListPeersResponse"></a>
 
 ### ListPeersResponse
 
@@ -738,14 +738,14 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| peers | [Peer](#xudrpc.Peer) | repeated | The list of connected peers. |
+| peers | [Peer](#opendexrpc.Peer) | repeated | The list of connected peers. |
 
 
 
 
 
 
-<a name="xudrpc.LndInfo"></a>
+<a name="opendexrpc.LndInfo"></a>
 
 ### LndInfo
 
@@ -754,8 +754,8 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | status | [string](#string) |  |  |
-| channels | [Channels](#xudrpc.Channels) |  |  |
-| chains | [Chain](#xudrpc.Chain) | repeated |  |
+| channels | [Channels](#opendexrpc.Channels) |  |  |
+| chains | [Chain](#opendexrpc.Chain) | repeated |  |
 | blockheight | [uint32](#uint32) |  |  |
 | uris | [string](#string) | repeated |  |
 | version | [string](#string) |  |  |
@@ -766,7 +766,7 @@
 
 
 
-<a name="xudrpc.NodeIdentifier"></a>
+<a name="opendexrpc.NodeIdentifier"></a>
 
 ### NodeIdentifier
 
@@ -782,7 +782,7 @@
 
 
 
-<a name="xudrpc.OpenChannelRequest"></a>
+<a name="opendexrpc.OpenChannelRequest"></a>
 
 ### OpenChannelRequest
 
@@ -801,7 +801,7 @@
 
 
 
-<a name="xudrpc.OpenChannelResponse"></a>
+<a name="opendexrpc.OpenChannelResponse"></a>
 
 ### OpenChannelResponse
 
@@ -816,7 +816,7 @@
 
 
 
-<a name="xudrpc.Order"></a>
+<a name="opendexrpc.Order"></a>
 
 ### Order
 
@@ -828,10 +828,10 @@
 | quantity | [uint64](#uint64) |  | The quantity of the order in satoshis. |
 | pair_id | [string](#string) |  | The trading pair that this order is for. |
 | id | [string](#string) |  | A UUID for this order. |
-| node_identifier | [NodeIdentifier](#xudrpc.NodeIdentifier) |  | The identifier of the node that created this order. |
+| node_identifier | [NodeIdentifier](#opendexrpc.NodeIdentifier) |  | The identifier of the node that created this order. |
 | local_id | [string](#string) |  | The local id for this order, if applicable. |
 | created_at | [uint64](#uint64) |  | The epoch time in milliseconds when this order was created. |
-| side | [OrderSide](#xudrpc.OrderSide) |  | Whether this order is a buy or sell |
+| side | [OrderSide](#opendexrpc.OrderSide) |  | Whether this order is a buy or sell |
 | is_own_order | [bool](#bool) |  | Whether this order is a local own order or a remote peer order. |
 | hold | [uint64](#uint64) |  | The quantity on hold pending swap execution. |
 
@@ -840,7 +840,7 @@
 
 
 
-<a name="xudrpc.OrderBookRequest"></a>
+<a name="opendexrpc.OrderBookRequest"></a>
 
 ### OrderBookRequest
 
@@ -857,7 +857,7 @@
 
 
 
-<a name="xudrpc.OrderBookResponse"></a>
+<a name="opendexrpc.OrderBookResponse"></a>
 
 ### OrderBookResponse
 
@@ -865,14 +865,14 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| buckets | [OrderBookResponse.BucketsEntry](#xudrpc.OrderBookResponse.BucketsEntry) | repeated | A map between currency tickers and sorted lists of order buckets |
+| buckets | [OrderBookResponse.BucketsEntry](#opendexrpc.OrderBookResponse.BucketsEntry) | repeated | A map between currency tickers and sorted lists of order buckets |
 
 
 
 
 
 
-<a name="xudrpc.OrderBookResponse.Bucket"></a>
+<a name="opendexrpc.OrderBookResponse.Bucket"></a>
 
 ### OrderBookResponse.Bucket
 
@@ -888,7 +888,7 @@
 
 
 
-<a name="xudrpc.OrderBookResponse.Buckets"></a>
+<a name="opendexrpc.OrderBookResponse.Buckets"></a>
 
 ### OrderBookResponse.Buckets
 
@@ -896,15 +896,15 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| sell_buckets | [OrderBookResponse.Bucket](#xudrpc.OrderBookResponse.Bucket) | repeated | A sorted list of buckets for sell orders |
-| buy_buckets | [OrderBookResponse.Bucket](#xudrpc.OrderBookResponse.Bucket) | repeated | A sorted list of buckets for buy orders. |
+| sell_buckets | [OrderBookResponse.Bucket](#opendexrpc.OrderBookResponse.Bucket) | repeated | A sorted list of buckets for sell orders |
+| buy_buckets | [OrderBookResponse.Bucket](#opendexrpc.OrderBookResponse.Bucket) | repeated | A sorted list of buckets for buy orders. |
 
 
 
 
 
 
-<a name="xudrpc.OrderBookResponse.BucketsEntry"></a>
+<a name="opendexrpc.OrderBookResponse.BucketsEntry"></a>
 
 ### OrderBookResponse.BucketsEntry
 
@@ -913,14 +913,14 @@
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | key | [string](#string) |  |  |
-| value | [OrderBookResponse.Buckets](#xudrpc.OrderBookResponse.Buckets) |  |  |
+| value | [OrderBookResponse.Buckets](#opendexrpc.OrderBookResponse.Buckets) |  |  |
 
 
 
 
 
 
-<a name="xudrpc.OrderRemoval"></a>
+<a name="opendexrpc.OrderRemoval"></a>
 
 ### OrderRemoval
 
@@ -939,7 +939,7 @@
 
 
 
-<a name="xudrpc.OrderUpdate"></a>
+<a name="opendexrpc.OrderUpdate"></a>
 
 ### OrderUpdate
 
@@ -947,15 +947,15 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| order | [Order](#xudrpc.Order) |  | An order that was added to the order book. |
-| order_removal | [OrderRemoval](#xudrpc.OrderRemoval) |  | An order (or portion thereof) that was removed from the order book. |
+| order | [Order](#opendexrpc.Order) |  | An order that was added to the order book. |
+| order_removal | [OrderRemoval](#opendexrpc.OrderRemoval) |  | An order (or portion thereof) that was removed from the order book. |
 
 
 
 
 
 
-<a name="xudrpc.Orders"></a>
+<a name="opendexrpc.Orders"></a>
 
 ### Orders
 
@@ -963,15 +963,15 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| buy_orders | [Order](#xudrpc.Order) | repeated | A list of buy orders sorted by descending price. |
-| sell_orders | [Order](#xudrpc.Order) | repeated | A list of sell orders sorted by ascending price. |
+| buy_orders | [Order](#opendexrpc.Order) | repeated | A list of buy orders sorted by descending price. |
+| sell_orders | [Order](#opendexrpc.Order) | repeated | A list of sell orders sorted by ascending price. |
 
 
 
 
 
 
-<a name="xudrpc.OrdersCount"></a>
+<a name="opendexrpc.OrdersCount"></a>
 
 ### OrdersCount
 
@@ -979,15 +979,15 @@
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| peer | [uint32](#uint32) |  | The number of orders belonging to remote xud nodes. |
-| own | [uint32](#uint32) |  | The number of orders belonging to our local xud node. |
+| peer | [uint32](#uint32) |  | The number of orders belonging to remote opendex nodes. |
+| own | [uint32](#uint32) |  | The number of orders belonging to our local opendex node. |
 
 
 
 
 
 
-<a name="xudrpc.Peer"></a>
+<a name="opendexrpc.Peer"></a>
 
 ### Peer
 
@@ -997,13 +997,13 @@
 | ----- | ---- | ----- | ----------- |
 | address | [string](#string) |  | The socket address with host and port for this peer. |
 | node_pub_key | [string](#string) |  | The node pub key to uniquely identify this peer. |
-| lnd_pub_keys | [Peer.LndPubKeysEntry](#xudrpc.Peer.LndPubKeysEntry) | repeated | A map of ticker symbols to lnd pub keys for this peer |
+| lnd_pub_keys | [Peer.LndPubKeysEntry](#opendexrpc.Peer.LndPubKeysEntry) | repeated | A map of ticker symbols to lnd pub keys for this peer |
 | inbound | [bool](#bool) |  | Indicates whether this peer was connected inbound. |
 | pairs | [string](#string) | repeated | A list of trading pair tickers supported by this peer. |
-| xud_version | [string](#string) |  | The version of xud being used by the peer. |
+| xud_version | [string](#string) |  | The version of opendex being used by the peer. |
 | seconds_connected | [uint32](#uint32) |  | The time in seconds that we have been connected to this peer. |
 | alias | [string](#string) |  | The alias for this peer&#39;s public key |
-| lnd_uris | [Peer.LndUris](#xudrpc.Peer.LndUris) | repeated |  |
+| lnd_uris | [Peer.LndUris](#opendexrpc.Peer.LndUris) | repeated |  |
 | connext_identifier | [string](#string) |  | The connext identifier for this peer |
 
 
@@ -1011,7 +1011,7 @@
 
 
 
-<a name="xudrpc.Peer.LndPubKeysEntry"></a>
+<a name="opendexrpc.Peer.LndPubKeysEntry"></a>
 
 ### Peer.LndPubKeysEntry
 
@@ -1027,7 +1027,7 @@
 
 
 
-<a name="xudrpc.Peer.LndUris"></a>
+<a name="opendexrpc.Peer.LndUris"></a>
 
 ### Peer.LndUris
 A map of ticker symbols to lnd uris for this peer
@@ -1043,7 +1043,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.PlaceOrderEvent"></a>
+<a name="opendexrpc.PlaceOrderEvent"></a>
 
 ### PlaceOrderEvent
 
@@ -1051,17 +1051,17 @@ A map of ticker symbols to lnd uris for this peer
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| match | [Order](#xudrpc.Order) |  | An order (or portion thereof) that matched the newly placed order. |
-| swap_success | [SwapSuccess](#xudrpc.SwapSuccess) |  | A successful swap of a peer order that matched the newly placed order. |
-| remaining_order | [Order](#xudrpc.Order) |  | The remaining portion of the order, after matches, that enters the order book. |
-| swap_failure | [SwapFailure](#xudrpc.SwapFailure) |  | A swap attempt that failed. |
+| match | [Order](#opendexrpc.Order) |  | An order (or portion thereof) that matched the newly placed order. |
+| swap_success | [SwapSuccess](#opendexrpc.SwapSuccess) |  | A successful swap of a peer order that matched the newly placed order. |
+| remaining_order | [Order](#opendexrpc.Order) |  | The remaining portion of the order, after matches, that enters the order book. |
+| swap_failure | [SwapFailure](#opendexrpc.SwapFailure) |  | A swap attempt that failed. |
 
 
 
 
 
 
-<a name="xudrpc.PlaceOrderRequest"></a>
+<a name="opendexrpc.PlaceOrderRequest"></a>
 
 ### PlaceOrderRequest
 
@@ -1073,7 +1073,7 @@ A map of ticker symbols to lnd uris for this peer
 | quantity | [uint64](#uint64) |  | The quantity of the order denominated in satoshis. |
 | pair_id | [string](#string) |  | The trading pair that the order is for. |
 | order_id | [string](#string) |  | The local id to assign to the order. |
-| side | [OrderSide](#xudrpc.OrderSide) |  | Whether the order is a buy or sell. |
+| side | [OrderSide](#opendexrpc.OrderSide) |  | Whether the order is a buy or sell. |
 | replace_order_id | [string](#string) |  | The local id of an existing order to be replaced. If provided, the order must be successfully found and removed before the new order is placed, otherwise an error is returned. |
 | immediate_or_cancel | [bool](#bool) |  | Whether the order must be filled immediately and not allowed to enter the order book. |
 
@@ -1082,7 +1082,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.PlaceOrderResponse"></a>
+<a name="opendexrpc.PlaceOrderResponse"></a>
 
 ### PlaceOrderResponse
 
@@ -1090,17 +1090,17 @@ A map of ticker symbols to lnd uris for this peer
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| internal_matches | [Order](#xudrpc.Order) | repeated | A list of own orders (or portions thereof) that matched the newly placed order. |
-| swap_successes | [SwapSuccess](#xudrpc.SwapSuccess) | repeated | A list of successful swaps of peer orders that matched the newly placed order. |
-| remaining_order | [Order](#xudrpc.Order) |  | The remaining portion of the order, after matches, that enters the order book. |
-| swap_failures | [SwapFailure](#xudrpc.SwapFailure) | repeated | A list of swap attempts that failed. |
+| internal_matches | [Order](#opendexrpc.Order) | repeated | A list of own orders (or portions thereof) that matched the newly placed order. |
+| swap_successes | [SwapSuccess](#opendexrpc.SwapSuccess) | repeated | A list of successful swaps of peer orders that matched the newly placed order. |
+| remaining_order | [Order](#opendexrpc.Order) |  | The remaining portion of the order, after matches, that enters the order book. |
+| swap_failures | [SwapFailure](#opendexrpc.SwapFailure) | repeated | A list of swap attempts that failed. |
 
 
 
 
 
 
-<a name="xudrpc.RemoveAllOrdersRequest"></a>
+<a name="opendexrpc.RemoveAllOrdersRequest"></a>
 
 ### RemoveAllOrdersRequest
 
@@ -1110,7 +1110,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.RemoveAllOrdersResponse"></a>
+<a name="opendexrpc.RemoveAllOrdersResponse"></a>
 
 ### RemoveAllOrdersResponse
 
@@ -1126,7 +1126,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.RemoveCurrencyRequest"></a>
+<a name="opendexrpc.RemoveCurrencyRequest"></a>
 
 ### RemoveCurrencyRequest
 
@@ -1141,7 +1141,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.RemoveCurrencyResponse"></a>
+<a name="opendexrpc.RemoveCurrencyResponse"></a>
 
 ### RemoveCurrencyResponse
 
@@ -1151,7 +1151,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.RemoveOrderRequest"></a>
+<a name="opendexrpc.RemoveOrderRequest"></a>
 
 ### RemoveOrderRequest
 
@@ -1167,7 +1167,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.RemoveOrderResponse"></a>
+<a name="opendexrpc.RemoveOrderResponse"></a>
 
 ### RemoveOrderResponse
 
@@ -1185,7 +1185,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.RemovePairRequest"></a>
+<a name="opendexrpc.RemovePairRequest"></a>
 
 ### RemovePairRequest
 
@@ -1200,7 +1200,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.RemovePairResponse"></a>
+<a name="opendexrpc.RemovePairResponse"></a>
 
 ### RemovePairResponse
 
@@ -1210,7 +1210,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.RestoreNodeRequest"></a>
+<a name="opendexrpc.RestoreNodeRequest"></a>
 
 ### RestoreNodeRequest
 
@@ -1218,17 +1218,17 @@ A map of ticker symbols to lnd uris for this peer
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| seed_mnemonic | [string](#string) | repeated | The 24 word mnemonic to recover the xud identity key and underlying wallets |
-| password | [string](#string) |  | The password in utf-8 with which to encrypt the restored xud node key as well as any restored underlying wallets. |
-| lnd_backups | [RestoreNodeRequest.LndBackupsEntry](#xudrpc.RestoreNodeRequest.LndBackupsEntry) | repeated | A map between the currency of the LND and its multi channel SCB |
-| xud_database | [bytes](#bytes) |  | The XUD database backup |
+| seed_mnemonic | [string](#string) | repeated | The 24 word mnemonic to recover the opendex identity key and underlying wallets |
+| password | [string](#string) |  | The password in utf-8 with which to encrypt the restored opendex node key as well as any restored underlying wallets. |
+| lnd_backups | [RestoreNodeRequest.LndBackupsEntry](#opendexrpc.RestoreNodeRequest.LndBackupsEntry) | repeated | A map between the currency of the LND and its multi channel SCB |
+| xud_database | [bytes](#bytes) |  | The opendex database backup |
 
 
 
 
 
 
-<a name="xudrpc.RestoreNodeRequest.LndBackupsEntry"></a>
+<a name="opendexrpc.RestoreNodeRequest.LndBackupsEntry"></a>
 
 ### RestoreNodeRequest.LndBackupsEntry
 
@@ -1244,7 +1244,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.RestoreNodeResponse"></a>
+<a name="opendexrpc.RestoreNodeResponse"></a>
 
 ### RestoreNodeResponse
 
@@ -1260,7 +1260,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.SetLogLevelRequest"></a>
+<a name="opendexrpc.SetLogLevelRequest"></a>
 
 ### SetLogLevelRequest
 
@@ -1268,14 +1268,14 @@ A map of ticker symbols to lnd uris for this peer
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| log_level | [LogLevel](#xudrpc.LogLevel) |  |  |
+| log_level | [LogLevel](#opendexrpc.LogLevel) |  |  |
 
 
 
 
 
 
-<a name="xudrpc.SetLogLevelResponse"></a>
+<a name="opendexrpc.SetLogLevelResponse"></a>
 
 ### SetLogLevelResponse
 
@@ -1285,7 +1285,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.ShutdownRequest"></a>
+<a name="opendexrpc.ShutdownRequest"></a>
 
 ### ShutdownRequest
 
@@ -1295,7 +1295,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.ShutdownResponse"></a>
+<a name="opendexrpc.ShutdownResponse"></a>
 
 ### ShutdownResponse
 
@@ -1305,7 +1305,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.SubscribeOrdersRequest"></a>
+<a name="opendexrpc.SubscribeOrdersRequest"></a>
 
 ### SubscribeOrdersRequest
 
@@ -1320,7 +1320,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.SubscribeSwapsAcceptedRequest"></a>
+<a name="opendexrpc.SubscribeSwapsAcceptedRequest"></a>
 
 ### SubscribeSwapsAcceptedRequest
 
@@ -1330,7 +1330,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.SubscribeSwapsRequest"></a>
+<a name="opendexrpc.SubscribeSwapsRequest"></a>
 
 ### SubscribeSwapsRequest
 
@@ -1345,7 +1345,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.SwapAccepted"></a>
+<a name="opendexrpc.SwapAccepted"></a>
 
 ### SwapAccepted
 
@@ -1370,7 +1370,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.SwapFailure"></a>
+<a name="opendexrpc.SwapFailure"></a>
 
 ### SwapFailure
 
@@ -1389,7 +1389,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.SwapSuccess"></a>
+<a name="opendexrpc.SwapSuccess"></a>
 
 ### SwapSuccess
 
@@ -1405,7 +1405,7 @@ A map of ticker symbols to lnd uris for this peer
 | amount_received | [uint64](#uint64) |  | The amount received denominated in satoshis. |
 | amount_sent | [uint64](#uint64) |  | The amount sent denominated in satoshis. |
 | peer_pub_key | [string](#string) |  | The node pub key of the peer that executed this order. |
-| role | [Role](#xudrpc.Role) |  | Our role in the swap, either MAKER or TAKER. |
+| role | [Role](#opendexrpc.Role) |  | Our role in the swap, either MAKER or TAKER. |
 | currency_received | [string](#string) |  | The ticker symbol of the currency received. |
 | currency_sent | [string](#string) |  | The ticker symbol of the currency sent. |
 | r_preimage | [string](#string) |  | The hex-encoded preimage. |
@@ -1416,7 +1416,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.Trade"></a>
+<a name="opendexrpc.Trade"></a>
 
 ### Trade
 
@@ -1424,23 +1424,23 @@ A map of ticker symbols to lnd uris for this peer
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| maker_order | [Order](#xudrpc.Order) |  | The maker order involved in this trade. |
-| taker_order | [Order](#xudrpc.Order) |  | The taker order involved in this trade. Note that when a trade occurs from a remote peer filling one of our orders, we do not receive the order (only a swap request) and this field will be empty. |
+| maker_order | [Order](#opendexrpc.Order) |  | The maker order involved in this trade. |
+| taker_order | [Order](#opendexrpc.Order) |  | The taker order involved in this trade. Note that when a trade occurs from a remote peer filling one of our orders, we do not receive the order (only a swap request) and this field will be empty. |
 | r_hash | [string](#string) |  | The payment hash involved in this trade. |
 | quantity | [uint64](#uint64) |  | The quantity transacted in this trade. |
 | pair_id | [string](#string) |  | The trading pair for this trade. |
 | price | [double](#double) |  | The price used for the trade. |
-| role | [Role](#xudrpc.Role) |  | Our role in the trade. |
+| role | [Role](#opendexrpc.Role) |  | Our role in the trade. |
 | executed_at | [uint64](#uint64) |  | The epoch time in milliseconds that this trade was executed |
-| side | [OrderSide](#xudrpc.OrderSide) |  | Whether this node was on the buy or sell side of the trade - or both in case of internal trades. |
-| counterparty | [NodeIdentifier](#xudrpc.NodeIdentifier) |  | The counterparty to this trade, if applicable. |
+| side | [OrderSide](#opendexrpc.OrderSide) |  | Whether this node was on the buy or sell side of the trade - or both in case of internal trades. |
+| counterparty | [NodeIdentifier](#opendexrpc.NodeIdentifier) |  | The counterparty to this trade, if applicable. |
 
 
 
 
 
 
-<a name="xudrpc.TradeHistoryRequest"></a>
+<a name="opendexrpc.TradeHistoryRequest"></a>
 
 ### TradeHistoryRequest
 
@@ -1455,7 +1455,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.TradeHistoryResponse"></a>
+<a name="opendexrpc.TradeHistoryResponse"></a>
 
 ### TradeHistoryResponse
 
@@ -1463,14 +1463,14 @@ A map of ticker symbols to lnd uris for this peer
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| trades | [Trade](#xudrpc.Trade) | repeated |  |
+| trades | [Trade](#opendexrpc.Trade) | repeated |  |
 
 
 
 
 
 
-<a name="xudrpc.TradingLimits"></a>
+<a name="opendexrpc.TradingLimits"></a>
 
 ### TradingLimits
 
@@ -1488,7 +1488,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.TradingLimitsRequest"></a>
+<a name="opendexrpc.TradingLimitsRequest"></a>
 
 ### TradingLimitsRequest
 
@@ -1503,7 +1503,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.TradingLimitsResponse"></a>
+<a name="opendexrpc.TradingLimitsResponse"></a>
 
 ### TradingLimitsResponse
 
@@ -1511,14 +1511,14 @@ A map of ticker symbols to lnd uris for this peer
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| limits | [TradingLimitsResponse.LimitsEntry](#xudrpc.TradingLimitsResponse.LimitsEntry) | repeated | A map between currency ticker symbols and their trading limits. |
+| limits | [TradingLimitsResponse.LimitsEntry](#opendexrpc.TradingLimitsResponse.LimitsEntry) | repeated | A map between currency ticker symbols and their trading limits. |
 
 
 
 
 
 
-<a name="xudrpc.TradingLimitsResponse.LimitsEntry"></a>
+<a name="opendexrpc.TradingLimitsResponse.LimitsEntry"></a>
 
 ### TradingLimitsResponse.LimitsEntry
 
@@ -1527,14 +1527,14 @@ A map of ticker symbols to lnd uris for this peer
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 | key | [string](#string) |  |  |
-| value | [TradingLimits](#xudrpc.TradingLimits) |  |  |
+| value | [TradingLimits](#opendexrpc.TradingLimits) |  |  |
 
 
 
 
 
 
-<a name="xudrpc.UnbanRequest"></a>
+<a name="opendexrpc.UnbanRequest"></a>
 
 ### UnbanRequest
 
@@ -1550,7 +1550,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.UnbanResponse"></a>
+<a name="opendexrpc.UnbanResponse"></a>
 
 ### UnbanResponse
 
@@ -1560,7 +1560,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.UnlockNodeRequest"></a>
+<a name="opendexrpc.UnlockNodeRequest"></a>
 
 ### UnlockNodeRequest
 
@@ -1568,14 +1568,14 @@ A map of ticker symbols to lnd uris for this peer
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
-| password | [string](#string) |  | The password in utf-8 with which to unlock an existing xud node key as well as underlying client wallets such as lnd. |
+| password | [string](#string) |  | The password in utf-8 with which to unlock an existing opendex node key as well as underlying client wallets such as lnd. |
 
 
 
 
 
 
-<a name="xudrpc.UnlockNodeResponse"></a>
+<a name="opendexrpc.UnlockNodeResponse"></a>
 
 ### UnlockNodeResponse
 
@@ -1591,7 +1591,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.WithdrawRequest"></a>
+<a name="opendexrpc.WithdrawRequest"></a>
 
 ### WithdrawRequest
 
@@ -1610,7 +1610,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.WithdrawResponse"></a>
+<a name="opendexrpc.WithdrawResponse"></a>
 
 ### WithdrawResponse
 
@@ -1627,7 +1627,7 @@ A map of ticker symbols to lnd uris for this peer
  
 
 
-<a name="xudrpc.Currency.SwapClient"></a>
+<a name="opendexrpc.Currency.SwapClient"></a>
 
 ### Currency.SwapClient
 
@@ -1639,7 +1639,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.ListOrdersRequest.Owner"></a>
+<a name="opendexrpc.ListOrdersRequest.Owner"></a>
 
 ### ListOrdersRequest.Owner
 
@@ -1652,7 +1652,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.LogLevel"></a>
+<a name="opendexrpc.LogLevel"></a>
 
 ### LogLevel
 
@@ -1669,7 +1669,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.OrderSide"></a>
+<a name="opendexrpc.OrderSide"></a>
 
 ### OrderSide
 
@@ -1682,7 +1682,7 @@ A map of ticker symbols to lnd uris for this peer
 
 
 
-<a name="xudrpc.Role"></a>
+<a name="opendexrpc.Role"></a>
 
 ### Role
 
@@ -1699,61 +1699,61 @@ A map of ticker symbols to lnd uris for this peer
  
 
 
-<a name="xudrpc.Xud"></a>
+<a name="opendexrpc.Xud"></a>
 
 ### Xud
-The primary service for interacting with a running xud node.
+The primary service for interacting with a running opendex node.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| AddCurrency | [Currency](#xudrpc.Currency) | [AddCurrencyResponse](#xudrpc.AddCurrencyResponse) | Adds a currency to the list of supported currencies. Once added, the currency may be used for new trading pairs. shell: xucli addcurrency &lt;currency&gt; &lt;swap_client&gt; [decimal_places] [token_address] |
-| AddPair | [AddPairRequest](#xudrpc.AddPairRequest) | [AddPairResponse](#xudrpc.AddPairResponse) | Adds a trading pair to the list of supported trading pairs. The newly supported pair is advertised to peers so they may begin sending orders for it. shell: xucli addpair &lt;base_currency&gt; &lt;quote_currency&gt; |
-| Ban | [BanRequest](#xudrpc.BanRequest) | [BanResponse](#xudrpc.BanResponse) | Bans a node and immediately disconnects from it. This can be used to prevent any connections to a specific node. shell: xucli ban &lt;node_identifier&gt; |
-| ChangePassword | [ChangePasswordRequest](#xudrpc.ChangePasswordRequest) | [ChangePasswordResponse](#xudrpc.ChangePasswordResponse) | Changes the xud master password, including the wallet passwords for any underlying clients. shell: xucli changepass |
-| CloseChannel | [CloseChannelRequest](#xudrpc.CloseChannelRequest) | [CloseChannelResponse](#xudrpc.CloseChannelResponse) | Closes any existing payment channels with a peer for the specified currency. shell: xucli closechannel &lt;currency&gt; [node_identifier ] [--force] |
-| Connect | [ConnectRequest](#xudrpc.ConnectRequest) | [ConnectResponse](#xudrpc.ConnectResponse) | Attempts to connect to a node. Once connected, the node is added to the list of peers and becomes available for swaps and trading. A handshake exchanges information about the peer&#39;s supported trading and swap clients. Orders will be shared with the peer upon connection and upon new order placements. shell: xucli connect &lt;node_uri&gt; |
-| WalletDeposit | [DepositRequest](#xudrpc.DepositRequest) | [DepositResponse](#xudrpc.DepositResponse) | Gets an address to deposit a given currency into the xud wallets. shell: xucli walletdeposit &lt;currency&gt; |
-| Deposit | [DepositRequest](#xudrpc.DepositRequest) | [DepositResponse](#xudrpc.DepositResponse) | Gets an address to deposit a given currency directly into a channel. shell: xucli deposit &lt;currency&gt; |
-| DiscoverNodes | [DiscoverNodesRequest](#xudrpc.DiscoverNodesRequest) | [DiscoverNodesResponse](#xudrpc.DiscoverNodesResponse) | Discover nodes from a specific peer and apply new connections |
-| GetBalance | [GetBalanceRequest](#xudrpc.GetBalanceRequest) | [GetBalanceResponse](#xudrpc.GetBalanceResponse) | Gets the total balance available across all payment channels and wallets for one or all currencies. shell: xucli getbalance [currency] |
-| GetInfo | [GetInfoRequest](#xudrpc.GetInfoRequest) | [GetInfoResponse](#xudrpc.GetInfoResponse) | Gets general information about this node. shell: xucli getinfo |
-| GetMnemonic | [GetMnemonicRequest](#xudrpc.GetMnemonicRequest) | [GetMnemonicResponse](#xudrpc.GetMnemonicResponse) | Gets the master seed mnemonic . shell: xucli getnemonic |
-| GetNodeInfo | [GetNodeInfoRequest](#xudrpc.GetNodeInfoRequest) | [GetNodeInfoResponse](#xudrpc.GetNodeInfoResponse) | Gets general information about a node. shell: xucli getnodeinfo &lt;node_identifier&gt; |
-| ListOrders | [ListOrdersRequest](#xudrpc.ListOrdersRequest) | [ListOrdersResponse](#xudrpc.ListOrdersResponse) | Gets orders from the order book. This call returns the state of the order book at a given point in time, although it is not guaranteed to still be vaild by the time a response is received and processed by a client. It accepts an optional trading pair id parameter. If specified, only orders for that particular trading pair are returned. Otherwise, all orders are returned. Orders are separated into buys and sells for each trading pair, but unsorted. shell: xucli listorders [pair_id] [include_own_orders] [limit] |
-| ListCurrencies | [ListCurrenciesRequest](#xudrpc.ListCurrenciesRequest) | [ListCurrenciesResponse](#xudrpc.ListCurrenciesResponse) | Gets a list of this node&#39;s supported currencies. shell: xucli listcurrencies |
-| ListPairs | [ListPairsRequest](#xudrpc.ListPairsRequest) | [ListPairsResponse](#xudrpc.ListPairsResponse) | Gets a list of this nodes suported trading pairs. shell: xucli listpairs |
-| ListPeers | [ListPeersRequest](#xudrpc.ListPeersRequest) | [ListPeersResponse](#xudrpc.ListPeersResponse) | Gets a list of connected peers. shell: xucli listpeers |
-| OpenChannel | [OpenChannelRequest](#xudrpc.OpenChannelRequest) | [OpenChannelResponse](#xudrpc.OpenChannelResponse) | Opens a payment channel to a peer for the specified amount and currency. shell: xucli openchannel &lt;currency&gt; &lt;amount&gt; [node_identifier] [push_amount] |
-| OrderBook | [OrderBookRequest](#xudrpc.OrderBookRequest) | [OrderBookResponse](#xudrpc.OrderBookResponse) | Gets an order book depth chart where orders are grouped into &#34;buckets&#34; according to their price rounded to a given level of precision. shell: xucli orderbook [pair_id] [precision] |
-| PlaceOrder | [PlaceOrderRequest](#xudrpc.PlaceOrderRequest) | [PlaceOrderEvent](#xudrpc.PlaceOrderEvent) stream | Adds an order to the order book. If price is zero or unspecified a market order will get added. |
-| PlaceOrderSync | [PlaceOrderRequest](#xudrpc.PlaceOrderRequest) | [PlaceOrderResponse](#xudrpc.PlaceOrderResponse) | The synchronous, non-streaming version of PlaceOrder. shell: xucli buy &lt;quantity&gt; &lt;pair_id&gt; &lt;price&gt; [order_id] [stream] shell: xucli sell &lt;quantity&gt; &lt;pair_id&gt; &lt;price&gt; [order_id] [stream] |
-| ExecuteSwap | [ExecuteSwapRequest](#xudrpc.ExecuteSwapRequest) | [SwapSuccess](#xudrpc.SwapSuccess) | Executes a swap on a maker peer order. |
-| RemoveCurrency | [RemoveCurrencyRequest](#xudrpc.RemoveCurrencyRequest) | [RemoveCurrencyResponse](#xudrpc.RemoveCurrencyResponse) | Removes a currency from the list of supported currencies. Only currencies that are not in use for any currently supported trading pairs may be removed. Once removed, the currency can no longer be used for any supported trading pairs. shell: xucli removecurrency &lt;currency&gt; |
-| RemoveOrder | [RemoveOrderRequest](#xudrpc.RemoveOrderRequest) | [RemoveOrderResponse](#xudrpc.RemoveOrderResponse) | Removes an order from the order book by its local id. This should be called when an order is canceled or filled outside of xud. Removed orders become immediately unavailable for swaps, and peers are notified that the order is no longer valid. Any portion of the order that is on hold due to ongoing swaps will not be removed until after the swap attempts complete. shell: xucli removeorder &lt;order_id&gt; [quantity] |
-| RemoveAllOrders | [RemoveAllOrdersRequest](#xudrpc.RemoveAllOrdersRequest) | [RemoveAllOrdersResponse](#xudrpc.RemoveAllOrdersResponse) | Removes all orders from the order book. Removed orders become immediately unavailable for swaps, and peers are notified that the orders are no longer valid. Any portion of the orders that is on hold due to ongoing swaps will not be removed until after the swap attempts complete. shell: xucli removeallorders |
-| RemovePair | [RemovePairRequest](#xudrpc.RemovePairRequest) | [RemovePairResponse](#xudrpc.RemovePairResponse) | Removes a trading pair from the list of currently supported trading pair. This call will effectively cancel any standing orders for that trading pair. Peers are informed when a pair is no longer supported so that they will know to stop sending orders for it. shell: xucli removepair &lt;pair_id&gt; |
-| SetLogLevel | [SetLogLevelRequest](#xudrpc.SetLogLevelRequest) | [SetLogLevelResponse](#xudrpc.SetLogLevelResponse) | Set the logging level. shell: xucli loglevel &lt;level&gt; |
-| Shutdown | [ShutdownRequest](#xudrpc.ShutdownRequest) | [ShutdownResponse](#xudrpc.ShutdownResponse) | Begin gracefully shutting down xud. shell: xucli shutdown |
-| SubscribeOrders | [SubscribeOrdersRequest](#xudrpc.SubscribeOrdersRequest) | [OrderUpdate](#xudrpc.OrderUpdate) stream | Subscribes to orders being added to and removed from the order book. This call allows the client to maintain an up-to-date view of the order book. For example, an exchange that wants to show its users a real time view of the orders available to them would subscribe to this streaming call to be alerted as new orders are added and expired orders are removed. |
-| SubscribeSwapFailures | [SubscribeSwapsRequest](#xudrpc.SubscribeSwapsRequest) | [SwapFailure](#xudrpc.SwapFailure) stream | Subscribes to failed swaps. By default, only swaps that are initiated by a remote peer are transmitted unless a flag is set to include swaps initiated by the local node. This call allows the client to get real-time notifications when swap attempts are failing. It can be used for status monitoring, debugging, and testing purposes. |
-| SubscribeSwaps | [SubscribeSwapsRequest](#xudrpc.SubscribeSwapsRequest) | [SwapSuccess](#xudrpc.SwapSuccess) stream | Subscribes to completed swaps. By default, only swaps that are initiated by a remote peer are transmitted unless a flag is set to include swaps initiated by the local node. This call allows the client to get real-time notifications when its orders are filled by a peer. It can be used for tracking order executions, updating balances, and informing a trader when one of their orders is settled through the Exchange Union network. |
-| SubscribeSwapsAccepted | [SubscribeSwapsAcceptedRequest](#xudrpc.SubscribeSwapsAcceptedRequest) | [SwapAccepted](#xudrpc.SwapAccepted) stream | Subscribes to accepted swaps. This stream emits a message when the local xud node accepts a swap request from a peer, but before the swap has actually succeeded. |
-| TradeHistory | [TradeHistoryRequest](#xudrpc.TradeHistoryRequest) | [TradeHistoryResponse](#xudrpc.TradeHistoryResponse) | Gets a list of completed trades. shell: xucli tradehistory [limit] |
-| TradingLimits | [TradingLimitsRequest](#xudrpc.TradingLimitsRequest) | [TradingLimitsResponse](#xudrpc.TradingLimitsResponse) | Gets the trading limits for one or all currencies. shell: xucli tradinglimits [currency] |
-| Unban | [UnbanRequest](#xudrpc.UnbanRequest) | [UnbanResponse](#xudrpc.UnbanResponse) | Removes a ban from a node manually and, optionally, attempts to connect to it. shell: xucli unban &lt;node_identifier&gt; [reconnect] |
-| WalletWithdraw | [WithdrawRequest](#xudrpc.WithdrawRequest) | [WithdrawResponse](#xudrpc.WithdrawResponse) | Withdraws a given currency from the xud wallets to a specified address. shell: xucli withdraw [amount] [currency] &lt;destination&gt; [fee] |
+| AddCurrency | [Currency](#opendexrpc.Currency) | [AddCurrencyResponse](#opendexrpc.AddCurrencyResponse) | Adds a currency to the list of supported currencies. Once added, the currency may be used for new trading pairs. shell: xucli addcurrency &lt;currency&gt; &lt;swap_client&gt; [decimal_places] [token_address] |
+| AddPair | [AddPairRequest](#opendexrpc.AddPairRequest) | [AddPairResponse](#opendexrpc.AddPairResponse) | Adds a trading pair to the list of supported trading pairs. The newly supported pair is advertised to peers so they may begin sending orders for it. shell: xucli addpair &lt;base_currency&gt; &lt;quote_currency&gt; |
+| Ban | [BanRequest](#opendexrpc.BanRequest) | [BanResponse](#opendexrpc.BanResponse) | Bans a node and immediately disconnects from it. This can be used to prevent any connections to a specific node. shell: xucli ban &lt;node_identifier&gt; |
+| ChangePassword | [ChangePasswordRequest](#opendexrpc.ChangePasswordRequest) | [ChangePasswordResponse](#opendexrpc.ChangePasswordResponse) | Changes the opendex master password, including the wallet passwords for any underlying clients. shell: xucli changepass |
+| CloseChannel | [CloseChannelRequest](#opendexrpc.CloseChannelRequest) | [CloseChannelResponse](#opendexrpc.CloseChannelResponse) | Closes any existing payment channels with a peer for the specified currency. shell: xucli closechannel &lt;currency&gt; [node_identifier ] [--force] |
+| Connect | [ConnectRequest](#opendexrpc.ConnectRequest) | [ConnectResponse](#opendexrpc.ConnectResponse) | Attempts to connect to a node. Once connected, the node is added to the list of peers and becomes available for swaps and trading. A handshake exchanges information about the peer&#39;s supported trading and swap clients. Orders will be shared with the peer upon connection and upon new order placements. shell: xucli connect &lt;node_uri&gt; |
+| WalletDeposit | [DepositRequest](#opendexrpc.DepositRequest) | [DepositResponse](#opendexrpc.DepositResponse) | Gets an address to deposit a given currency into the opendex wallets. shell: xucli walletdeposit &lt;currency&gt; |
+| Deposit | [DepositRequest](#opendexrpc.DepositRequest) | [DepositResponse](#opendexrpc.DepositResponse) | Gets an address to deposit a given currency directly into a channel. shell: xucli deposit &lt;currency&gt; |
+| DiscoverNodes | [DiscoverNodesRequest](#opendexrpc.DiscoverNodesRequest) | [DiscoverNodesResponse](#opendexrpc.DiscoverNodesResponse) | Discover nodes from a specific peer and apply new connections |
+| GetBalance | [GetBalanceRequest](#opendexrpc.GetBalanceRequest) | [GetBalanceResponse](#opendexrpc.GetBalanceResponse) | Gets the total balance available across all payment channels and wallets for one or all currencies. shell: xucli getbalance [currency] |
+| GetInfo | [GetInfoRequest](#opendexrpc.GetInfoRequest) | [GetInfoResponse](#opendexrpc.GetInfoResponse) | Gets general information about this node. shell: xucli getinfo |
+| GetMnemonic | [GetMnemonicRequest](#opendexrpc.GetMnemonicRequest) | [GetMnemonicResponse](#opendexrpc.GetMnemonicResponse) | Gets the master seed mnemonic . shell: xucli getnemonic |
+| GetNodeInfo | [GetNodeInfoRequest](#opendexrpc.GetNodeInfoRequest) | [GetNodeInfoResponse](#opendexrpc.GetNodeInfoResponse) | Gets general information about a node. shell: xucli getnodeinfo &lt;node_identifier&gt; |
+| ListOrders | [ListOrdersRequest](#opendexrpc.ListOrdersRequest) | [ListOrdersResponse](#opendexrpc.ListOrdersResponse) | Gets orders from the order book. This call returns the state of the order book at a given point in time, although it is not guaranteed to still be vaild by the time a response is received and processed by a client. It accepts an optional trading pair id parameter. If specified, only orders for that particular trading pair are returned. Otherwise, all orders are returned. Orders are separated into buys and sells for each trading pair, but unsorted. shell: xucli listorders [pair_id] [include_own_orders] [limit] |
+| ListCurrencies | [ListCurrenciesRequest](#opendexrpc.ListCurrenciesRequest) | [ListCurrenciesResponse](#opendexrpc.ListCurrenciesResponse) | Gets a list of this node&#39;s supported currencies. shell: xucli listcurrencies |
+| ListPairs | [ListPairsRequest](#opendexrpc.ListPairsRequest) | [ListPairsResponse](#opendexrpc.ListPairsResponse) | Gets a list of this nodes suported trading pairs. shell: xucli listpairs |
+| ListPeers | [ListPeersRequest](#opendexrpc.ListPeersRequest) | [ListPeersResponse](#opendexrpc.ListPeersResponse) | Gets a list of connected peers. shell: xucli listpeers |
+| OpenChannel | [OpenChannelRequest](#opendexrpc.OpenChannelRequest) | [OpenChannelResponse](#opendexrpc.OpenChannelResponse) | Opens a payment channel to a peer for the specified amount and currency. shell: xucli openchannel &lt;currency&gt; &lt;amount&gt; [node_identifier] [push_amount] |
+| OrderBook | [OrderBookRequest](#opendexrpc.OrderBookRequest) | [OrderBookResponse](#opendexrpc.OrderBookResponse) | Gets an order book depth chart where orders are grouped into &#34;buckets&#34; according to their price rounded to a given level of precision. shell: xucli orderbook [pair_id] [precision] |
+| PlaceOrder | [PlaceOrderRequest](#opendexrpc.PlaceOrderRequest) | [PlaceOrderEvent](#opendexrpc.PlaceOrderEvent) stream | Adds an order to the order book. If price is zero or unspecified a market order will get added. |
+| PlaceOrderSync | [PlaceOrderRequest](#opendexrpc.PlaceOrderRequest) | [PlaceOrderResponse](#opendexrpc.PlaceOrderResponse) | The synchronous, non-streaming version of PlaceOrder. shell: xucli buy &lt;quantity&gt; &lt;pair_id&gt; &lt;price&gt; [order_id] [stream] shell: xucli sell &lt;quantity&gt; &lt;pair_id&gt; &lt;price&gt; [order_id] [stream] |
+| ExecuteSwap | [ExecuteSwapRequest](#opendexrpc.ExecuteSwapRequest) | [SwapSuccess](#opendexrpc.SwapSuccess) | Executes a swap on a maker peer order. |
+| RemoveCurrency | [RemoveCurrencyRequest](#opendexrpc.RemoveCurrencyRequest) | [RemoveCurrencyResponse](#opendexrpc.RemoveCurrencyResponse) | Removes a currency from the list of supported currencies. Only currencies that are not in use for any currently supported trading pairs may be removed. Once removed, the currency can no longer be used for any supported trading pairs. shell: xucli removecurrency &lt;currency&gt; |
+| RemoveOrder | [RemoveOrderRequest](#opendexrpc.RemoveOrderRequest) | [RemoveOrderResponse](#opendexrpc.RemoveOrderResponse) | Removes an order from the order book by its local id. This should be called when an order is canceled or filled outside of opendex. Removed orders become immediately unavailable for swaps, and peers are notified that the order is no longer valid. Any portion of the order that is on hold due to ongoing swaps will not be removed until after the swap attempts complete. shell: xucli removeorder &lt;order_id&gt; [quantity] |
+| RemoveAllOrders | [RemoveAllOrdersRequest](#opendexrpc.RemoveAllOrdersRequest) | [RemoveAllOrdersResponse](#opendexrpc.RemoveAllOrdersResponse) | Removes all orders from the order book. Removed orders become immediately unavailable for swaps, and peers are notified that the orders are no longer valid. Any portion of the orders that is on hold due to ongoing swaps will not be removed until after the swap attempts complete. shell: xucli removeallorders |
+| RemovePair | [RemovePairRequest](#opendexrpc.RemovePairRequest) | [RemovePairResponse](#opendexrpc.RemovePairResponse) | Removes a trading pair from the list of currently supported trading pair. This call will effectively cancel any standing orders for that trading pair. Peers are informed when a pair is no longer supported so that they will know to stop sending orders for it. shell: xucli removepair &lt;pair_id&gt; |
+| SetLogLevel | [SetLogLevelRequest](#opendexrpc.SetLogLevelRequest) | [SetLogLevelResponse](#opendexrpc.SetLogLevelResponse) | Set the logging level. shell: xucli loglevel &lt;level&gt; |
+| Shutdown | [ShutdownRequest](#opendexrpc.ShutdownRequest) | [ShutdownResponse](#opendexrpc.ShutdownResponse) | Begin gracefully shutting down opendex. shell: xucli shutdown |
+| SubscribeOrders | [SubscribeOrdersRequest](#opendexrpc.SubscribeOrdersRequest) | [OrderUpdate](#opendexrpc.OrderUpdate) stream | Subscribes to orders being added to and removed from the order book. This call allows the client to maintain an up-to-date view of the order book. For example, an exchange that wants to show its users a real time view of the orders available to them would subscribe to this streaming call to be alerted as new orders are added and expired orders are removed. |
+| SubscribeSwapFailures | [SubscribeSwapsRequest](#opendexrpc.SubscribeSwapsRequest) | [SwapFailure](#opendexrpc.SwapFailure) stream | Subscribes to failed swaps. By default, only swaps that are initiated by a remote peer are transmitted unless a flag is set to include swaps initiated by the local node. This call allows the client to get real-time notifications when swap attempts are failing. It can be used for status monitoring, debugging, and testing purposes. |
+| SubscribeSwaps | [SubscribeSwapsRequest](#opendexrpc.SubscribeSwapsRequest) | [SwapSuccess](#opendexrpc.SwapSuccess) stream | Subscribes to completed swaps. By default, only swaps that are initiated by a remote peer are transmitted unless a flag is set to include swaps initiated by the local node. This call allows the client to get real-time notifications when its orders are filled by a peer. It can be used for tracking order executions, updating balances, and informing a trader when one of their orders is settled through the Exchange Union network. |
+| SubscribeSwapsAccepted | [SubscribeSwapsAcceptedRequest](#opendexrpc.SubscribeSwapsAcceptedRequest) | [SwapAccepted](#opendexrpc.SwapAccepted) stream | Subscribes to accepted swaps. This stream emits a message when the local opendex node accepts a swap request from a peer, but before the swap has actually succeeded. |
+| TradeHistory | [TradeHistoryRequest](#opendexrpc.TradeHistoryRequest) | [TradeHistoryResponse](#opendexrpc.TradeHistoryResponse) | Gets a list of completed trades. shell: xucli tradehistory [limit] |
+| TradingLimits | [TradingLimitsRequest](#opendexrpc.TradingLimitsRequest) | [TradingLimitsResponse](#opendexrpc.TradingLimitsResponse) | Gets the trading limits for one or all currencies. shell: xucli tradinglimits [currency] |
+| Unban | [UnbanRequest](#opendexrpc.UnbanRequest) | [UnbanResponse](#opendexrpc.UnbanResponse) | Removes a ban from a node manually and, optionally, attempts to connect to it. shell: xucli unban &lt;node_identifier&gt; [reconnect] |
+| WalletWithdraw | [WithdrawRequest](#opendexrpc.WithdrawRequest) | [WithdrawResponse](#opendexrpc.WithdrawResponse) | Withdraws a given currency from the opendex wallets to a specified address. shell: xucli withdraw [amount] [currency] &lt;destination&gt; [fee] |
 
 
-<a name="xudrpc.XudInit"></a>
+<a name="opendexrpc.XudInit"></a>
 
 ### XudInit
-A service for interacting with a locked or uninitalized xud node.
+A service for interacting with a locked or uninitalized opendex node.
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
-| CreateNode | [CreateNodeRequest](#xudrpc.CreateNodeRequest) | [CreateNodeResponse](#xudrpc.CreateNodeResponse) | Creates an xud identity node key and underlying wallets. The node key and wallets are derived from a single seed and encrypted using a single password provided as a parameter to the call. shell: xucli create |
-| RestoreNode | [RestoreNodeRequest](#xudrpc.RestoreNodeRequest) | [RestoreNodeResponse](#xudrpc.RestoreNodeResponse) | Restores an xud instance and underlying wallets from a seed. shell: xucli restore [backup_directory] |
-| UnlockNode | [UnlockNodeRequest](#xudrpc.UnlockNodeRequest) | [UnlockNodeResponse](#xudrpc.UnlockNodeResponse) | Unlocks and decrypts the xud node key and any underlying wallets. shell: xucli unlock |
+| CreateNode | [CreateNodeRequest](#opendexrpc.CreateNodeRequest) | [CreateNodeResponse](#opendexrpc.CreateNodeResponse) | Creates an opendex identity node key and underlying wallets. The node key and wallets are derived from a single seed and encrypted using a single password provided as a parameter to the call. shell: xucli create |
+| RestoreNode | [RestoreNodeRequest](#opendexrpc.RestoreNodeRequest) | [RestoreNodeResponse](#opendexrpc.RestoreNodeResponse) | Restores an opendex instance and underlying wallets from a seed. shell: xucli restore [backup_directory] |
+| UnlockNode | [UnlockNodeRequest](#opendexrpc.UnlockNodeRequest) | [UnlockNodeResponse](#opendexrpc.UnlockNodeResponse) | Unlocks and decrypts the opendex node key and any underlying wallets. shell: xucli unlock |
 
  
 

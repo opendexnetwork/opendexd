@@ -3,8 +3,8 @@ import http from 'http';
 import { defer, from, Observable, of, throwError } from 'rxjs';
 import { catchError, concat, concatAll, delay, mergeMap, retryWhen, share, take, mapTo } from 'rxjs/operators';
 import { loadXudClient } from '../cli/command';
-import { XudClient } from '../proto/xudrpc_grpc_pb';
-import { GetBalanceRequest, GetBalanceResponse, GetInfoRequest, GetInfoResponse } from '../proto/xudrpc_pb';
+import { XudClient } from '../proto/opendexrpc_grpc_pb';
+import { GetBalanceRequest, GetBalanceResponse, GetInfoRequest, GetInfoResponse } from '../proto/opendexrpc_pb';
 
 type Balances = {
   channelBalance: number;

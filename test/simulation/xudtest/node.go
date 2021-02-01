@@ -19,7 +19,7 @@ import (
 	"context"
 
 	"github.com/ExchangeUnion/xud-simulation/lntest"
-	"github.com/ExchangeUnion/xud-simulation/xudrpc"
+	"github.com/ExchangeUnion/xud-simulation/opendexrpc"
 	"github.com/go-errors/errors"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
@@ -139,7 +139,7 @@ type HarnessNode struct {
 	quit chan struct{}
 	wg   sync.WaitGroup
 
-	Client xudrpc.XudClient
+	Client opendexrpc.XudClient
 }
 
 func (cfg nodeConfig) RPCAddr() string {
@@ -275,7 +275,7 @@ func (hn *HarnessNode) Start(errorChan chan<- *XudError) error {
 		return err
 	}
 
-	hn.Client = xudrpc.NewXudClient(conn)
+	hn.Client = opendexrpc.NewXudClient(conn)
 
 	if err := hn.WaitReady(); err != nil {
 		return err
@@ -286,7 +286,7 @@ func (hn *HarnessNode) Start(errorChan chan<- *XudError) error {
 
 func (hn *HarnessNode) WaitReady() error {
 	isReady := func() bool {
-		_, err := hn.Client.GetInfo(context.Background(), &xudrpc.GetInfoRequest{})
+		_, err := hn.Client.GetInfo(context.Background(), &opendexrpc.GetInfoRequest{})
 		return err == nil
 	}
 
@@ -362,7 +362,7 @@ func (hn *HarnessNode) stop(kill bool) error {
 	}
 
 	if hn.Client != nil {
-		_, _ = hn.Client.Shutdown(context.Background(), &xudrpc.ShutdownRequest{})
+		_, _ = hn.Client.Shutdown(context.Background(), &opendexrpc.ShutdownRequest{})
 	}
 
 	// Wait for xud process and other goroutines to exit.

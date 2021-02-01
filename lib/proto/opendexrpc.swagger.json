@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "xudrpc.proto",
+    "title": "opendexrpc.proto",
     "version": "version not set"
   },
   "schemes": [
@@ -23,7 +23,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcAddCurrencyResponse"
+              "$ref": "#/definitions/opendexrpcAddCurrencyResponse"
             }
           }
         },
@@ -33,7 +33,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/xudrpcCurrency"
+              "$ref": "#/definitions/opendexrpcCurrency"
             }
           }
         ],
@@ -50,7 +50,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcAddPairResponse"
+              "$ref": "#/definitions/opendexrpcAddPairResponse"
             }
           }
         },
@@ -60,7 +60,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/xudrpcAddPairRequest"
+              "$ref": "#/definitions/opendexrpcAddPairRequest"
             }
           }
         ],
@@ -77,7 +77,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcGetBalanceResponse"
+              "$ref": "#/definitions/opendexrpcGetBalanceResponse"
             }
           }
         },
@@ -103,7 +103,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcBanResponse"
+              "$ref": "#/definitions/opendexrpcBanResponse"
             }
           }
         },
@@ -113,7 +113,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/xudrpcBanRequest"
+              "$ref": "#/definitions/opendexrpcBanRequest"
             }
           }
         ],
@@ -124,13 +124,13 @@
     },
     "/v1/changepass": {
       "post": {
-        "summary": "Changes the xud master password, including the wallet passwords for any underlying clients.\nshell: xucli changepass",
+        "summary": "Changes the opendex master password, including the wallet passwords for any underlying clients.\nshell: xucli changepass",
         "operationId": "ChangePassword",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcChangePasswordResponse"
+              "$ref": "#/definitions/opendexrpcChangePasswordResponse"
             }
           }
         },
@@ -147,7 +147,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcCloseChannelResponse"
+              "$ref": "#/definitions/opendexrpcCloseChannelResponse"
             }
           }
         },
@@ -164,7 +164,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcConnectResponse"
+              "$ref": "#/definitions/opendexrpcConnectResponse"
             }
           }
         },
@@ -174,7 +174,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/xudrpcConnectRequest"
+              "$ref": "#/definitions/opendexrpcConnectRequest"
             }
           }
         ],
@@ -191,7 +191,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcListCurrenciesResponse"
+              "$ref": "#/definitions/opendexrpcListCurrenciesResponse"
             }
           }
         },
@@ -208,7 +208,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcDepositResponse"
+              "$ref": "#/definitions/opendexrpcDepositResponse"
             }
           }
         },
@@ -218,7 +218,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/xudrpcDepositRequest"
+              "$ref": "#/definitions/opendexrpcDepositRequest"
             }
           }
         ],
@@ -235,7 +235,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcDiscoverNodesResponse"
+              "$ref": "#/definitions/opendexrpcDiscoverNodesResponse"
             }
           }
         },
@@ -245,7 +245,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/xudrpcDiscoverNodesRequest"
+              "$ref": "#/definitions/opendexrpcDiscoverNodesRequest"
             }
           }
         ],
@@ -262,7 +262,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcSwapSuccess"
+              "$ref": "#/definitions/opendexrpcSwapSuccess"
             }
           }
         },
@@ -272,7 +272,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/xudrpcExecuteSwapRequest"
+              "$ref": "#/definitions/opendexrpcExecuteSwapRequest"
             }
           }
         ],
@@ -289,7 +289,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcGetInfoResponse"
+              "$ref": "#/definitions/opendexrpcGetInfoResponse"
             }
           }
         },
@@ -306,7 +306,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcGetMnemonicResponse"
+              "$ref": "#/definitions/opendexrpcGetMnemonicResponse"
             }
           }
         },
@@ -323,7 +323,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcGetNodeInfoResponse"
+              "$ref": "#/definitions/opendexrpcGetNodeInfoResponse"
             }
           }
         },
@@ -349,7 +349,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcOpenChannelResponse"
+              "$ref": "#/definitions/opendexrpcOpenChannelResponse"
             }
           }
         },
@@ -366,7 +366,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcOrderBookResponse"
+              "$ref": "#/definitions/opendexrpcOrderBookResponse"
             }
           }
         },
@@ -376,7 +376,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/xudrpcOrderBookRequest"
+              "$ref": "#/definitions/opendexrpcOrderBookRequest"
             }
           }
         ],
@@ -393,7 +393,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcListOrdersResponse"
+              "$ref": "#/definitions/opendexrpcListOrdersResponse"
             }
           }
         },
@@ -448,7 +448,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcListPairsResponse"
+              "$ref": "#/definitions/opendexrpcListPairsResponse"
             }
           }
         },
@@ -465,7 +465,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcListPeersResponse"
+              "$ref": "#/definitions/opendexrpcListPeersResponse"
             }
           }
         },
@@ -482,7 +482,7 @@
           "200": {
             "description": "A successful response.(streaming responses)",
             "schema": {
-              "$ref": "#/x-stream-definitions/xudrpcPlaceOrderEvent"
+              "$ref": "#/x-stream-definitions/opendexrpcPlaceOrderEvent"
             }
           }
         },
@@ -492,7 +492,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/xudrpcPlaceOrderRequest"
+              "$ref": "#/definitions/opendexrpcPlaceOrderRequest"
             }
           }
         ],
@@ -509,7 +509,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcPlaceOrderResponse"
+              "$ref": "#/definitions/opendexrpcPlaceOrderResponse"
             }
           }
         },
@@ -519,7 +519,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/xudrpcPlaceOrderRequest"
+              "$ref": "#/definitions/opendexrpcPlaceOrderRequest"
             }
           }
         ],
@@ -536,7 +536,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcRemoveAllOrdersResponse"
+              "$ref": "#/definitions/opendexrpcRemoveAllOrdersResponse"
             }
           }
         },
@@ -546,7 +546,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/xudrpcRemoveAllOrdersRequest"
+              "$ref": "#/definitions/opendexrpcRemoveAllOrdersRequest"
             }
           }
         ],
@@ -563,7 +563,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcRemoveCurrencyResponse"
+              "$ref": "#/definitions/opendexrpcRemoveCurrencyResponse"
             }
           }
         },
@@ -573,7 +573,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/xudrpcRemoveCurrencyRequest"
+              "$ref": "#/definitions/opendexrpcRemoveCurrencyRequest"
             }
           }
         ],
@@ -584,13 +584,13 @@
     },
     "/v1/removeorder": {
       "post": {
-        "summary": "Removes an order from the order book by its local id. This should be called when an order is\ncanceled or filled outside of xud. Removed orders become immediately unavailable for swaps,\nand peers are notified that the order is no longer valid. Any portion of the order that is\non hold due to ongoing swaps will not be removed until after the swap attempts complete.\nshell: xucli removeorder \u003corder_id\u003e [quantity]",
+        "summary": "Removes an order from the order book by its local id. This should be called when an order is\ncanceled or filled outside of opendex. Removed orders become immediately unavailable for swaps,\nand peers are notified that the order is no longer valid. Any portion of the order that is\non hold due to ongoing swaps will not be removed until after the swap attempts complete.\nshell: xucli removeorder \u003corder_id\u003e [quantity]",
         "operationId": "RemoveOrder",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcRemoveOrderResponse"
+              "$ref": "#/definitions/opendexrpcRemoveOrderResponse"
             }
           }
         },
@@ -600,7 +600,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/xudrpcRemoveOrderRequest"
+              "$ref": "#/definitions/opendexrpcRemoveOrderRequest"
             }
           }
         ],
@@ -617,7 +617,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcRemovePairResponse"
+              "$ref": "#/definitions/opendexrpcRemovePairResponse"
             }
           }
         },
@@ -627,7 +627,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/xudrpcRemovePairRequest"
+              "$ref": "#/definitions/opendexrpcRemovePairRequest"
             }
           }
         ],
@@ -644,7 +644,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcSetLogLevelResponse"
+              "$ref": "#/definitions/opendexrpcSetLogLevelResponse"
             }
           }
         },
@@ -654,7 +654,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/xudrpcSetLogLevelRequest"
+              "$ref": "#/definitions/opendexrpcSetLogLevelRequest"
             }
           }
         ],
@@ -665,13 +665,13 @@
     },
     "/v1/shutdown": {
       "post": {
-        "summary": "Begin gracefully shutting down xud.\nshell: xucli shutdown",
+        "summary": "Begin gracefully shutting down opendex.\nshell: xucli shutdown",
         "operationId": "Shutdown",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcShutdownResponse"
+              "$ref": "#/definitions/opendexrpcShutdownResponse"
             }
           }
         },
@@ -681,7 +681,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/xudrpcShutdownRequest"
+              "$ref": "#/definitions/opendexrpcShutdownRequest"
             }
           }
         ],
@@ -698,7 +698,7 @@
           "200": {
             "description": "A successful response.(streaming responses)",
             "schema": {
-              "$ref": "#/x-stream-definitions/xudrpcOrderUpdate"
+              "$ref": "#/x-stream-definitions/opendexrpcOrderUpdate"
             }
           }
         },
@@ -725,7 +725,7 @@
           "200": {
             "description": "A successful response.(streaming responses)",
             "schema": {
-              "$ref": "#/x-stream-definitions/xudrpcSwapFailure"
+              "$ref": "#/x-stream-definitions/opendexrpcSwapFailure"
             }
           }
         },
@@ -752,7 +752,7 @@
           "200": {
             "description": "A successful response.(streaming responses)",
             "schema": {
-              "$ref": "#/x-stream-definitions/xudrpcSwapSuccess"
+              "$ref": "#/x-stream-definitions/opendexrpcSwapSuccess"
             }
           }
         },
@@ -773,13 +773,13 @@
     },
     "/v1/subscribeswapsaccepted": {
       "get": {
-        "summary": "Subscribes to accepted swaps. This stream emits a message when the local xud node \naccepts a swap request from a peer, but before the swap has actually succeeded.",
+        "summary": "Subscribes to accepted swaps. This stream emits a message when the local opendex node \naccepts a swap request from a peer, but before the swap has actually succeeded.",
         "operationId": "SubscribeSwapsAccepted",
         "responses": {
           "200": {
             "description": "A successful response.(streaming responses)",
             "schema": {
-              "$ref": "#/x-stream-definitions/xudrpcSwapAccepted"
+              "$ref": "#/x-stream-definitions/opendexrpcSwapAccepted"
             }
           }
         },
@@ -796,7 +796,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcTradeHistoryResponse"
+              "$ref": "#/definitions/opendexrpcTradeHistoryResponse"
             }
           }
         },
@@ -806,7 +806,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/xudrpcTradeHistoryRequest"
+              "$ref": "#/definitions/opendexrpcTradeHistoryRequest"
             }
           }
         ],
@@ -823,7 +823,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcTradingLimitsResponse"
+              "$ref": "#/definitions/opendexrpcTradingLimitsResponse"
             }
           }
         },
@@ -849,7 +849,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcUnbanResponse"
+              "$ref": "#/definitions/opendexrpcUnbanResponse"
             }
           }
         },
@@ -859,7 +859,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/xudrpcUnbanRequest"
+              "$ref": "#/definitions/opendexrpcUnbanRequest"
             }
           }
         ],
@@ -870,13 +870,13 @@
     },
     "/v1/walletdeposit": {
       "post": {
-        "summary": "Gets an address to deposit a given currency into the xud wallets.\nshell: xucli walletdeposit \u003ccurrency\u003e",
+        "summary": "Gets an address to deposit a given currency into the opendex wallets.\nshell: xucli walletdeposit \u003ccurrency\u003e",
         "operationId": "WalletDeposit",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcDepositResponse"
+              "$ref": "#/definitions/opendexrpcDepositResponse"
             }
           }
         },
@@ -886,7 +886,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/xudrpcDepositRequest"
+              "$ref": "#/definitions/opendexrpcDepositRequest"
             }
           }
         ],
@@ -897,13 +897,13 @@
     },
     "/v1/walletwithdraw": {
       "post": {
-        "summary": "Withdraws a given currency from the xud wallets to a specified address.\nshell: xucli withdraw [amount] [currency] \u003cdestination\u003e [fee]",
+        "summary": "Withdraws a given currency from the opendex wallets to a specified address.\nshell: xucli withdraw [amount] [currency] \u003cdestination\u003e [fee]",
         "operationId": "WalletWithdraw",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/xudrpcWithdrawResponse"
+              "$ref": "#/definitions/opendexrpcWithdrawResponse"
             }
           }
         },
@@ -913,7 +913,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/xudrpcWithdrawRequest"
+              "$ref": "#/definitions/opendexrpcWithdrawRequest"
             }
           }
         ],
@@ -990,47 +990,10 @@
       },
       "title": "A map of ticker symbols to lnd uris for this peer"
     },
-    "protobufAny": {
-      "type": "object",
-      "properties": {
-        "type_url": {
-          "type": "string"
-        },
-        "value": {
-          "type": "string",
-          "format": "byte"
-        }
-      }
-    },
-    "runtimeStreamError": {
-      "type": "object",
-      "properties": {
-        "grpc_code": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "http_code": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "message": {
-          "type": "string"
-        },
-        "http_status": {
-          "type": "string"
-        },
-        "details": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/protobufAny"
-          }
-        }
-      }
-    },
-    "xudrpcAddCurrencyResponse": {
+    "opendexrpcAddCurrencyResponse": {
       "type": "object"
     },
-    "xudrpcAddPairRequest": {
+    "opendexrpcAddPairRequest": {
       "type": "object",
       "properties": {
         "base_currency": {
@@ -1043,10 +1006,10 @@
         }
       }
     },
-    "xudrpcAddPairResponse": {
+    "opendexrpcAddPairResponse": {
       "type": "object"
     },
-    "xudrpcBalance": {
+    "opendexrpcBalance": {
       "type": "object",
       "properties": {
         "total_balance": {
@@ -1081,7 +1044,7 @@
         }
       }
     },
-    "xudrpcBanRequest": {
+    "opendexrpcBanRequest": {
       "type": "object",
       "properties": {
         "node_identifier": {
@@ -1090,10 +1053,10 @@
         }
       }
     },
-    "xudrpcBanResponse": {
+    "opendexrpcBanResponse": {
       "type": "object"
     },
-    "xudrpcChain": {
+    "opendexrpcChain": {
       "type": "object",
       "properties": {
         "chain": {
@@ -1106,10 +1069,10 @@
         }
       }
     },
-    "xudrpcChangePasswordResponse": {
+    "opendexrpcChangePasswordResponse": {
       "type": "object"
     },
-    "xudrpcChannels": {
+    "opendexrpcChannels": {
       "type": "object",
       "properties": {
         "active": {
@@ -1134,7 +1097,7 @@
         }
       }
     },
-    "xudrpcCloseChannelResponse": {
+    "opendexrpcCloseChannelResponse": {
       "type": "object",
       "properties": {
         "transaction_ids": {
@@ -1146,7 +1109,7 @@
         }
       }
     },
-    "xudrpcConnectRequest": {
+    "opendexrpcConnectRequest": {
       "type": "object",
       "properties": {
         "node_uri": {
@@ -1155,10 +1118,10 @@
         }
       }
     },
-    "xudrpcConnectResponse": {
+    "opendexrpcConnectResponse": {
       "type": "object"
     },
-    "xudrpcConnextInfo": {
+    "opendexrpcConnextInfo": {
       "type": "object",
       "properties": {
         "status": {
@@ -1175,7 +1138,7 @@
         }
       }
     },
-    "xudrpcCreateNodeResponse": {
+    "opendexrpcCreateNodeResponse": {
       "type": "object",
       "properties": {
         "seed_mnemonic": {
@@ -1183,7 +1146,7 @@
           "items": {
             "type": "string"
           },
-          "title": "The 24 word mnemonic to recover the xud identity key and underlying wallets"
+          "title": "The 24 word mnemonic to recover the opendex identity key and underlying wallets"
         },
         "initialized_lnds": {
           "type": "array",
@@ -1199,7 +1162,7 @@
         }
       }
     },
-    "xudrpcCurrency": {
+    "opendexrpcCurrency": {
       "type": "object",
       "properties": {
         "currency": {
@@ -1221,7 +1184,7 @@
         }
       }
     },
-    "xudrpcDepositRequest": {
+    "opendexrpcDepositRequest": {
       "type": "object",
       "properties": {
         "currency": {
@@ -1230,7 +1193,7 @@
         }
       }
     },
-    "xudrpcDepositResponse": {
+    "opendexrpcDepositResponse": {
       "type": "object",
       "properties": {
         "address": {
@@ -1239,7 +1202,7 @@
         }
       }
     },
-    "xudrpcDiscoverNodesRequest": {
+    "opendexrpcDiscoverNodesRequest": {
       "type": "object",
       "properties": {
         "node_identifier": {
@@ -1248,7 +1211,7 @@
         }
       }
     },
-    "xudrpcDiscoverNodesResponse": {
+    "opendexrpcDiscoverNodesResponse": {
       "type": "object",
       "properties": {
         "num_nodes": {
@@ -1257,7 +1220,7 @@
         }
       }
     },
-    "xudrpcExecuteSwapRequest": {
+    "opendexrpcExecuteSwapRequest": {
       "type": "object",
       "properties": {
         "order_id": {
@@ -1279,24 +1242,24 @@
         }
       }
     },
-    "xudrpcGetBalanceResponse": {
+    "opendexrpcGetBalanceResponse": {
       "type": "object",
       "properties": {
         "balances": {
           "type": "object",
           "additionalProperties": {
-            "$ref": "#/definitions/xudrpcBalance"
+            "$ref": "#/definitions/opendexrpcBalance"
           },
           "description": "A map between currency ticker symbols and their balances."
         }
       }
     },
-    "xudrpcGetInfoResponse": {
+    "opendexrpcGetInfoResponse": {
       "type": "object",
       "properties": {
         "version": {
           "type": "string",
-          "description": "The version of this instance of xud."
+          "description": "The version of this instance of opendex."
         },
         "node_pub_key": {
           "type": "string",
@@ -1320,18 +1283,18 @@
           "description": "The number of supported trading pairs."
         },
         "orders": {
-          "$ref": "#/definitions/xudrpcOrdersCount",
+          "$ref": "#/definitions/opendexrpcOrdersCount",
           "description": "The number of active, standing orders in the order book."
         },
         "lnd": {
           "type": "object",
           "additionalProperties": {
-            "$ref": "#/definitions/xudrpcLndInfo"
+            "$ref": "#/definitions/opendexrpcLndInfo"
           }
         },
         "alias": {
           "type": "string",
-          "description": "The alias of this instance of xud."
+          "description": "The alias of this instance of opendex."
         },
         "network": {
           "type": "string",
@@ -1344,11 +1307,11 @@
           }
         },
         "connext": {
-          "$ref": "#/definitions/xudrpcConnextInfo"
+          "$ref": "#/definitions/opendexrpcConnextInfo"
         }
       }
     },
-    "xudrpcGetMnemonicResponse": {
+    "opendexrpcGetMnemonicResponse": {
       "type": "object",
       "properties": {
         "seed_mnemonic": {
@@ -1359,7 +1322,7 @@
         }
       }
     },
-    "xudrpcGetNodeInfoResponse": {
+    "opendexrpcGetNodeInfoResponse": {
       "type": "object",
       "properties": {
         "reputationScore": {
@@ -1374,31 +1337,31 @@
         }
       }
     },
-    "xudrpcListCurrenciesResponse": {
+    "opendexrpcListCurrenciesResponse": {
       "type": "object",
       "properties": {
         "currencies": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/xudrpcCurrency"
+            "$ref": "#/definitions/opendexrpcCurrency"
           },
           "description": "The list of available currencies in the orderbook."
         }
       }
     },
-    "xudrpcListOrdersResponse": {
+    "opendexrpcListOrdersResponse": {
       "type": "object",
       "properties": {
         "orders": {
           "type": "object",
           "additionalProperties": {
-            "$ref": "#/definitions/xudrpcOrders"
+            "$ref": "#/definitions/opendexrpcOrders"
           },
           "description": "A map between pair ids and their buy and sell orders."
         }
       }
     },
-    "xudrpcListPairsResponse": {
+    "opendexrpcListPairsResponse": {
       "type": "object",
       "properties": {
         "pairs": {
@@ -1410,31 +1373,31 @@
         }
       }
     },
-    "xudrpcListPeersResponse": {
+    "opendexrpcListPeersResponse": {
       "type": "object",
       "properties": {
         "peers": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/xudrpcPeer"
+            "$ref": "#/definitions/opendexrpcPeer"
           },
           "description": "The list of connected peers."
         }
       }
     },
-    "xudrpcLndInfo": {
+    "opendexrpcLndInfo": {
       "type": "object",
       "properties": {
         "status": {
           "type": "string"
         },
         "channels": {
-          "$ref": "#/definitions/xudrpcChannels"
+          "$ref": "#/definitions/opendexrpcChannels"
         },
         "chains": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/xudrpcChain"
+            "$ref": "#/definitions/opendexrpcChain"
           }
         },
         "blockheight": {
@@ -1455,7 +1418,7 @@
         }
       }
     },
-    "xudrpcLogLevel": {
+    "opendexrpcLogLevel": {
       "type": "string",
       "enum": [
         "ALERT",
@@ -1468,7 +1431,7 @@
       ],
       "default": "ALERT"
     },
-    "xudrpcNodeIdentifier": {
+    "opendexrpcNodeIdentifier": {
       "type": "object",
       "properties": {
         "node_pub_key": {
@@ -1481,7 +1444,7 @@
         }
       }
     },
-    "xudrpcOpenChannelResponse": {
+    "opendexrpcOpenChannelResponse": {
       "type": "object",
       "properties": {
         "transaction_id": {
@@ -1490,7 +1453,7 @@
         }
       }
     },
-    "xudrpcOrder": {
+    "opendexrpcOrder": {
       "type": "object",
       "properties": {
         "price": {
@@ -1512,7 +1475,7 @@
           "description": "A UUID for this order."
         },
         "node_identifier": {
-          "$ref": "#/definitions/xudrpcNodeIdentifier",
+          "$ref": "#/definitions/opendexrpcNodeIdentifier",
           "description": "The identifier of the node that created this order."
         },
         "local_id": {
@@ -1525,7 +1488,7 @@
           "description": "The epoch time in milliseconds when this order was created."
         },
         "side": {
-          "$ref": "#/definitions/xudrpcOrderSide",
+          "$ref": "#/definitions/opendexrpcOrderSide",
           "title": "Whether this order is a buy or sell"
         },
         "is_own_order": {
@@ -1540,7 +1503,7 @@
         }
       }
     },
-    "xudrpcOrderBookRequest": {
+    "opendexrpcOrderBookRequest": {
       "type": "object",
       "properties": {
         "pair_id": {
@@ -1559,7 +1522,7 @@
         }
       }
     },
-    "xudrpcOrderBookResponse": {
+    "opendexrpcOrderBookResponse": {
       "type": "object",
       "properties": {
         "buckets": {
@@ -1571,7 +1534,7 @@
         }
       }
     },
-    "xudrpcOrderRemoval": {
+    "opendexrpcOrderRemoval": {
       "type": "object",
       "properties": {
         "quantity": {
@@ -1598,7 +1561,7 @@
         }
       }
     },
-    "xudrpcOrderSide": {
+    "opendexrpcOrderSide": {
       "type": "string",
       "enum": [
         "BUY",
@@ -1607,54 +1570,54 @@
       ],
       "default": "BUY"
     },
-    "xudrpcOrderUpdate": {
+    "opendexrpcOrderUpdate": {
       "type": "object",
       "properties": {
         "order": {
-          "$ref": "#/definitions/xudrpcOrder",
+          "$ref": "#/definitions/opendexrpcOrder",
           "description": "An order that was added to the order book."
         },
         "order_removal": {
-          "$ref": "#/definitions/xudrpcOrderRemoval",
+          "$ref": "#/definitions/opendexrpcOrderRemoval",
           "description": "An order (or portion thereof) that was removed from the order book."
         }
       }
     },
-    "xudrpcOrders": {
+    "opendexrpcOrders": {
       "type": "object",
       "properties": {
         "buy_orders": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/xudrpcOrder"
+            "$ref": "#/definitions/opendexrpcOrder"
           },
           "description": "A list of buy orders sorted by descending price."
         },
         "sell_orders": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/xudrpcOrder"
+            "$ref": "#/definitions/opendexrpcOrder"
           },
           "description": "A list of sell orders sorted by ascending price."
         }
       }
     },
-    "xudrpcOrdersCount": {
+    "opendexrpcOrdersCount": {
       "type": "object",
       "properties": {
         "peer": {
           "type": "integer",
           "format": "int64",
-          "description": "The number of orders belonging to remote xud nodes."
+          "description": "The number of orders belonging to remote opendex nodes."
         },
         "own": {
           "type": "integer",
           "format": "int64",
-          "description": "The number of orders belonging to our local xud node."
+          "description": "The number of orders belonging to our local opendex node."
         }
       }
     },
-    "xudrpcPeer": {
+    "opendexrpcPeer": {
       "type": "object",
       "properties": {
         "address": {
@@ -1686,7 +1649,7 @@
         },
         "xud_version": {
           "type": "string",
-          "description": "The version of xud being used by the peer."
+          "description": "The version of opendex being used by the peer."
         },
         "seconds_connected": {
           "type": "integer",
@@ -1709,28 +1672,28 @@
         }
       }
     },
-    "xudrpcPlaceOrderEvent": {
+    "opendexrpcPlaceOrderEvent": {
       "type": "object",
       "properties": {
         "match": {
-          "$ref": "#/definitions/xudrpcOrder",
+          "$ref": "#/definitions/opendexrpcOrder",
           "description": "An order (or portion thereof) that matched the newly placed order."
         },
         "swap_success": {
-          "$ref": "#/definitions/xudrpcSwapSuccess",
+          "$ref": "#/definitions/opendexrpcSwapSuccess",
           "description": "A successful swap of a peer order that matched the newly placed order."
         },
         "remaining_order": {
-          "$ref": "#/definitions/xudrpcOrder",
+          "$ref": "#/definitions/opendexrpcOrder",
           "description": "The remaining portion of the order, after matches, that enters the order book."
         },
         "swap_failure": {
-          "$ref": "#/definitions/xudrpcSwapFailure",
+          "$ref": "#/definitions/opendexrpcSwapFailure",
           "description": "A swap attempt that failed."
         }
       }
     },
-    "xudrpcPlaceOrderRequest": {
+    "opendexrpcPlaceOrderRequest": {
       "type": "object",
       "properties": {
         "price": {
@@ -1752,7 +1715,7 @@
           "description": "The local id to assign to the order."
         },
         "side": {
-          "$ref": "#/definitions/xudrpcOrderSide",
+          "$ref": "#/definitions/opendexrpcOrderSide",
           "description": "Whether the order is a buy or sell."
         },
         "replace_order_id": {
@@ -1766,40 +1729,40 @@
         }
       }
     },
-    "xudrpcPlaceOrderResponse": {
+    "opendexrpcPlaceOrderResponse": {
       "type": "object",
       "properties": {
         "internal_matches": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/xudrpcOrder"
+            "$ref": "#/definitions/opendexrpcOrder"
           },
           "description": "A list of own orders (or portions thereof) that matched the newly placed order."
         },
         "swap_successes": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/xudrpcSwapSuccess"
+            "$ref": "#/definitions/opendexrpcSwapSuccess"
           },
           "description": "A list of successful swaps of peer orders that matched the newly placed order."
         },
         "remaining_order": {
-          "$ref": "#/definitions/xudrpcOrder",
+          "$ref": "#/definitions/opendexrpcOrder",
           "description": "The remaining portion of the order, after matches, that enters the order book."
         },
         "swap_failures": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/xudrpcSwapFailure"
+            "$ref": "#/definitions/opendexrpcSwapFailure"
           },
           "description": "A list of swap attempts that failed."
         }
       }
     },
-    "xudrpcRemoveAllOrdersRequest": {
+    "opendexrpcRemoveAllOrdersRequest": {
       "type": "object"
     },
-    "xudrpcRemoveAllOrdersResponse": {
+    "opendexrpcRemoveAllOrdersResponse": {
       "type": "object",
       "properties": {
         "removed_order_ids": {
@@ -1818,7 +1781,7 @@
         }
       }
     },
-    "xudrpcRemoveCurrencyRequest": {
+    "opendexrpcRemoveCurrencyRequest": {
       "type": "object",
       "properties": {
         "currency": {
@@ -1827,10 +1790,10 @@
         }
       }
     },
-    "xudrpcRemoveCurrencyResponse": {
+    "opendexrpcRemoveCurrencyResponse": {
       "type": "object"
     },
-    "xudrpcRemoveOrderRequest": {
+    "opendexrpcRemoveOrderRequest": {
       "type": "object",
       "properties": {
         "order_id": {
@@ -1844,7 +1807,7 @@
         }
       }
     },
-    "xudrpcRemoveOrderResponse": {
+    "opendexrpcRemoveOrderResponse": {
       "type": "object",
       "properties": {
         "quantity_on_hold": {
@@ -1868,7 +1831,7 @@
         }
       }
     },
-    "xudrpcRemovePairRequest": {
+    "opendexrpcRemovePairRequest": {
       "type": "object",
       "properties": {
         "pair_id": {
@@ -1877,10 +1840,10 @@
         }
       }
     },
-    "xudrpcRemovePairResponse": {
+    "opendexrpcRemovePairResponse": {
       "type": "object"
     },
-    "xudrpcRestoreNodeResponse": {
+    "opendexrpcRestoreNodeResponse": {
       "type": "object",
       "properties": {
         "restored_lnds": {
@@ -1897,7 +1860,7 @@
         }
       }
     },
-    "xudrpcRole": {
+    "opendexrpcRole": {
       "type": "string",
       "enum": [
         "TAKER",
@@ -1906,24 +1869,24 @@
       ],
       "default": "TAKER"
     },
-    "xudrpcSetLogLevelRequest": {
+    "opendexrpcSetLogLevelRequest": {
       "type": "object",
       "properties": {
         "log_level": {
-          "$ref": "#/definitions/xudrpcLogLevel"
+          "$ref": "#/definitions/opendexrpcLogLevel"
         }
       }
     },
-    "xudrpcSetLogLevelResponse": {
+    "opendexrpcSetLogLevelResponse": {
       "type": "object"
     },
-    "xudrpcShutdownRequest": {
+    "opendexrpcShutdownRequest": {
       "type": "object"
     },
-    "xudrpcShutdownResponse": {
+    "opendexrpcShutdownResponse": {
       "type": "object"
     },
-    "xudrpcSwapAccepted": {
+    "opendexrpcSwapAccepted": {
       "type": "object",
       "properties": {
         "order_id": {
@@ -1976,7 +1939,7 @@
         }
       }
     },
-    "xudrpcSwapFailure": {
+    "opendexrpcSwapFailure": {
       "type": "object",
       "properties": {
         "order_id": {
@@ -2002,7 +1965,7 @@
         }
       }
     },
-    "xudrpcSwapSuccess": {
+    "opendexrpcSwapSuccess": {
       "type": "object",
       "properties": {
         "order_id": {
@@ -2041,7 +2004,7 @@
           "description": "The node pub key of the peer that executed this order."
         },
         "role": {
-          "$ref": "#/definitions/xudrpcRole",
+          "$ref": "#/definitions/opendexrpcRole",
           "description": "Our role in the swap, either MAKER or TAKER."
         },
         "currency_received": {
@@ -2063,15 +2026,15 @@
         }
       }
     },
-    "xudrpcTrade": {
+    "opendexrpcTrade": {
       "type": "object",
       "properties": {
         "maker_order": {
-          "$ref": "#/definitions/xudrpcOrder",
+          "$ref": "#/definitions/opendexrpcOrder",
           "description": "The maker order involved in this trade."
         },
         "taker_order": {
-          "$ref": "#/definitions/xudrpcOrder",
+          "$ref": "#/definitions/opendexrpcOrder",
           "description": "The taker order involved in this trade. Note that when a trade occurs from\na remote peer filling one of our orders, we do not receive the order (only a\nswap request) and this field will be empty."
         },
         "r_hash": {
@@ -2093,7 +2056,7 @@
           "description": "The price used for the trade."
         },
         "role": {
-          "$ref": "#/definitions/xudrpcRole",
+          "$ref": "#/definitions/opendexrpcRole",
           "description": "Our role in the trade."
         },
         "executed_at": {
@@ -2102,16 +2065,16 @@
           "title": "The epoch time in milliseconds that this trade was executed"
         },
         "side": {
-          "$ref": "#/definitions/xudrpcOrderSide",
+          "$ref": "#/definitions/opendexrpcOrderSide",
           "description": "Whether this node was on the buy or sell side of the trade - or both in case of internal trades."
         },
         "counterparty": {
-          "$ref": "#/definitions/xudrpcNodeIdentifier",
+          "$ref": "#/definitions/opendexrpcNodeIdentifier",
           "description": "The counterparty to this trade, if applicable."
         }
       }
     },
-    "xudrpcTradeHistoryRequest": {
+    "opendexrpcTradeHistoryRequest": {
       "type": "object",
       "properties": {
         "limit": {
@@ -2121,18 +2084,18 @@
         }
       }
     },
-    "xudrpcTradeHistoryResponse": {
+    "opendexrpcTradeHistoryResponse": {
       "type": "object",
       "properties": {
         "trades": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/xudrpcTrade"
+            "$ref": "#/definitions/opendexrpcTrade"
           }
         }
       }
     },
-    "xudrpcTradingLimits": {
+    "opendexrpcTradingLimits": {
       "type": "object",
       "properties": {
         "max_sell": {
@@ -2157,19 +2120,19 @@
         }
       }
     },
-    "xudrpcTradingLimitsResponse": {
+    "opendexrpcTradingLimitsResponse": {
       "type": "object",
       "properties": {
         "limits": {
           "type": "object",
           "additionalProperties": {
-            "$ref": "#/definitions/xudrpcTradingLimits"
+            "$ref": "#/definitions/opendexrpcTradingLimits"
           },
           "description": "A map between currency ticker symbols and their trading limits."
         }
       }
     },
-    "xudrpcUnbanRequest": {
+    "opendexrpcUnbanRequest": {
       "type": "object",
       "properties": {
         "node_identifier": {
@@ -2183,10 +2146,10 @@
         }
       }
     },
-    "xudrpcUnbanResponse": {
+    "opendexrpcUnbanResponse": {
       "type": "object"
     },
-    "xudrpcUnlockNodeResponse": {
+    "opendexrpcUnlockNodeResponse": {
       "type": "object",
       "properties": {
         "unlocked_lnds": {
@@ -2205,7 +2168,7 @@
         }
       }
     },
-    "xudrpcWithdrawRequest": {
+    "opendexrpcWithdrawRequest": {
       "type": "object",
       "properties": {
         "currency": {
@@ -2233,7 +2196,7 @@
         }
       }
     },
-    "xudrpcWithdrawResponse": {
+    "opendexrpcWithdrawResponse": {
       "type": "object",
       "properties": {
         "transaction_id": {
@@ -2241,68 +2204,105 @@
           "description": "The id of the withdrawal transaction."
         }
       }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "runtimeStreamError": {
+      "type": "object",
+      "properties": {
+        "grpc_code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "http_code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "http_status": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
     }
   },
   "x-stream-definitions": {
-    "xudrpcOrderUpdate": {
+    "opendexrpcOrderUpdate": {
       "type": "object",
       "properties": {
         "result": {
-          "$ref": "#/definitions/xudrpcOrderUpdate"
+          "$ref": "#/definitions/opendexrpcOrderUpdate"
         },
         "error": {
           "$ref": "#/definitions/runtimeStreamError"
         }
       },
-      "title": "Stream result of xudrpcOrderUpdate"
+      "title": "Stream result of opendexrpcOrderUpdate"
     },
-    "xudrpcPlaceOrderEvent": {
+    "opendexrpcPlaceOrderEvent": {
       "type": "object",
       "properties": {
         "result": {
-          "$ref": "#/definitions/xudrpcPlaceOrderEvent"
+          "$ref": "#/definitions/opendexrpcPlaceOrderEvent"
         },
         "error": {
           "$ref": "#/definitions/runtimeStreamError"
         }
       },
-      "title": "Stream result of xudrpcPlaceOrderEvent"
+      "title": "Stream result of opendexrpcPlaceOrderEvent"
     },
-    "xudrpcSwapAccepted": {
+    "opendexrpcSwapAccepted": {
       "type": "object",
       "properties": {
         "result": {
-          "$ref": "#/definitions/xudrpcSwapAccepted"
+          "$ref": "#/definitions/opendexrpcSwapAccepted"
         },
         "error": {
           "$ref": "#/definitions/runtimeStreamError"
         }
       },
-      "title": "Stream result of xudrpcSwapAccepted"
+      "title": "Stream result of opendexrpcSwapAccepted"
     },
-    "xudrpcSwapFailure": {
+    "opendexrpcSwapFailure": {
       "type": "object",
       "properties": {
         "result": {
-          "$ref": "#/definitions/xudrpcSwapFailure"
+          "$ref": "#/definitions/opendexrpcSwapFailure"
         },
         "error": {
           "$ref": "#/definitions/runtimeStreamError"
         }
       },
-      "title": "Stream result of xudrpcSwapFailure"
+      "title": "Stream result of opendexrpcSwapFailure"
     },
-    "xudrpcSwapSuccess": {
+    "opendexrpcSwapSuccess": {
       "type": "object",
       "properties": {
         "result": {
-          "$ref": "#/definitions/xudrpcSwapSuccess"
+          "$ref": "#/definitions/opendexrpcSwapSuccess"
         },
         "error": {
           "$ref": "#/definitions/runtimeStreamError"
         }
       },
-      "title": "Stream result of xudrpcSwapSuccess"
+      "title": "Stream result of opendexrpcSwapSuccess"
     }
   }
 }

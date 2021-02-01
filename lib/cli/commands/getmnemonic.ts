@@ -1,5 +1,5 @@
 import { Arguments } from 'yargs';
-import { GetMnemonicRequest, GetMnemonicResponse } from '../../proto/xudrpc_pb';
+import { GetMnemonicRequest, GetMnemonicResponse } from '../../proto/opendexrpc_pb';
 import { callback, loadXudClient } from '../command';
 import { showSeed } from '../utils';
 

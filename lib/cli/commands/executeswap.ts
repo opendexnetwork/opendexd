@@ -1,7 +1,7 @@
 import Table, { VerticalTable } from 'cli-table3';
 import colors from 'colors/safe';
 import { Arguments, Argv } from 'yargs';
-import { ExecuteSwapRequest, SwapSuccess } from '../../proto/xudrpc_pb';
+import { ExecuteSwapRequest, SwapSuccess } from '../../proto/opendexrpc_pb';
 import { callback, loadXudClient } from '../command';
 import { coinsToSats } from '../utils';
 

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ExchangeUnion/xud-simulation/xudrpc"
+	"github.com/ExchangeUnion/xud-simulation/opendexrpc"
 	"github.com/ExchangeUnion/xud-simulation/xudtest"
 )
 
@@ -60,22 +60,22 @@ func testMakerCrashedDuringSwap(net *xudtest.NetworkHarness, ht *harnessTest, cu
 	alicePrevLtcBalance := alicePrevBalance.ltc.channel.GetBalance()
 
 	// Place an order on Alice.
-	aliceOrderReq := &xudrpc.PlaceOrderRequest{
+	aliceOrderReq := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "testMakerCrashedDuringSwap",
 		Price:    0.02,
 		Quantity: uint64(ltcQuantity),
 		PairId:   "LTC/BTC",
-		Side:     xudrpc.OrderSide_BUY,
+		Side:     opendexrpc.OrderSide_BUY,
 	}
 	ht.act.placeOrderAndBroadcast(net.Alice, net.Bob, aliceOrderReq)
 
 	// Place a matching order on Bob.
-	bobOrderReq := &xudrpc.PlaceOrderRequest{
+	bobOrderReq := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "testMakerCrashedDuringSwap",
 		Price:    aliceOrderReq.Price,
 		Quantity: aliceOrderReq.Quantity,
 		PairId:   aliceOrderReq.PairId,
-		Side:     xudrpc.OrderSide_SELL,
+		Side:     opendexrpc.OrderSide_SELL,
 	}
 
 	_, err = net.Bob.Client.PlaceOrderSync(ht.ctx, bobOrderReq)
@@ -116,22 +116,22 @@ func testMakerLndCrashedBeforeSettlement(net *xudtest.NetworkHarness, ht *harnes
 	alicePrevLtcBalance := alicePrevBalance.ltc.channel.GetBalance()
 
 	// Place an order on Alice.
-	aliceOrderReq := &xudrpc.PlaceOrderRequest{
+	aliceOrderReq := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "testMakerLndCrashedBeforeSettlement",
 		Price:    0.02,
 		Quantity: uint64(ltcQuantity),
 		PairId:   "LTC/BTC",
-		Side:     xudrpc.OrderSide_BUY,
+		Side:     opendexrpc.OrderSide_BUY,
 	}
 	ht.act.placeOrderAndBroadcast(net.Alice, net.Bob, aliceOrderReq)
 
 	// Place a matching order on Bob.
-	bobOrderReq := &xudrpc.PlaceOrderRequest{
+	bobOrderReq := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "testMakerLndCrashedBeforeSettlement",
 		Price:    aliceOrderReq.Price,
 		Quantity: aliceOrderReq.Quantity,
 		PairId:   aliceOrderReq.PairId,
-		Side:     xudrpc.OrderSide_SELL,
+		Side:     opendexrpc.OrderSide_SELL,
 	}
 	go net.Bob.Client.PlaceOrderSync(ht.ctx, bobOrderReq)
 
@@ -178,22 +178,22 @@ func testMakerCrashedAfterSendDelayedSettlement(net *xudtest.NetworkHarness, ht 
 	alicePrevLtcBalance := alicePrevBalance.ltc.channel.GetBalance()
 
 	// Place an order on Alice.
-	aliceOrderReq := &xudrpc.PlaceOrderRequest{
+	aliceOrderReq := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "testMakerCrashedAfterSendDelayedSettlement",
 		Price:    0.02,
 		Quantity: uint64(ltcQuantity),
 		PairId:   "LTC/BTC",
-		Side:     xudrpc.OrderSide_BUY,
+		Side:     opendexrpc.OrderSide_BUY,
 	}
 	ht.act.placeOrderAndBroadcast(net.Alice, net.Bob, aliceOrderReq)
 
 	// Place a matching order on Bob.
-	bobOrderReq := &xudrpc.PlaceOrderRequest{
+	bobOrderReq := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "testMakerCrashedAfterSendDelayedSettlement",
 		Price:    aliceOrderReq.Price,
 		Quantity: aliceOrderReq.Quantity,
 		PairId:   aliceOrderReq.PairId,
-		Side:     xudrpc.OrderSide_SELL,
+		Side:     opendexrpc.OrderSide_SELL,
 	}
 	go net.Bob.Client.PlaceOrderSync(ht.ctx, bobOrderReq)
 
@@ -241,31 +241,31 @@ func testMakerCrashedAfterSendDelayedSettlementConnextOut(net *xudtest.NetworkHa
 	ht.assert.NoError(err)
 
 	// Save the initial balances.
-	alicePrevBalance, err := net.Alice.Client.GetBalance(ht.ctx, &xudrpc.GetBalanceRequest{Currency: "BTC"})
+	alicePrevBalance, err := net.Alice.Client.GetBalance(ht.ctx, &opendexrpc.GetBalanceRequest{Currency: "BTC"})
 	ht.assert.NoError(err)
 	alicePrevBtcBalance := alicePrevBalance.Balances["BTC"]
 
-	bobPrevBalance, err := net.Bob.Client.GetBalance(ht.ctx, &xudrpc.GetBalanceRequest{Currency: "ETH"})
+	bobPrevBalance, err := net.Bob.Client.GetBalance(ht.ctx, &opendexrpc.GetBalanceRequest{Currency: "ETH"})
 	ht.assert.NoError(err)
 	bobPrevEthBalance := bobPrevBalance.Balances["ETH"]
 
 	// Place an order on Alice.
-	aliceOrderReq := &xudrpc.PlaceOrderRequest{
+	aliceOrderReq := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "testMakerCrashedAfterSendDelayedSettlementConnextOut",
 		Price:    40,
 		Quantity: 100,
 		PairId:   "BTC/ETH",
-		Side:     xudrpc.OrderSide_BUY,
+		Side:     opendexrpc.OrderSide_BUY,
 	}
 	ht.act.placeOrderAndBroadcast(net.Alice, net.Bob, aliceOrderReq)
 
 	// Place a matching order on Bob.
-	bobOrderReq := &xudrpc.PlaceOrderRequest{
+	bobOrderReq := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "testMakerCrashedAfterSendDelayedSettlementConnextOut",
 		Price:    aliceOrderReq.Price,
 		Quantity: aliceOrderReq.Quantity,
 		PairId:   aliceOrderReq.PairId,
-		Side:     xudrpc.OrderSide_SELL,
+		Side:     opendexrpc.OrderSide_SELL,
 	}
 	go net.Bob.Client.PlaceOrderSync(ht.ctx, bobOrderReq)
 
@@ -278,12 +278,12 @@ func testMakerCrashedAfterSendDelayedSettlementConnextOut(net *xudtest.NetworkHa
 	// Verify that alice hasn't claimed her BTC yet. The incoming BTC payment
 	// cannot be settled until the outgoing ETH payment is settled by bob,
 	// which is being intentionally delayed.
-	aliceIntermediateBalance, err := net.Alice.Client.GetBalance(ht.ctx, &xudrpc.GetBalanceRequest{Currency: "BTC"})
+	aliceIntermediateBalance, err := net.Alice.Client.GetBalance(ht.ctx, &opendexrpc.GetBalanceRequest{Currency: "BTC"})
 	ht.assert.NoError(err)
 	aliceIntermediateBtcBalance := aliceIntermediateBalance.Balances["BTC"]
 	ht.assert.Equal(alicePrevBtcBalance.ChannelBalance, aliceIntermediateBtcBalance.ChannelBalance)
 
-	bobIntermediateBalance, err := net.Bob.Client.GetBalance(ht.ctx, &xudrpc.GetBalanceRequest{Currency: "ETH"})
+	bobIntermediateBalance, err := net.Bob.Client.GetBalance(ht.ctx, &opendexrpc.GetBalanceRequest{Currency: "ETH"})
 	ht.assert.NoError(err)
 	bobIntermediateEthBalance := bobIntermediateBalance.Balances["ETH"]
 	ht.assert.Equal(bobPrevEthBalance.ChannelBalance, bobIntermediateEthBalance.ChannelBalance)
@@ -292,13 +292,13 @@ func testMakerCrashedAfterSendDelayedSettlementConnextOut(net *xudtest.NetworkHa
 	time.Sleep(10 * time.Second)
 
 	// Verify that both parties received their payment.
-	bobBalance, err := net.Bob.Client.GetBalance(ht.ctx, &xudrpc.GetBalanceRequest{Currency: "ETH"})
+	bobBalance, err := net.Bob.Client.GetBalance(ht.ctx, &opendexrpc.GetBalanceRequest{Currency: "ETH"})
 	ht.assert.NoError(err)
 	bobEthBalance := bobBalance.Balances["ETH"]
 	diff := uint64(float64(bobOrderReq.Quantity) * bobOrderReq.Price)
 	ht.assert.Equal(bobPrevEthBalance.ChannelBalance+diff, bobEthBalance.ChannelBalance)
 
-	aliceBalance, err := net.Alice.Client.GetBalance(ht.ctx, &xudrpc.GetBalanceRequest{Currency: "BTC"})
+	aliceBalance, err := net.Alice.Client.GetBalance(ht.ctx, &opendexrpc.GetBalanceRequest{Currency: "BTC"})
 	ht.assert.NoError(err)
 	aliceBtcBalance := aliceBalance.Balances["BTC"]
 	diff = aliceOrderReq.Quantity
@@ -327,21 +327,21 @@ func testMakerCrashedAfterSendDelayedSettlementConnextIn(net *xudtest.NetworkHar
 	ht.assert.NoError(err)
 
 	// Save the initial balances.
-	alicePrevBalance, err := net.Alice.Client.GetBalance(ht.ctx, &xudrpc.GetBalanceRequest{Currency: "ETH"})
+	alicePrevBalance, err := net.Alice.Client.GetBalance(ht.ctx, &opendexrpc.GetBalanceRequest{Currency: "ETH"})
 	ht.assert.NoError(err)
 	alicePrevEthBalance := alicePrevBalance.Balances["ETH"]
 
-	bobPrevBalance, err := net.Bob.Client.GetBalance(ht.ctx, &xudrpc.GetBalanceRequest{Currency: "BTC"})
+	bobPrevBalance, err := net.Bob.Client.GetBalance(ht.ctx, &opendexrpc.GetBalanceRequest{Currency: "BTC"})
 	ht.assert.NoError(err)
 	bobPrevBtcBalance := bobPrevBalance.Balances["BTC"]
 
 	// Place an order on Alice.
-	aliceOrderReq := &xudrpc.PlaceOrderRequest{
+	aliceOrderReq := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "testMakerCrashedAfterSendDelayedSettlementConnextIn",
 		Price:    40,
 		Quantity: 100,
 		PairId:   "BTC/ETH",
-		Side:     xudrpc.OrderSide_SELL,
+		Side:     opendexrpc.OrderSide_SELL,
 	}
 	ht.act.placeOrderAndBroadcast(net.Alice, net.Bob, aliceOrderReq)
 
@@ -349,12 +349,12 @@ func testMakerCrashedAfterSendDelayedSettlementConnextIn(net *xudtest.NetworkHar
 	time.Sleep(1 * time.Second)
 
 	// Place a matching order on Bob.
-	bobOrderReq := &xudrpc.PlaceOrderRequest{
+	bobOrderReq := &opendexrpc.PlaceOrderRequest{
 		OrderId:  "testMakerCrashedAfterSendDelayedSettlementConnextIn",
 		Price:    aliceOrderReq.Price,
 		Quantity: aliceOrderReq.Quantity,
 		PairId:   aliceOrderReq.PairId,
-		Side:     xudrpc.OrderSide_BUY,
+		Side:     opendexrpc.OrderSide_BUY,
 	}
 	go net.Bob.Client.PlaceOrderSync(ht.ctx, bobOrderReq)
 
@@ -367,12 +367,12 @@ func testMakerCrashedAfterSendDelayedSettlementConnextIn(net *xudtest.NetworkHar
 	// Verify that alice hasn't claimed her ETH yet. The incoming ETH payment
 	// cannot be settled until the outgoing BTC payment is settled by bob,
 	// which is being intentionally delayed.
-	aliceIntermediateBalance, err := net.Alice.Client.GetBalance(ht.ctx, &xudrpc.GetBalanceRequest{Currency: "ETH"})
+	aliceIntermediateBalance, err := net.Alice.Client.GetBalance(ht.ctx, &opendexrpc.GetBalanceRequest{Currency: "ETH"})
 	ht.assert.NoError(err)
 	aliceIntermediateEthBalance := aliceIntermediateBalance.Balances["ETH"]
 	ht.assert.Equal(alicePrevEthBalance.ChannelBalance, aliceIntermediateEthBalance.ChannelBalance)
 
-	bobIntermediateBalance, err := net.Bob.Client.GetBalance(ht.ctx, &xudrpc.GetBalanceRequest{Currency: "BTC"})
+	bobIntermediateBalance, err := net.Bob.Client.GetBalance(ht.ctx, &opendexrpc.GetBalanceRequest{Currency: "BTC"})
 	ht.assert.NoError(err)
 	bobIntermediateBtcBalance := bobIntermediateBalance.Balances["BTC"]
 	ht.assert.Equal(bobPrevBtcBalance.ChannelBalance, bobIntermediateBtcBalance.ChannelBalance)
@@ -381,13 +381,13 @@ func testMakerCrashedAfterSendDelayedSettlementConnextIn(net *xudtest.NetworkHar
 	time.Sleep(10 * time.Second)
 
 	// Verify that both parties received their payment.
-	bobBalance, err := net.Bob.Client.GetBalance(ht.ctx, &xudrpc.GetBalanceRequest{Currency: "BTC"})
+	bobBalance, err := net.Bob.Client.GetBalance(ht.ctx, &opendexrpc.GetBalanceRequest{Currency: "BTC"})
 	ht.assert.NoError(err)
 	bobBtcBalance := bobBalance.Balances["BTC"]
 	diff := bobOrderReq.Quantity
 	ht.assert.Equal(bobPrevBtcBalance.ChannelBalance+diff, bobBtcBalance.ChannelBalance)
 
-	aliceBalance, err := net.Alice.Client.GetBalance(ht.ctx, &xudrpc.GetBalanceRequest{Currency: "ETH"})
+	aliceBalance, err := net.Alice.Client.GetBalance(ht.ctx, &opendexrpc.GetBalanceRequest{Currency: "ETH"})
 	ht.assert.NoError(err)
 	aliceEthBalance := aliceBalance.Balances["ETH"]
 	diff = uint64(float64(aliceOrderReq.Quantity) * aliceOrderReq.Price)

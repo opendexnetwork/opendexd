@@ -1,5 +1,5 @@
 import { Arguments, Argv } from 'yargs';
-import { ConnectRequest } from '../../proto/xudrpc_pb';
+import { ConnectRequest } from '../../proto/opendexrpc_pb';
 import { callback, loadXudClient } from '../command';
 
 export const command = 'connect <node_uri>';

@@ -1,5 +1,5 @@
 import { Arguments, Argv } from 'yargs';
-import { LogLevel, SetLogLevelRequest } from '../../proto/xudrpc_pb';
+import { LogLevel, SetLogLevelRequest } from '../../proto/opendexrpc_pb';
 import { callback, loadXudClient } from '../command';
 import { LevelPriority } from '../../Logger';
 

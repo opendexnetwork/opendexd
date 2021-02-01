@@ -1,5 +1,5 @@
 import { Arguments, Argv } from 'yargs';
-import { DiscoverNodesRequest } from '../../proto/xudrpc_pb';
+import { DiscoverNodesRequest } from '../../proto/opendexrpc_pb';
 import { callback, loadXudClient } from '../command';
 
 export const command = 'discovernodes <node_identifier>';

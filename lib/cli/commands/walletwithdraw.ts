@@ -1,5 +1,5 @@
 import { Arguments, Argv } from 'yargs';
-import { WithdrawRequest } from '../../proto/xudrpc_pb';
+import { WithdrawRequest } from '../../proto/opendexrpc_pb';
 import { callback, loadXudClient } from '../command';
 import { coinsToSats } from '../utils';
 

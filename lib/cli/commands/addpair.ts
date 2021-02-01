@@ -1,5 +1,5 @@
 import { Arguments, Argv } from 'yargs';
-import { AddPairRequest } from '../../proto/xudrpc_pb';
+import { AddPairRequest } from '../../proto/opendexrpc_pb';
 import { callback, loadXudClient } from '../command';
 
 export const command = 'addpair <pair_id|base_currency> [quote_currency]';

@@ -2,7 +2,7 @@ import Table, { HorizontalTable } from 'cli-table3';
 import colors from 'colors/safe';
 import { Arguments } from 'yargs';
 import { SwapClientType } from '../../constants/enums';
-import { ListCurrenciesRequest, ListCurrenciesResponse } from '../../proto/xudrpc_pb';
+import { ListCurrenciesRequest, ListCurrenciesResponse } from '../../proto/opendexrpc_pb';
 import { callback, loadXudClient } from '../command';
 
 const HEADERS = [

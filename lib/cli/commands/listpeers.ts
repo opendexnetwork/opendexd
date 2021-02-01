@@ -1,7 +1,7 @@
 import Table, { HorizontalTable } from 'cli-table3';
 import colors from 'colors/safe';
 import { Arguments } from 'yargs';
-import { ListPeersRequest, ListPeersResponse, Peer } from '../../proto/xudrpc_pb';
+import { ListPeersRequest, ListPeersResponse, Peer } from '../../proto/opendexrpc_pb';
 import { callback, loadXudClient } from '../command';
 import { generateHeaders, shorten } from '../utils';
 

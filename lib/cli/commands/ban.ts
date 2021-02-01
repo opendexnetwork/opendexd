@@ -1,5 +1,5 @@
 import { Arguments, Argv } from 'yargs';
-import { BanRequest } from '../../proto/xudrpc_pb';
+import { BanRequest } from '../../proto/opendexrpc_pb';
 import { callback, loadXudClient } from '../command';
 
 export const command = 'ban <node_identifier>';

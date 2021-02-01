@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { formatOrders } from '../../lib/cli/commands/listorders';
-import { ListOrdersResponse } from '../../lib/proto/xudrpc_pb';
+import { ListOrdersResponse } from '../../lib/proto/opendexrpc_pb';
 import { satsToCoinsStr, coinsToSats } from '../../lib/cli/utils';
 
 describe('Command.listorders.formatOrders', () => {

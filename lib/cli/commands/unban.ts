@@ -1,5 +1,5 @@
 import { Arguments, Argv } from 'yargs';
-import { UnbanRequest } from '../../proto/xudrpc_pb';
+import { UnbanRequest } from '../../proto/opendexrpc_pb';
 import { callback, loadXudClient } from '../command';
 
 export const command = 'unban <node_identifier> [--reconnect]';

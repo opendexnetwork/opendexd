@@ -1,5 +1,5 @@
 import { Arguments, Argv } from 'yargs';
-import { DepositRequest } from '../../proto/xudrpc_pb';
+import { DepositRequest } from '../../proto/opendexrpc_pb';
 import { callback, loadXudClient } from '../command';
 
 export const command = 'walletdeposit <currency>';

@@ -26,7 +26,7 @@
     "nodemon:watch:inspect": "nodemon --inspect-brk --watch dist -e js dist/OpenDEX.js",
     "prepublishOnly": "cross-os clean && npm run compile",
     "proto": "cross-os proto && cross-os swagger && cross-os protodocs && cross-os prototest",
-    "slate": "proto2slate proto/xudrpc.proto",
+    "slate": "proto2slate proto/opendexrpc.proto",
     "start": "node dist/OpenDEX.js",
     "stop": "cross-os stop",
     "test": "npm run test:unit && npm run test:crypto && npm run test:int && npm run test:p2p && npm run test:jest",
@@ -82,22 +82,22 @@
     "proto": {
       "linux": "grpc_tools_node_protoc --js_out='import_style=commonjs,binary:lib/proto' --ts_out='generate_package_definition:lib/proto' --grpc_out='generate_package_definition:lib/proto' --plugin='protoc-gen-ts=node_modules/.bin/protoc-gen-ts' -I='proto' proto/*.proto proto/google/api/*.proto proto/google/protobuf/*.proto",
       "darwin": "grpc_tools_node_protoc --js_out='import_style=commonjs,binary:lib/proto' --ts_out='generate_package_definition:lib/proto' --grpc_out='generate_package_definition:lib/proto' --plugin='protoc-gen-ts=node_modules/.bin/protoc-gen-ts' -I='proto' proto/*.proto proto/google/api/*.proto proto/google/protobuf/*.proto",
-      "win32": "grpc_tools_node_protoc --js_out=\"import_style=commonjs,binary:lib\\proto\" --ts_out=\"generate_package_definition:lib\\proto\" --grpc_out=\"generate_package_definition:lib\\proto\" --plugin=\"protoc-gen-ts=node_modules\\.bin\\protoc-gen-ts.cmd\" -I=\"proto\" proto\\xudrpc.proto proto\\xudp2p.proto proto\\lndrpc.proto proto\\lndinvoices.proto proto\\annotations.proto proto\\google\\api\\http.proto proto\\google\\protobuf\\descriptor.proto"
+      "win32": "grpc_tools_node_protoc --js_out=\"import_style=commonjs,binary:lib\\proto\" --ts_out=\"generate_package_definition:lib\\proto\" --grpc_out=\"generate_package_definition:lib\\proto\" --plugin=\"protoc-gen-ts=node_modules\\.bin\\protoc-gen-ts.cmd\" -I=\"proto\" proto\\opendexrpc.proto proto\\xudp2p.proto proto\\lndrpc.proto proto\\lndinvoices.proto proto\\annotations.proto proto\\google\\api\\http.proto proto\\google\\protobuf\\descriptor.proto"
     },
     "swagger": {
-      "linux": "grpc_tools_node_protoc --swagger_out='lib/proto' -I='proto' proto/xudrpc.proto",
-      "darwin": "grpc_tools_node_protoc --swagger_out='lib/proto' -I='proto' proto/xudrpc.proto",
-      "win32": "grpc_tools_node_protoc --swagger_out=\"lib\\proto\" -I=\"proto\" proto\\xudrpc.proto"
+      "linux": "grpc_tools_node_protoc --swagger_out='lib/proto' -I='proto' proto/opendexrpc.proto",
+      "darwin": "grpc_tools_node_protoc --swagger_out='lib/proto' -I='proto' proto/opendexrpc.proto",
+      "win32": "grpc_tools_node_protoc --swagger_out=\"lib\\proto\" -I=\"proto\" proto\\opendexrpc.proto"
     },
     "protodocs": {
-      "linux": "grpc_tools_node_protoc --doc_out='docs' --doc_opt=markdown,api.md -I='proto' proto/xudrpc.proto",
-      "darwin": "grpc_tools_node_protoc --doc_out='docs' --doc_opt=markdown,api.md -I='proto' proto/xudrpc.proto",
-      "win32": "grpc_tools_node_protoc --doc_out=\"docs\" --doc_opt=markdown,api.md -I=\"proto\" proto\\xudrpc.proto"
+      "linux": "grpc_tools_node_protoc --doc_out='docs' --doc_opt=markdown,api.md -I='proto' proto/opendexrpc.proto",
+      "darwin": "grpc_tools_node_protoc --doc_out='docs' --doc_opt=markdown,api.md -I='proto' proto/opendexrpc.proto",
+      "win32": "grpc_tools_node_protoc --doc_out=\"docs\" --doc_opt=markdown,api.md -I=\"proto\" proto\\opendexrpc.proto"
     },
     "prototest": {
-      "linux": "grpc_tools_node_protoc --go_out='plugins=grpc:test/simulation/xudrpc' -I='proto' proto/xudrpc.proto",
-      "darwin": "grpc_tools_node_protoc --go_out='plugins=grpc:test/simulation/xudrpc' -I='proto' proto/xudrpc.proto",
-      "win32": "grpc_tools_node_protoc --go_out=\"plugins=grpc:test\\simulation\\xudrpc\" -I=\"proto\" proto\\xudrpc.proto"
+      "linux": "grpc_tools_node_protoc --go_out='plugins=grpc:test/simulation/opendexrpc' -I='proto' proto/opendexrpc.proto",
+      "darwin": "grpc_tools_node_protoc --go_out='plugins=grpc:test/simulation/opendexrpc' -I='proto' proto/opendexrpc.proto",
+      "win32": "grpc_tools_node_protoc --go_out=\"plugins=grpc:test\\simulation\\opendexrpc\" -I=\"proto\" proto\\opendexrpc.proto"
     },
     "stop": {
       "linux": "./bin/opendex-cli shutdown",

@@ -1,6 +1,6 @@
 import readline from 'readline';
 import { Arguments } from 'yargs';
-import { CreateNodeRequest, CreateNodeResponse } from '../../proto/xudrpc_pb';
+import { CreateNodeRequest, CreateNodeResponse } from '../../proto/opendexrpc_pb';
 import { callback, loadXudInitClient } from '../command';
 import { getDefaultCertPath, waitForCert, showSeed } from '../utils';
 

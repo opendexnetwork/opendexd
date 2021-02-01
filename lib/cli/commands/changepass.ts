@@ -1,6 +1,6 @@
 import readline from 'readline';
 import { Arguments } from 'yargs';
-import { ChangePasswordRequest } from '../../proto/xudrpc_pb';
+import { ChangePasswordRequest } from '../../proto/opendexrpc_pb';
 import { callback, loadXudClient } from '../command';
 
 export const command = 'changepass';

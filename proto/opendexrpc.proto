@@ -22,26 +22,26 @@ syntax = "proto3";
 
 import "annotations.proto";
 
-package xudrpc;
+package opendexrpc;
 
-/* A service for interacting with a locked or uninitalized xud node. */
+/* A service for interacting with a locked or uninitalized opendex node. */
 service XudInit {
-  /* Creates an xud identity node key and underlying wallets. The node key and
+  /* Creates an opendex identity node key and underlying wallets. The node key and
    * wallets are derived from a single seed and encrypted using a single
    * password provided as a parameter to the call. 
    * shell: xucli create */
   rpc CreateNode(CreateNodeRequest) returns (CreateNodeResponse) { }
 
-  /* Restores an xud instance and underlying wallets from a seed.
+  /* Restores an opendex instance and underlying wallets from a seed.
    * shell: xucli restore [backup_directory] */
   rpc RestoreNode(RestoreNodeRequest) returns (RestoreNodeResponse) { }
 
-  /* Unlocks and decrypts the xud node key and any underlying wallets.
+  /* Unlocks and decrypts the opendex node key and any underlying wallets.
    * shell: xucli unlock */
   rpc UnlockNode(UnlockNodeRequest) returns (UnlockNodeResponse) { }
 }
 
-/* The primary service for interacting with a running xud node. */
+/* The primary service for interacting with a running opendex node. */
 service Xud {
   /* Adds a currency to the list of supported currencies. Once added, the currency may be used for
    * new trading pairs.
@@ -73,7 +73,7 @@ service Xud {
     };
   }
 
-  /* Changes the xud master password, including the wallet passwords for any underlying clients.
+  /* Changes the opendex master password, including the wallet passwords for any underlying clients.
    * shell: xucli changepass*/
   rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse) {
     option (google.api.http) = {
@@ -101,7 +101,7 @@ service Xud {
     };
   }
 
-  /* Gets an address to deposit a given currency into the xud wallets.
+  /* Gets an address to deposit a given currency into the opendex wallets.
    * shell: xucli walletdeposit <currency> */
   rpc WalletDeposit(DepositRequest) returns (DepositResponse) {
     option (google.api.http) = {
@@ -254,7 +254,7 @@ service Xud {
   }
 
   /* Removes an order from the order book by its local id. This should be called when an order is
-   * canceled or filled outside of xud. Removed orders become immediately unavailable for swaps,
+   * canceled or filled outside of opendex. Removed orders become immediately unavailable for swaps,
    * and peers are notified that the order is no longer valid. Any portion of the order that is
    * on hold due to ongoing swaps will not be removed until after the swap attempts complete.
    * shell: xucli removeorder <order_id> [quantity] */
@@ -296,7 +296,7 @@ service Xud {
     };
   }
 
-  /* Begin gracefully shutting down xud.
+  /* Begin gracefully shutting down opendex.
    * shell: xucli shutdown */
   rpc Shutdown(ShutdownRequest) returns (ShutdownResponse) {
     option (google.api.http) = {
@@ -336,7 +336,7 @@ service Xud {
     };
   }
 
-  /* Subscribes to accepted swaps. This stream emits a message when the local xud node 
+  /* Subscribes to accepted swaps. This stream emits a message when the local opendex node 
    * accepts a swap request from a peer, but before the swap has actually succeeded. */
   rpc SubscribeSwapsAccepted(SubscribeSwapsAcceptedRequest) returns (stream SwapAccepted) {
     option (google.api.http) = {
@@ -370,7 +370,7 @@ service Xud {
     };
   }
 
-  /* Withdraws a given currency from the xud wallets to a specified address.
+  /* Withdraws a given currency from the opendex wallets to a specified address.
    * shell: xucli withdraw [amount] [currency] <destination> [fee] */
   rpc WalletWithdraw(WithdrawRequest) returns (WithdrawResponse) {
     option (google.api.http) = {
@@ -488,12 +488,12 @@ message ConnectRequest {
 message ConnectResponse {}
 
 message CreateNodeRequest {
-  // The password in utf-8 with which to encrypt the new xud node key as well
+  // The password in utf-8 with which to encrypt the new opendex node key as well
   // as any uninitialized underlying wallets.
   string password = 1;
 }
 message CreateNodeResponse {
-  // The 24 word mnemonic to recover the xud identity key and underlying wallets
+  // The 24 word mnemonic to recover the opendex identity key and underlying wallets
   repeated string seed_mnemonic = 1;
   // The list of lnd clients that were initialized.
   repeated string initialized_lnds = 2;
@@ -560,7 +560,7 @@ message GetBalanceResponse {
 
 message GetInfoRequest {}
 message GetInfoResponse {
-  // The version of this instance of xud.
+  // The version of this instance of opendex.
   string version = 1 [json_name = "version"];
   // The node pub key of this node.
   string node_pub_key = 2 [json_name = "node_pub_key"];
@@ -573,7 +573,7 @@ message GetInfoResponse {
   // The number of active, standing orders in the order book.
   OrdersCount orders = 6 [json_name = "orders"];
   map<string, LndInfo> lnd = 7 [json_name = "lnd"];
-  // The alias of this instance of xud.
+  // The alias of this instance of opendex.
   string alias = 9 [json_name = "alias"];
   // The network of this node.
   string network = 10 [json_name = "network"];
@@ -741,9 +741,9 @@ message Orders {
 }
 
 message OrdersCount {
-  // The number of orders belonging to remote xud nodes.
+  // The number of orders belonging to remote opendex nodes.
   uint32 peer = 1 [json_name = "peer"];
-  // The number of orders belonging to our local xud node.
+  // The number of orders belonging to our local opendex node.
   uint32 own = 2 [json_name = "own"];
 }
 
@@ -767,8 +767,8 @@ message Peer {
   bool inbound = 4 [json_name = "inbound"];
   // A list of trading pair tickers supported by this peer.
   repeated string pairs = 5 [json_name = "pairs"];
-  // The version of xud being used by the peer.
-  string xud_version = 6 [json_name = "xud_version"];
+  // The version of opendex being used by the peer.
+  string xud_version = 6 [json_name = "opendex_version"];
   // The time in seconds that we have been connected to this peer.
   uint32 seconds_connected = 7 [json_name = "seconds_connected"];
   // The alias for this peer's public key
@@ -872,16 +872,16 @@ message RemovePairRequest {
 message RemovePairResponse {}
 
 message RestoreNodeRequest {
-  // The 24 word mnemonic to recover the xud identity key and underlying wallets
+  // The 24 word mnemonic to recover the opendex identity key and underlying wallets
   repeated string seed_mnemonic = 1;
-  // The password in utf-8 with which to encrypt the restored xud node key as well
+  // The password in utf-8 with which to encrypt the restored opendex node key as well
   // as any restored underlying wallets.
   string password = 2;
 
   // A map between the currency of the LND and its multi channel SCB
   map<string, bytes> lnd_backups = 3;
 
-  // The XUD database backup
+  // The opendex database backup
   bytes xud_database = 6;
 }
 message RestoreNodeResponse {
@@ -1044,7 +1044,7 @@ message UnbanRequest {
 message UnbanResponse {}
 
 message UnlockNodeRequest {
-  // The password in utf-8 with which to unlock an existing xud node key as
+  // The password in utf-8 with which to unlock an existing opendex node key as
   // well as underlying client wallets such as lnd.
   string password = 1;
 }

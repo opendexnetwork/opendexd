@@ -3,7 +3,7 @@ import { join } from 'path';
 import readline from 'readline';
 import { Arguments } from 'yargs';
 import { getDefaultBackupDir } from '../../utils/utils';
-import { RestoreNodeRequest, RestoreNodeResponse } from '../../proto/xudrpc_pb';
+import { RestoreNodeRequest, RestoreNodeResponse } from '../../proto/opendexrpc_pb';
 import { callback, loadXudInitClient } from '../command';
 import { getDefaultCertPath, waitForCert } from '../utils';
 

@@ -1,5 +1,5 @@
 import { Arguments, Argv } from 'yargs';
-import { RemovePairRequest } from '../../proto/xudrpc_pb';
+import { RemovePairRequest } from '../../proto/opendexrpc_pb';
 import { callback, loadXudClient } from '../command';
 
 export const command = 'removepair <pair_id>';

@@ -1,5 +1,5 @@
 import { Arguments, Argv } from 'yargs';
-import { CloseChannelRequest } from '../../proto/xudrpc_pb';
+import { CloseChannelRequest } from '../../proto/opendexrpc_pb';
 import { callback, loadXudClient } from '../command';
 import { coinsToSats } from '../utils';
 

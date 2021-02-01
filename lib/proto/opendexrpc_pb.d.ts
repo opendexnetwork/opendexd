@@ -1,5 +1,5 @@
-// package: xudrpc
-// file: xudrpc.proto
+// package: opendexrpc
+// file: opendexrpc.proto
 
 /* tslint:disable */
 /* eslint-disable */
