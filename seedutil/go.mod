@@ -1,4 +1,4 @@
-module ExchangeUnion/xud/seedutil
+module ExchangeUnion/opendexnetwork/seedutil
 
 go 1.12
 
