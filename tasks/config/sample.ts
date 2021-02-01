@@ -71,5 +71,5 @@ export default async () => {
 
   recursivelyConvertJsonToToml(new Config(), '');
 
-  fs.writeFileSync(path.join(__dirname, '../', '../', 'sample-xud.conf'), result);
+  fs.writeFileSync(path.join(__dirname, '../', '../', 'sample-opendex.conf'), result);
 };
