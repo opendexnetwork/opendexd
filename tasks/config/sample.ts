@@ -4,13 +4,13 @@ import fs from 'fs';
 import path from 'path';
 
 export default async () => {
-  let result = `# Sample configuration file for xud
+  let result = `# Sample configuration file for opendexd
 #
 # This sample file contains the default values for all configuration
-# options for xud. Directories and file path options are platform &
+# options for opendexd. Directories and file path options are platform &
 # user specific and are not included, but are explained below.
 #
-# 'opendexdir' is the directory for data stored by xud including logs,
+# 'opendexdir' is the directory for data stored by opendexd including logs,
 # keys, config and its database. Individual paths can be overridden
 # by settings such as 'logpath' and 'dbpath'.
 #
@@ -20,17 +20,17 @@ export default async () => {
 # Default values:
 #
 # Linux
-# opendexdir = "/home/<user>/.xud"
+# opendexdir = "/home/<user>/.opendexd"
 # certpath = "/home/<user>/.lnd/tls.cert"
 # macaroonpath = "/home/<user>/.lnd/data/chain/<currency>/<network>/admin.macaroon"
 #
 # Darwin (macOS)
-# opendexdir = "/Users/<user>/Library/Application Support/Xud"
+# opendexdir = "/Users/<user>/Library/Application Support/opendexd"
 # certpath = "/Users/<user>/Library/Application Support/Lnd/tls.cert"
 # macaroonpath = "/Users/<user>/Library/Application Support/data/chain/<currency>/<network>/admin.macaroon"
 #
 # Windows
-# opendexdir = "C:\\Users\\<user>\\AppData\\Local\\Xud"
+# opendexdir = "C:\\Users\\<user>\\AppData\\Local\\opendexd"
 # certpath = "C:\\Users\\<user>\\AppData\\Local\\Lnd\\tls.cert"
 # macaroonpath = "C:\\Users\\<user>\\AppData\\Local\\Lnd\\data\\chain\\<currency>\\<network>\\admin.macaroon"
 
