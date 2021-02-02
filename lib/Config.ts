@@ -208,7 +208,9 @@ class Config {
       if (configProps.network && (!args || !args.network)) {
         this.network = configProps.network;
         if (
-          ![OpenDEXnetwork.MainNet, OpenDEXnetwork.TestNet, OpenDEXnetwork.SimNet, OpenDEXnetwork.RegTest].includes(configProps.network)
+          ![OpenDEXnetwork.MainNet, OpenDEXnetwork.TestNet, OpenDEXnetwork.SimNet, OpenDEXnetwork.RegTest].includes(
+            configProps.network,
+          )
         ) {
           throw new Error(`Invalid network config: ${configProps.network}`);
         }

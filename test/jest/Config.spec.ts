@@ -1,5 +1,5 @@
 import Config from '../../lib/Config';
-import {  OpenDEXnetwork } from '../../lib/constants/enums';
+import { OpenDEXnetwork } from '../../lib/constants/enums';
 
 const MAINNET_P2P_PORT = 8885;
 const TESTNET_P2P_PORT = 18885;

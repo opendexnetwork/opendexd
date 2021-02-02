@@ -8,7 +8,12 @@ import NodeKey from '../../lib/nodekey/NodeKey';
 
 chai.use(chaiAsPromised);
 
-export const createConfig = (instanceid: number, p2pPort: number, uniqueopendexdir = true, network = OpenDEXnetwork.SimNet) => ({
+export const createConfig = (
+  instanceid: number,
+  p2pPort: number,
+  uniqueopendexdir = true,
+  network = OpenDEXnetwork.SimNet,
+) => ({
   instanceid,
   network,
   initdb: false,

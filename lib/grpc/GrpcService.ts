@@ -223,7 +223,10 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.addCurrency]]
    */
-  public addCurrency: grpc.handleUnaryCall<opendexrpc.Currency, opendexrpc.AddCurrencyResponse> = async (call, callback) => {
+  public addCurrency: grpc.handleUnaryCall<opendexrpc.Currency, opendexrpc.AddCurrencyResponse> = async (
+    call,
+    callback,
+  ) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
@@ -240,7 +243,10 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.addPair]]
    */
-  public addPair: grpc.handleUnaryCall<opendexrpc.AddPairRequest, opendexrpc.AddPairResponse> = async (call, callback) => {
+  public addPair: grpc.handleUnaryCall<opendexrpc.AddPairRequest, opendexrpc.AddPairResponse> = async (
+    call,
+    callback,
+  ) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
@@ -303,10 +309,10 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.removeAllOrders]]
    */
-  public removeAllOrders: grpc.handleUnaryCall<opendexrpc.RemoveAllOrdersRequest, opendexrpc.RemoveAllOrdersResponse> = async (
-    _,
-    callback,
-  ) => {
+  public removeAllOrders: grpc.handleUnaryCall<
+    opendexrpc.RemoveAllOrdersRequest,
+    opendexrpc.RemoveAllOrdersResponse
+  > = async (_, callback) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
@@ -356,10 +362,10 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.tradingLimits]]
    */
-  public tradingLimits: grpc.handleUnaryCall<opendexrpc.TradingLimitsRequest, opendexrpc.TradingLimitsResponse> = async (
-    call,
-    callback,
-  ) => {
+  public tradingLimits: grpc.handleUnaryCall<
+    opendexrpc.TradingLimitsRequest,
+    opendexrpc.TradingLimitsResponse
+  > = async (call, callback) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
@@ -405,7 +411,10 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.connect]]
    */
-  public connect: grpc.handleUnaryCall<opendexrpc.ConnectRequest, opendexrpc.ConnectResponse> = async (call, callback) => {
+  public connect: grpc.handleUnaryCall<opendexrpc.ConnectRequest, opendexrpc.ConnectResponse> = async (
+    call,
+    callback,
+  ) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
@@ -442,7 +451,10 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.deposit]]
    */
-  public deposit: grpc.handleUnaryCall<opendexrpc.DepositRequest, opendexrpc.DepositResponse> = async (call, callback) => {
+  public deposit: grpc.handleUnaryCall<opendexrpc.DepositRequest, opendexrpc.DepositResponse> = async (
+    call,
+    callback,
+  ) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
@@ -511,7 +523,10 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.executeSwap]]
    */
-  public executeSwap: grpc.handleUnaryCall<opendexrpc.ExecuteSwapRequest, opendexrpc.SwapSuccess> = async (call, callback) => {
+  public executeSwap: grpc.handleUnaryCall<opendexrpc.ExecuteSwapRequest, opendexrpc.SwapSuccess> = async (
+    call,
+    callback,
+  ) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
@@ -674,7 +689,10 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.listOrders]]
    */
-  public listOrders: grpc.handleUnaryCall<opendexrpc.ListOrdersRequest, opendexrpc.ListOrdersResponse> = (call, callback) => {
+  public listOrders: grpc.handleUnaryCall<opendexrpc.ListOrdersRequest, opendexrpc.ListOrdersResponse> = (
+    call,
+    callback,
+  ) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
@@ -843,7 +861,10 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     }
   };
 
-  public orderBook: grpc.handleUnaryCall<opendexrpc.OrderBookRequest, opendexrpc.OrderBookResponse> = (call, callback) => {
+  public orderBook: grpc.handleUnaryCall<opendexrpc.OrderBookRequest, opendexrpc.OrderBookResponse> = (
+    call,
+    callback,
+  ) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
@@ -919,10 +940,10 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.addCurrency]]
    */
-  public removeCurrency: grpc.handleUnaryCall<opendexrpc.RemoveCurrencyRequest, opendexrpc.RemoveCurrencyResponse> = async (
-    call,
-    callback,
-  ) => {
+  public removeCurrency: grpc.handleUnaryCall<
+    opendexrpc.RemoveCurrencyRequest,
+    opendexrpc.RemoveCurrencyResponse
+  > = async (call, callback) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
@@ -959,10 +980,10 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /**
    * See [[Service.discoverNodes]]
    */
-  public discoverNodes: grpc.handleUnaryCall<opendexrpc.DiscoverNodesRequest, opendexrpc.DiscoverNodesResponse> = async (
-    call,
-    callback,
-  ) => {
+  public discoverNodes: grpc.handleUnaryCall<
+    opendexrpc.DiscoverNodesRequest,
+    opendexrpc.DiscoverNodesResponse
+  > = async (call, callback) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
@@ -995,10 +1016,10 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     }
   };
 
-  public changePassword: grpc.handleUnaryCall<opendexrpc.ChangePasswordRequest, opendexrpc.ChangePasswordResponse> = async (
-    call,
-    callback,
-  ) => {
+  public changePassword: grpc.handleUnaryCall<
+    opendexrpc.ChangePasswordRequest,
+    opendexrpc.ChangePasswordResponse
+  > = async (call, callback) => {
     if (!this.isReady(this.service, callback)) {
       return;
     }
@@ -1060,9 +1081,10 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /*
    * See [[Service.subscribeSwapFailures]]
    */
-  public subscribeSwapFailures: grpc.handleServerStreamingCall<opendexrpc.SubscribeSwapsRequest, opendexrpc.SwapFailure> = (
-    call,
-  ) => {
+  public subscribeSwapFailures: grpc.handleServerStreamingCall<
+    opendexrpc.SubscribeSwapsRequest,
+    opendexrpc.SwapFailure
+  > = (call) => {
     if (!this.service) {
       call.emit('error', { code: grpc.status.UNAVAILABLE, message: 'xud is starting', name: 'NotReadyError' });
       return;
@@ -1081,7 +1103,9 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   /*
    * See [[Service.subscribeSwaps]]
    */
-  public subscribeSwaps: grpc.handleServerStreamingCall<opendexrpc.SubscribeSwapsRequest, opendexrpc.SwapSuccess> = (call) => {
+  public subscribeSwaps: grpc.handleServerStreamingCall<opendexrpc.SubscribeSwapsRequest, opendexrpc.SwapSuccess> = (
+    call,
+  ) => {
     if (!this.service) {
       call.emit('error', { code: grpc.status.UNAVAILABLE, message: 'xud is starting', name: 'NotReadyError' });
       return;

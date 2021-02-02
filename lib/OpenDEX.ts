@@ -131,7 +131,9 @@ class OpenDEX extends EventEmitter {
         const initService = new InitService(this.swapClientManager, nodeKeyPath, nodeKeyExists, this.config.dbpath);
 
         this.rpcServer.grpcInitService.setInitService(initService);
-        this.logger.info("Node key is encrypted, unlock with 'opendex-cli unlock', 'opendex-cli create', or 'opendex-cli restore'");
+        this.logger.info(
+          "Node key is encrypted, unlock with 'opendex-cli unlock', 'opendex-cli create', or 'opendex-cli restore'",
+        );
         nodeKey = await new Promise<NodeKey | undefined>((resolve) => {
           initService.once('nodekey', resolve);
           this.on('shutdown', () => {
