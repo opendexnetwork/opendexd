@@ -86,6 +86,10 @@ class OpenDEX extends EventEmitter {
       this.logger.info('config file loaded');
     }
 
+    if (process.env.CUSTOM_SCENARIO) {
+      this.logger.info(`CUSTOM_SCENARIO=${process.env.CUSTOM_SCENARIO}`);
+    }
+
     try {
       if (!this.config.rpc.disable) {
         // start rpc server first, it will respond with UNAVAILABLE error
