@@ -1,5 +1,5 @@
 import Config from '../../lib/Config';
-import { SwapClientType, XuNetwork } from '../../lib/constants/enums';
+import { SwapClientType, OpenDEXnetwork } from '../../lib/constants/enums';
 import DB from '../../lib/db/DB';
 import Logger from '../../lib/Logger';
 import NodeKey from '../../lib/nodekey/NodeKey';
@@ -84,7 +84,7 @@ jest.mock('../../lib/p2p/Pool', () => {
       updatePairs: jest.fn(),
       on: jest.fn(),
       removeListener: jest.fn(),
-      getNetwork: () => XuNetwork.MainNet,
+      getNetwork: () => OpenDEXnetwork.MainNet,
       getTokenIdentifier: (currency: string) => tokenIdentifiers[currency] as string,
       broadcastOrderInvalidation: jest.fn(),
     };
@@ -142,7 +142,7 @@ describe('OrderBook', () => {
 
   beforeEach(async () => {
     config = new Config();
-    network = new Network(XuNetwork.TestNet);
+    network = new Network(OpenDEXnetwork.TestNet);
     peer = new Peer(
       loggers.p2p,
       {
@@ -155,7 +155,7 @@ describe('OrderBook', () => {
     db = new DB(loggers.db, config.dbpath);
     pool = new Pool({
       config: config.p2p,
-      xuNetwork: XuNetwork.SimNet,
+      openDEXnetwork: OpenDEXnetwork.SimNet,
       logger: loggers.p2p,
       models: db.models,
       version: '1.0.0',

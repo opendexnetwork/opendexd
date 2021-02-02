@@ -1,5 +1,5 @@
 import Config from '../../lib/Config';
-import { XuNetwork } from '../../lib/constants/enums';
+import {  OpenDEXnetwork } from '../../lib/constants/enums';
 
 const MAINNET_P2P_PORT = 8885;
 const TESTNET_P2P_PORT = 18885;
@@ -29,28 +29,28 @@ describe('Config', () => {
 
   test('it uses correct default ports based on network args', async () => {
     await config.load({ mainnet: true });
-    expect(config.network).toEqual(XuNetwork.MainNet);
+    expect(config.network).toEqual(OpenDEXnetwork.MainNet);
     expect(config.p2p.port).toEqual(MAINNET_P2P_PORT);
     expect(config.rpc.port).toEqual(MAINNET_RPC_PORT);
     expect(config.http.port).toEqual(MAINNET_HTTP_PORT);
 
     const testnetConfig = new Config();
     await testnetConfig.load({ testnet: true });
-    expect(testnetConfig.network).toEqual(XuNetwork.TestNet);
+    expect(testnetConfig.network).toEqual(OpenDEXnetwork.TestNet);
     expect(testnetConfig.p2p.port).toEqual(TESTNET_P2P_PORT);
     expect(testnetConfig.rpc.port).toEqual(TESTNET_RPC_PORT);
     expect(testnetConfig.http.port).toEqual(TESTNET_HTTP_PORT);
 
     const simnetConfig = new Config();
     await simnetConfig.load({ simnet: true });
-    expect(simnetConfig.network).toEqual(XuNetwork.SimNet);
+    expect(simnetConfig.network).toEqual(OpenDEXnetwork.SimNet);
     expect(simnetConfig.p2p.port).toEqual(SIMNET_P2P_PORT);
     expect(simnetConfig.rpc.port).toEqual(SIMNET_RPC_PORT);
     expect(simnetConfig.http.port).toEqual(SIMNET_HTTP_PORT);
 
     const regtestConfig = new Config();
     await regtestConfig.load({ regtest: true });
-    expect(regtestConfig.network).toEqual(XuNetwork.RegTest);
+    expect(regtestConfig.network).toEqual(OpenDEXnetwork.RegTest);
     expect(regtestConfig.p2p.port).toEqual(REGTEST_P2P_PORT);
     expect(regtestConfig.rpc.port).toEqual(REGTEST_RPC_PORT);
     expect(regtestConfig.http.port).toEqual(REGTEST_HTTP_PORT);
@@ -59,20 +59,20 @@ describe('Config', () => {
   test('arg network value overrides config values', async () => {
     Config['readConfigProps'] = jest.fn().mockResolvedValue({ network: 'testnet' });
     await config.load({ mainnet: true });
-    expect(config.network).toEqual(XuNetwork.MainNet);
+    expect(config.network).toEqual(OpenDEXnetwork.MainNet);
     expect(config.p2p.port).toEqual(MAINNET_P2P_PORT);
   });
 
   test('it uses correct default ports based on configured network', async () => {
     Config['readConfigProps'] = jest.fn().mockResolvedValue({ network: 'testnet' });
     await config.load();
-    expect(config.network).toEqual(XuNetwork.TestNet);
+    expect(config.network).toEqual(OpenDEXnetwork.TestNet);
     expect(config.p2p.port).toEqual(TESTNET_P2P_PORT);
   });
 
   test('it uses ports specified by args rather than defaults based on network', async () => {
     await config.load({ testnet: true, p2p: { port: MAINNET_P2P_PORT } });
-    expect(config.network).toEqual(XuNetwork.TestNet);
+    expect(config.network).toEqual(OpenDEXnetwork.TestNet);
     expect(config.p2p.port).toEqual(MAINNET_P2P_PORT);
   });
 
@@ -80,7 +80,7 @@ describe('Config', () => {
     Config['readConfigProps'] = jest.fn().mockResolvedValue({ p2p: { port: MAINNET_P2P_PORT } });
     await config.load({ testnet: true });
     expect(config.p2p.port).toEqual(MAINNET_P2P_PORT);
-    expect(config.network).toEqual(XuNetwork.TestNet);
+    expect(config.network).toEqual(OpenDEXnetwork.TestNet);
   });
 
   test('it throws an error when a property is assigned the wrong type', async () => {

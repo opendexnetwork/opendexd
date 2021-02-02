@@ -2,7 +2,7 @@ import chai, { expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import sinon from 'sinon';
 import Config from '../../lib/Config';
-import { DisconnectionReason, XuNetwork } from '../../lib/constants/enums';
+import { DisconnectionReason, OpenDEXnetwork } from '../../lib/constants/enums';
 import DB from '../../lib/db/DB';
 import Logger, { Level } from '../../lib/Logger';
 import NodeKey from '../../lib/nodekey/NodeKey';
@@ -29,7 +29,7 @@ describe('P2P Pool Tests', async () => {
 
   const pool = new Pool({
     config: config.p2p,
-    xuNetwork: XuNetwork.SimNet,
+    openDEXnetwork: OpenDEXnetwork.SimNet,
     logger: loggers.p2p,
     models: db.models,
     nodeKey: nodeKeyTwo,

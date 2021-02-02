@@ -135,7 +135,7 @@ class Config {
     // TODO: add dynamic max/min price limits
     this.orderthresholds = { minQuantity: 0 }; // 0 = disabled
     this.lnd.BTC = {
-      disable: true,
+      disable: false,
       certpath: path.join(lndDefaultDatadir, 'tls.cert'),
       macaroonpath: path.join(lndDefaultDatadir, 'data', 'chain', 'bitcoin', this.network, 'admin.macaroon'),
       host: 'localhost',

@@ -12,7 +12,7 @@ const removeDir = (dir: string) => {
   fs.rmdirSync(dir);
 };
 
-const backupdir = 'backup-test';
+const backupdir = `${__dirname}/backup-test`;
 
 const xudDatabasePath = 'xud';
 

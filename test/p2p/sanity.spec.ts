@@ -1,14 +1,14 @@
 import chai, { expect } from 'chai';
-import Xud from '../../lib/Xud';
+import Xud from '../../lib/OpenDEX';
 import chaiAsPromised from 'chai-as-promised';
 import { toUri } from '../../lib/utils/uriUtils';
 import { getUnusedPort, getTempDir } from '../utils';
-import { DisconnectionReason, XuNetwork } from '../../lib/constants/enums';
+import { DisconnectionReason, OpenDEXnetwork } from '../../lib/constants/enums';
 import NodeKey from '../../lib/nodekey/NodeKey';
 
 chai.use(chaiAsPromised);
 
-export const createConfig = (instanceid: number, p2pPort: number, uniqueopendexdir = true, network = XuNetwork.SimNet) => ({
+export const createConfig = (instanceid: number, p2pPort: number, uniqueopendexdir = true, network = OpenDEXnetwork.SimNet) => ({
   instanceid,
   network,
   initdb: false,

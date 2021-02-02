@@ -1,6 +1,6 @@
 import { setTimeout } from 'timers';
 import Config from '../../lib/Config';
-import { XuNetwork } from '../../lib/constants/enums';
+import { OpenDEXnetwork } from '../../lib/constants/enums';
 import DB from '../../lib/db/DB';
 import Logger, { Level } from '../../lib/Logger';
 import NodeKey from '../../lib/nodekey/NodeKey';
@@ -50,9 +50,9 @@ describe('P2P Pool', () => {
     config.p2p.listen = true;
     config.p2p.discover = false;
     pool1db = new DB(logger1);
-    await pool1db.init(XuNetwork.RegTest);
+    await pool1db.init(OpenDEXnetwork.RegTest);
     pool2db = new DB(logger2);
-    await pool2db.init(XuNetwork.RegTest);
+    await pool2db.init(OpenDEXnetwork.RegTest);
 
     pool = new Pool({
       version,
@@ -61,7 +61,7 @@ describe('P2P Pool', () => {
         ...config.p2p,
         port: 0,
       },
-      xuNetwork: XuNetwork.RegTest,
+      openDEXnetwork: OpenDEXnetwork.RegTest,
       models: pool1db.models,
       nodeKey: pool1nodeKey,
     });
@@ -76,7 +76,7 @@ describe('P2P Pool', () => {
         ...config.p2p,
         port: 0,
       },
-      xuNetwork: XuNetwork.RegTest,
+      openDEXnetwork: OpenDEXnetwork.RegTest,
       models: pool2db.models,
       nodeKey: pool2nodeKey,
     });
@@ -88,7 +88,7 @@ describe('P2P Pool', () => {
     pool2address = { host: 'localhost', port: pool2Port };
 
     const address: Address = { host: 'localhost', port: poolPort };
-    remotePeer = new Peer(logger3, address, new Network(XuNetwork.RegTest));
+    remotePeer = new Peer(logger3, address, new Network(OpenDEXnetwork.RegTest));
   });
 
   afterEach(async () => {

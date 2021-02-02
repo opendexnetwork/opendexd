@@ -1,7 +1,7 @@
 import chai, { expect } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import { randomBytes } from 'crypto';
-import { DisconnectionReason, SwapFailureReason, XuNetwork } from '../../lib/constants/enums';
+import { DisconnectionReason, SwapFailureReason, OpenDEXnetwork } from '../../lib/constants/enums';
 import { errorCodes } from '../../lib/p2p/errors';
 import Framer from '../../lib/p2p/Framer';
 import Network from '../../lib/p2p/Network';
@@ -22,7 +22,7 @@ chai.use(chaiAsPromised);
 
 describe('Parser', () => {
   const timeoutError = 'timeout';
-  const network = new Network(XuNetwork.SimNet);
+  const network = new Network(OpenDEXnetwork.SimNet);
   const framer = new Framer(network);
   const encryptionKey = randomBytes(Framer.ENCRYPTION_KEY_LENGTH);
   const rHash = '62c8bbef4587cff4286246e63044dc3e454b5693fb5ebd0171b7e58644bfafe2';

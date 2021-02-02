@@ -3,7 +3,7 @@ import chaiAsPromised from 'chai-as-promised';
 import { OrderSide, Owner, SwapClientType } from '../../lib/constants/enums';
 import p2pErrors from '../../lib/p2p/errors';
 import Service from '../../lib/service/Service';
-import Xud from '../../lib/Xud';
+import Xud from '../../lib/OpenDEX';
 import { getTempDir } from '../utils';
 
 chai.use(chaiAsPromised);

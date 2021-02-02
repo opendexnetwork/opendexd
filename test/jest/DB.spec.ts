@@ -1,4 +1,4 @@
-import { SwapClientType, SwapPhase, SwapRole, SwapState, XuNetwork } from '../../lib/constants/enums';
+import { SwapClientType, SwapPhase, SwapRole, SwapState, OpenDEXnetwork } from '../../lib/constants/enums';
 import DB from '../../lib/db/DB';
 import { defaultCurrencies, defaultNodes, defaultPairs } from '../../lib/db/seeds';
 import { TradeCreationAttributes } from '../../lib/db/types';
@@ -54,7 +54,7 @@ describe('Database', () => {
   let swapRepo: SwapRepository;
 
   describe('initDb', () => {
-    const network = XuNetwork.SimNet;
+    const network = OpenDEXnetwork.SimNet;
     const simnetNodes = defaultNodes(network)!;
     const simnetCurrencies = defaultCurrencies(network)!;
     const simnetPairs = defaultPairs(network)!;

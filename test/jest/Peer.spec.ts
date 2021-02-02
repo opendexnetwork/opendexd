@@ -1,4 +1,4 @@
-import { XuNetwork } from '../../lib/constants/enums';
+import { OpenDEXnetwork } from '../../lib/constants/enums';
 import Logger, { Level } from '../../lib/Logger';
 import Network from '../../lib/p2p/Network';
 import Peer from '../../lib/p2p/Peer';
@@ -14,7 +14,7 @@ describe('Peer', () => {
   let peer: Peer;
 
   beforeAll(async () => {
-    peer = new Peer(logger, address, new Network(XuNetwork.RegTest));
+    peer = new Peer(logger, address, new Network(OpenDEXnetwork.RegTest));
   });
 
   afterEach(() => {

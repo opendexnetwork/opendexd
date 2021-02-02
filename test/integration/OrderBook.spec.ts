@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import uuidv1 from 'uuid/v1';
 import Config from '../../lib/Config';
-import { SwapClientType, XuNetwork } from '../../lib/constants/enums';
+import { SwapClientType, OpenDEXnetwork } from '../../lib/constants/enums';
 import DB from '../../lib/db/DB';
 import LndClient from '../../lib/lndclient/LndClient';
 import Logger, { Level } from '../../lib/Logger';
@@ -25,7 +25,7 @@ const getMockPool = (sandbox: sinon.SinonSandbox) => {
   pool.broadcastOrder = () => {};
   pool.broadcastOrderInvalidation = () => {};
   pool.updatePairs = () => {};
-  pool.getNetwork = () => XuNetwork.SimNet;
+  pool.getNetwork = () => OpenDEXnetwork.SimNet;
   return pool;
 };
 
