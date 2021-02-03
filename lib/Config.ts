@@ -109,7 +109,7 @@ class Config {
     this.loglevel = this.getDefaultLogLevel();
     this.logpath = this.getDefaultLogPath();
     this.logdateformat = 'DD/MM/YYYY HH:mm:ss.SSS';
-    this.network = OpenDEXnetwork.SimNet;
+    this.network = OpenDEXnetwork.TestNet;
     this.dbpath = this.getDefaultDbPath();
     this.strict = false;
 
@@ -144,7 +144,7 @@ class Config {
       cltvdelta: 40,
     };
     this.lnd.LTC = {
-      disable: true,
+      disable: false,
       certpath: path.join(lndDefaultDatadir, 'tls.cert'),
       macaroonpath: path.join(lndDefaultDatadir, 'data', 'chain', 'litecoin', this.network, 'admin.macaroon'),
       host: 'localhost',

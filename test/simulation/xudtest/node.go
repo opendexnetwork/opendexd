@@ -230,7 +230,7 @@ func (hn *HarnessNode) Start(errorChan chan<- *XudError) error {
 	hn.quit = make(chan struct{})
 
 	args := hn.Cfg.genArgs()
-	cmd := exec.Command(filepath.Join(hn.Cfg.XUDPath, "bin/xud"), args...)
+	cmd := exec.Command(filepath.Join(hn.Cfg.XUDPath, "bin/opendexd"), args...)
 	if hn.EnvVars != nil && len(hn.EnvVars) > 0 {
 		cmd.Env = os.Environ()
 		for _, kv := range hn.EnvVars {

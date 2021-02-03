@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const Xud = require('../dist/Xud').default;
+const Xud = require('../dist/OpenDEX').default;
 
 const { argv } = require('yargs')
   .options({

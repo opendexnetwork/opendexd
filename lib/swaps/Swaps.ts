@@ -827,7 +827,6 @@ class Swaps extends EventEmitter {
           await setTimeoutPromise(1000);
         }
 
-        this.logger.info('SETTLING INVOICE');
         await swapClient.settleInvoice(rHash, rPreimage, currency);
       } catch (err) {
         this.logger.error(`could not settle invoice for deal ${rHash}`, err);
