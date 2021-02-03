@@ -81,7 +81,7 @@ ${info.urisList[0].substring(info.urisList[0].indexOf('@'))}`
         : '',
     },
   );
-  console.log(colors.underline(colors.bold('\nGeneral XUD Info')));
+  console.log(colors.underline(colors.bold('\nGeneral OpenDEX Info')));
   console.log(table.toString(), '\n');
 };
 
@@ -110,7 +110,7 @@ const displayGetInfo = (response: GetInfoResponse.AsObject) => {
 
 export const command = 'getinfo';
 
-export const describe = 'get general info from the local xud node';
+export const describe = 'get general info from the local opendex node';
 
 export const handler = async (argv: Arguments) => {
   (await loadXudClient(argv)).getInfo(new GetInfoRequest(), callback(argv, displayGetInfo));
