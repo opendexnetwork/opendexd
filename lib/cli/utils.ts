@@ -9,15 +9,15 @@ export function getDefaultCertPath() {
   switch (os.platform()) {
     case 'win32': {
       const homeDir = process.env.LOCALAPPDATA!;
-      return path.join(homeDir, 'Xud', 'tls.cert');
+      return path.join(homeDir, 'OpenDEX', 'tls.cert');
     }
     case 'darwin': {
       const homeDir = process.env.HOME!;
-      return path.join(homeDir, '.xud', 'tls.cert');
+      return path.join(homeDir, '.opendex', 'tls.cert');
     }
     default: {
       const homeDir = process.env.HOME!;
-      return path.join(homeDir, '.xud', 'tls.cert');
+      return path.join(homeDir, '.opendex', 'tls.cert');
     }
   }
 }
@@ -52,7 +52,7 @@ export const satsToCoinsStr = (satsQuantity: number) => {
   return (satsQuantity / SATOSHIS_PER_COIN).toFixed(8).replace(/\.?0+$/, '');
 };
 
-/** Waits up to 5 seconds for the tls.cert file to be created in case this is the first time xud has been run. */
+/** Waits up to 5 seconds for the tls.cert file to be created in case this is the first time opendexd has been run. */
 export const waitForCert = (certPath: string) => {
   return new Promise<void>((resolve, reject) => {
     try {
@@ -86,14 +86,14 @@ export function showSeed(seedMnemonicList: string[]) {
   const numberedMnemonic = seedMnemonicList.map((value, index) => {
     return `${index >= 9 ? '' : ' '}${index + 1}. ${value.padEnd(10)}`;
   });
-  console.log('----------------------BEGIN XUD SEED---------------------');
+  console.log('----------------------BEGIN OpenDEX SEED---------------------');
   for (let n = 0; n < seedMnemonicList.length / WORDS_PER_ROW; n += 1) {
     console.log(numberedMnemonic.slice(n * WORDS_PER_ROW, (n + 1) * WORDS_PER_ROW).join(' '));
   }
-  console.log('-----------------------END XUD SEED----------------------\n');
+  console.log('-----------------------END OpenDEX SEED----------------------\n');
 
   console.log(`
-Please write down your 24 word mnemonic. It will allow you to recover your xud \
+Please write down your 24 word mnemonic. It will allow you to recover your OpenDEX \
 node key and on-chain funds for the initialized wallets listed above should you \
 forget your password or lose your device. Off-chain funds in channels can NOT \
 be recovered with it and must be backed up and recovered separately. Keep it \

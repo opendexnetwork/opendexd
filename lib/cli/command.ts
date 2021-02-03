@@ -12,7 +12,7 @@ const XudInitClient = grpc.makeClientConstructor(openDEXrpc['opendexrpc.XudInit'
 
 /**
  * Attempts to load the opendex configuration file to dynamically determine the
- * port and interface that xud is listening for rpc calls on as well as the
+ * port and interface that opendex is listening for rpc calls on as well as the
  * tls cert path, if arguments specifying these parameters were not provided.
  * @param argv the command line arguments
  */
@@ -39,7 +39,7 @@ const loadXudConfig = async (argv: Arguments<any>) => {
   if (argv.rpchost === undefined) {
     argv.rpchost =
       config.rpc.host === '0.0.0.0' || config.rpc.host === '::'
-        ? 'localhost' // if xud is listening on any address, try reaching it with localhost
+        ? 'localhost' // if opendex is listening on any address, try reaching it with localhost
         : config.rpc.host;
   }
 };
@@ -49,7 +49,7 @@ const getTlsCert = (certPath: string) => {
     return fs.readFileSync(certPath);
   } catch (err) {
     if (err.code === 'ENOENT') {
-      throw `tls cert could not be found at ${certPath}, it may take several seconds to be created on xud's first run`;
+      throw `tls cert could not be found at ${certPath}, it may take several seconds to be created on opendex's first run`;
     }
 
     throw err;
@@ -88,24 +88,24 @@ export const callback = (argv: Arguments, formatOutput?: Function, displayJson?:
   return (error: grpc.ServiceError | null, response: GrpcResponse) => {
     if (error) {
       process.exitCode = 1;
-      if (error.code === grpc.status.UNAVAILABLE && error.message.includes('xud is starting')) {
-        console.error('xud is starting... try again in a few seconds');
+      if (error.code === grpc.status.UNAVAILABLE && error.message.includes('opendex is starting')) {
+        console.error('opendex is starting... try again in a few seconds');
       } else if (error.details === 'failed to connect to all addresses') {
-        console.error(`could not connect to xud at ${argv.rpchost}:${argv.rpcport}, is xud running?`);
-      } else if (error.code === grpc.status.UNIMPLEMENTED && error.message.includes('xud is locked')) {
-        console.error("xud is locked, run 'xucli unlock', 'xucli create', or 'xucli restore' then try again");
+        console.error(`could not connect to opendex at ${argv.rpchost}:${argv.rpcport}, is opendex running?`);
+      } else if (error.code === grpc.status.UNIMPLEMENTED && error.message.includes('opendex is locked')) {
+        console.error("opendex is locked, run 'xucli unlock', 'xucli create', or 'xucli restore' then try again");
       } else if (
         error.code === grpc.status.UNIMPLEMENTED &&
-        error.message.includes('xud node cannot be created because it already exists')
+        error.message.includes('opendex node cannot be created because it already exists')
       ) {
-        console.error("an xud node already exists, try unlocking it with 'xucli unlock'");
+        console.error("an opendex node already exists, try unlocking it with 'xucli unlock'");
       } else if (
         error.code === grpc.status.UNIMPLEMENTED &&
-        error.message.includes('xud node cannot be unlocked because it does not exist')
+        error.message.includes('opendex node cannot be unlocked because it does not exist')
       ) {
-        console.error("no xud node exists to unlock, try creating one with 'xucli create' or 'xucli restore'");
-      } else if (error.code === grpc.status.UNIMPLEMENTED && error.message.includes('xud init service is disabled')) {
-        console.error("xud is running and unlocked, try checking its status with 'xucli getinfo'");
+        console.error("no opendex node exists to unlock, try creating one with 'xucli create' or 'xucli restore'");
+      } else if (error.code === grpc.status.UNIMPLEMENTED && error.message.includes('opendex init service is disabled')) {
+        console.error("opendex is running and unlocked, try checking its status with 'xucli getinfo'");
       } else {
         console.error(`${error.name}: ${error.message}`);
       }
