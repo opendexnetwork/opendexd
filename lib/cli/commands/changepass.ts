@@ -5,13 +5,13 @@ import { callback, loadXudClient } from '../command';
 
 export const command = 'changepass';
 
-export const describe = 'change the password for an existing xud instance';
+export const describe = 'change the password for an existing opendex instance';
 
 export const builder = {};
 
 const formatOutput = () => {
-  console.log('The master xud password was succesfully changed.');
-  console.log('Passwords for lnd wallets will be changed the next time xud is restarted and unlocked.');
+  console.log('The master opendex password was succesfully changed.');
+  console.log('Passwords for lnd wallets will be changed the next time opendex is restarted and unlocked.');
 };
 
 export const handler = (argv: Arguments<any>) => {
@@ -21,7 +21,7 @@ export const handler = (argv: Arguments<any>) => {
   });
 
   console.log('\
-You are changing the master password for xud and underlying wallets.\
+You are changing the master password for opendex and underlying wallets.\
 ');
   process.stdout.write('Enter old password: ');
   rl.question('', (oldPassword) => {
@@ -37,7 +37,7 @@ You are changing the master password for xud and underlying wallets.\
           request.setOldPassword(oldPassword);
 
           const client = await loadXudClient(argv);
-          // wait up to 3 seconds for rpc server to listen before call in case xud was just started
+          // wait up to 3 seconds for rpc server to listen before call in case opendex was just started
           client.waitForReady(Date.now() + 3000, () => {
             client.changePassword(request, callback(argv, formatOutput));
           });

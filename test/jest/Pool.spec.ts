@@ -11,6 +11,8 @@ import Pool from '../../lib/p2p/Pool';
 import { Address } from '../../lib/p2p/types';
 import uuid = require('uuid');
 
+jest.setTimeout(15000);
+
 describe('P2P Pool', () => {
   let pool1db: DB;
   let pool2db: DB;

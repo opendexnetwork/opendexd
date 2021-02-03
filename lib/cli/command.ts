@@ -93,19 +93,26 @@ export const callback = (argv: Arguments, formatOutput?: Function, displayJson?:
       } else if (error.details === 'failed to connect to all addresses') {
         console.error(`could not connect to opendex at ${argv.rpchost}:${argv.rpcport}, is opendex running?`);
       } else if (error.code === grpc.status.UNIMPLEMENTED && error.message.includes('opendex is locked')) {
-        console.error("opendex is locked, run 'xucli unlock', 'xucli create', or 'xucli restore' then try again");
+        console.error(
+          "opendex is locked, run 'opendex-cli unlock', 'opendex-cli create', or 'opendex-cli restore' then try again",
+        );
       } else if (
         error.code === grpc.status.UNIMPLEMENTED &&
         error.message.includes('opendex node cannot be created because it already exists')
       ) {
-        console.error("an opendex node already exists, try unlocking it with 'xucli unlock'");
+        console.error("an opendex node already exists, try unlocking it with 'opendex-cli unlock'");
       } else if (
         error.code === grpc.status.UNIMPLEMENTED &&
         error.message.includes('opendex node cannot be unlocked because it does not exist')
       ) {
-        console.error("no opendex node exists to unlock, try creating one with 'xucli create' or 'xucli restore'");
-      } else if (error.code === grpc.status.UNIMPLEMENTED && error.message.includes('opendex init service is disabled')) {
-        console.error("opendex is running and unlocked, try checking its status with 'xucli getinfo'");
+        console.error(
+          "no opendex node exists to unlock, try creating one with 'opendex-cli create' or 'opendex-cli restore'",
+        );
+      } else if (
+        error.code === grpc.status.UNIMPLEMENTED &&
+        error.message.includes('opendex init service is disabled')
+      ) {
+        console.error("opendex is running and unlocked, try checking its status with 'opendex-cli getinfo'");
       } else {
         console.error(`${error.name}: ${error.message}`);
       }

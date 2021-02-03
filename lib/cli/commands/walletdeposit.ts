@@ -4,7 +4,7 @@ import { callback, loadXudClient } from '../command';
 
 export const command = 'walletdeposit <currency>';
 
-export const describe = 'gets an address to deposit funds to xud';
+export const describe = 'gets an address to deposit funds to opendex';
 
 export const builder = (argv: Argv) =>
   argv

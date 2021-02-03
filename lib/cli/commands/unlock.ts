@@ -5,12 +5,12 @@ import { UnlockNodeRequest, UnlockNodeResponse } from '../../proto/opendexrpc_pb
 
 export const command = 'unlock';
 
-export const describe = 'unlock local xud node';
+export const describe = 'unlock local opendex node';
 
 export const builder = {};
 
 const formatOutput = (response: UnlockNodeResponse.AsObject) => {
-  console.log('xud was unlocked successfully');
+  console.log('opendex was unlocked successfully');
   if (response.unlockedLndsList.length) {
     console.log(`The following wallets were unlocked: ${response.unlockedLndsList.join(', ')}`);
   }
@@ -25,14 +25,14 @@ export const handler = (argv: Arguments) => {
     terminal: true,
   });
 
-  process.stdout.write('Enter master xud password: ');
+  process.stdout.write('Enter master opendex password: ');
   rl.question('', async (password) => {
     process.stdout.write('\n');
     rl.close();
     const request = new UnlockNodeRequest();
     request.setPassword(password);
     const client = await loadXudInitClient(argv);
-    // wait up to 3 seconds for rpc server to listen before call in case xud was just started
+    // wait up to 3 seconds for rpc server to listen before call in case opendex was just started
     client.waitForReady(Date.now() + 3000, () => {
       client.unlockNode(request, callback(argv, formatOutput));
     });

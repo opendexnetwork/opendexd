@@ -5,7 +5,7 @@ import { LevelPriority } from '../../Logger';
 
 export const command = 'loglevel <level>';
 
-export const describe = 'set the logging level for xud';
+export const describe = 'set the logging level for opendex';
 
 export const builder = (argv: Argv) =>
   argv

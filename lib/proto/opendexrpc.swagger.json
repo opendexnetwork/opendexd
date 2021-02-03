@@ -17,7 +17,7 @@
   "paths": {
     "/v1/addcurrency": {
       "post": {
-        "summary": "Adds a currency to the list of supported currencies. Once added, the currency may be used for\nnew trading pairs.\nshell: xucli addcurrency \u003ccurrency\u003e \u003cswap_client\u003e [decimal_places] [token_address]",
+        "summary": "Adds a currency to the list of supported currencies. Once added, the currency may be used for\nnew trading pairs.\nshell: opendex-cli addcurrency \u003ccurrency\u003e \u003cswap_client\u003e [decimal_places] [token_address]",
         "operationId": "AddCurrency",
         "responses": {
           "200": {
@@ -44,7 +44,7 @@
     },
     "/v1/addpair": {
       "post": {
-        "summary": "Adds a trading pair to the list of supported trading pairs. The newly supported pair is\nadvertised to peers so they may begin sending orders for it.\nshell: xucli addpair \u003cbase_currency\u003e \u003cquote_currency\u003e",
+        "summary": "Adds a trading pair to the list of supported trading pairs. The newly supported pair is\nadvertised to peers so they may begin sending orders for it.\nshell: opendex-cli addpair \u003cbase_currency\u003e \u003cquote_currency\u003e",
         "operationId": "AddPair",
         "responses": {
           "200": {
@@ -71,7 +71,7 @@
     },
     "/v1/balance": {
       "get": {
-        "summary": "Gets the total balance available across all payment channels and wallets for one or all currencies.\nshell: xucli getbalance [currency]",
+        "summary": "Gets the total balance available across all payment channels and wallets for one or all currencies.\nshell: opendex-cli getbalance [currency]",
         "operationId": "GetBalance",
         "responses": {
           "200": {
@@ -97,7 +97,7 @@
     },
     "/v1/ban": {
       "post": {
-        "summary": "Bans a node and immediately disconnects from it. This can be used to prevent any connections\nto a specific node.\nshell: xucli ban \u003cnode_identifier\u003e",
+        "summary": "Bans a node and immediately disconnects from it. This can be used to prevent any connections\nto a specific node.\nshell: opendex-cli ban \u003cnode_identifier\u003e",
         "operationId": "Ban",
         "responses": {
           "200": {
@@ -124,7 +124,7 @@
     },
     "/v1/changepass": {
       "post": {
-        "summary": "Changes the opendex master password, including the wallet passwords for any underlying clients.\nshell: xucli changepass",
+        "summary": "Changes the opendex master password, including the wallet passwords for any underlying clients.\nshell: opendex-cli changepass",
         "operationId": "ChangePassword",
         "responses": {
           "200": {
@@ -141,7 +141,7 @@
     },
     "/v1/closechannel": {
       "post": {
-        "summary": "Closes any existing payment channels with a peer for the specified currency.\nshell: xucli closechannel \u003ccurrency\u003e [node_identifier ] [--force]",
+        "summary": "Closes any existing payment channels with a peer for the specified currency.\nshell: opendex-cli closechannel \u003ccurrency\u003e [node_identifier ] [--force]",
         "operationId": "CloseChannel",
         "responses": {
           "200": {
@@ -158,7 +158,7 @@
     },
     "/v1/connect": {
       "post": {
-        "summary": "Attempts to connect to a node. Once connected, the node is added to the list of peers and\nbecomes available for swaps and trading. A handshake exchanges information about the peer's\nsupported trading and swap clients. Orders will be shared with the peer upon connection and\nupon new order placements.\nshell: xucli connect \u003cnode_uri\u003e",
+        "summary": "Attempts to connect to a node. Once connected, the node is added to the list of peers and\nbecomes available for swaps and trading. A handshake exchanges information about the peer's\nsupported trading and swap clients. Orders will be shared with the peer upon connection and\nupon new order placements.\nshell: opendex-cli connect \u003cnode_uri\u003e",
         "operationId": "Connect",
         "responses": {
           "200": {
@@ -185,7 +185,7 @@
     },
     "/v1/currencies": {
       "get": {
-        "summary": "Gets a list of this node's supported currencies.\nshell: xucli listcurrencies",
+        "summary": "Gets a list of this node's supported currencies.\nshell: opendex-cli listcurrencies",
         "operationId": "ListCurrencies",
         "responses": {
           "200": {
@@ -202,7 +202,7 @@
     },
     "/v1/deposit": {
       "post": {
-        "summary": "Gets an address to deposit a given currency directly into a channel.\nshell: xucli deposit \u003ccurrency\u003e",
+        "summary": "Gets an address to deposit a given currency directly into a channel.\nshell: opendex-cli deposit \u003ccurrency\u003e",
         "operationId": "Deposit",
         "responses": {
           "200": {
@@ -283,7 +283,7 @@
     },
     "/v1/info": {
       "get": {
-        "summary": "Gets general information about this node.\nshell: xucli getinfo",
+        "summary": "Gets general information about this node.\nshell: opendex-cli getinfo",
         "operationId": "GetInfo",
         "responses": {
           "200": {
@@ -300,7 +300,7 @@
     },
     "/v1/mnemonic": {
       "get": {
-        "summary": "Gets the master seed mnemonic .\nshell: xucli getnemonic",
+        "summary": "Gets the master seed mnemonic .\nshell: opendex-cli getnemonic",
         "operationId": "GetMnemonic",
         "responses": {
           "200": {
@@ -317,7 +317,7 @@
     },
     "/v1/nodeinfo": {
       "get": {
-        "summary": "Gets general information about a node.\nshell: xucli getnodeinfo \u003cnode_identifier\u003e",
+        "summary": "Gets general information about a node.\nshell: opendex-cli getnodeinfo \u003cnode_identifier\u003e",
         "operationId": "GetNodeInfo",
         "responses": {
           "200": {
@@ -343,7 +343,7 @@
     },
     "/v1/openchannel": {
       "post": {
-        "summary": "Opens a payment channel to a peer for the specified amount and currency.\nshell: xucli openchannel \u003ccurrency\u003e \u003camount\u003e [node_identifier] [push_amount]",
+        "summary": "Opens a payment channel to a peer for the specified amount and currency.\nshell: opendex-cli openchannel \u003ccurrency\u003e \u003camount\u003e [node_identifier] [push_amount]",
         "operationId": "OpenChannel",
         "responses": {
           "200": {
@@ -360,7 +360,7 @@
     },
     "/v1/orderbook": {
       "post": {
-        "summary": "Gets an order book depth chart where orders are grouped into \"buckets\"\naccording to their price rounded to a given level of precision.\nshell: xucli orderbook [pair_id] [precision]",
+        "summary": "Gets an order book depth chart where orders are grouped into \"buckets\"\naccording to their price rounded to a given level of precision.\nshell: opendex-cli orderbook [pair_id] [precision]",
         "operationId": "OrderBook",
         "responses": {
           "200": {
@@ -387,7 +387,7 @@
     },
     "/v1/orders": {
       "get": {
-        "summary": "Gets orders from the order book. This call returns the state of the order book at a given point\nin time, although it is not guaranteed to still be vaild by the time a response is received\nand processed by a client. It accepts an optional trading pair id parameter. If specified, only\norders for that particular trading pair are returned. Otherwise, all orders are returned. Orders\nare separated into buys and sells for each trading pair, but unsorted.\nshell: xucli listorders [pair_id] [include_own_orders] [limit]",
+        "summary": "Gets orders from the order book. This call returns the state of the order book at a given point\nin time, although it is not guaranteed to still be vaild by the time a response is received\nand processed by a client. It accepts an optional trading pair id parameter. If specified, only\norders for that particular trading pair are returned. Otherwise, all orders are returned. Orders\nare separated into buys and sells for each trading pair, but unsorted.\nshell: opendex-cli listorders [pair_id] [include_own_orders] [limit]",
         "operationId": "ListOrders",
         "responses": {
           "200": {
@@ -442,7 +442,7 @@
     },
     "/v1/pairs": {
       "get": {
-        "summary": "Gets a list of this nodes suported trading pairs.\nshell: xucli listpairs",
+        "summary": "Gets a list of this nodes suported trading pairs.\nshell: opendex-cli listpairs",
         "operationId": "ListPairs",
         "responses": {
           "200": {
@@ -459,7 +459,7 @@
     },
     "/v1/peers": {
       "get": {
-        "summary": "Gets a list of connected peers.\nshell: xucli listpeers",
+        "summary": "Gets a list of connected peers.\nshell: opendex-cli listpeers",
         "operationId": "ListPeers",
         "responses": {
           "200": {
@@ -503,7 +503,7 @@
     },
     "/v1/placeordersync": {
       "post": {
-        "summary": "The synchronous, non-streaming version of PlaceOrder.\nshell: xucli buy \u003cquantity\u003e \u003cpair_id\u003e \u003cprice\u003e [order_id] [stream]\nshell: xucli sell \u003cquantity\u003e \u003cpair_id\u003e \u003cprice\u003e [order_id] [stream]",
+        "summary": "The synchronous, non-streaming version of PlaceOrder.\nshell: opendex-cli buy \u003cquantity\u003e \u003cpair_id\u003e \u003cprice\u003e [order_id] [stream]\nshell: opendex-cli sell \u003cquantity\u003e \u003cpair_id\u003e \u003cprice\u003e [order_id] [stream]",
         "operationId": "PlaceOrderSync",
         "responses": {
           "200": {
@@ -530,7 +530,7 @@
     },
     "/v1/removeallorders": {
       "post": {
-        "summary": "Removes all orders from the order book. Removed orders become immediately unavailable for swaps,\nand peers are notified that the orders are no longer valid. Any portion of the orders that is\non hold due to ongoing swaps will not be removed until after the swap attempts complete.\nshell: xucli removeallorders",
+        "summary": "Removes all orders from the order book. Removed orders become immediately unavailable for swaps,\nand peers are notified that the orders are no longer valid. Any portion of the orders that is\non hold due to ongoing swaps will not be removed until after the swap attempts complete.\nshell: opendex-cli removeallorders",
         "operationId": "RemoveAllOrders",
         "responses": {
           "200": {
@@ -557,7 +557,7 @@
     },
     "/v1/removecurrency": {
       "post": {
-        "summary": "Removes a currency from the list of supported currencies. Only currencies that are not in use\nfor any currently supported trading pairs may be removed. Once removed, the currency can no\nlonger be used for any supported trading pairs.\nshell: xucli removecurrency \u003ccurrency\u003e",
+        "summary": "Removes a currency from the list of supported currencies. Only currencies that are not in use\nfor any currently supported trading pairs may be removed. Once removed, the currency can no\nlonger be used for any supported trading pairs.\nshell: opendex-cli removecurrency \u003ccurrency\u003e",
         "operationId": "RemoveCurrency",
         "responses": {
           "200": {
@@ -584,7 +584,7 @@
     },
     "/v1/removeorder": {
       "post": {
-        "summary": "Removes an order from the order book by its local id. This should be called when an order is\ncanceled or filled outside of opendex. Removed orders become immediately unavailable for swaps,\nand peers are notified that the order is no longer valid. Any portion of the order that is\non hold due to ongoing swaps will not be removed until after the swap attempts complete.\nshell: xucli removeorder \u003corder_id\u003e [quantity]",
+        "summary": "Removes an order from the order book by its local id. This should be called when an order is\ncanceled or filled outside of opendex. Removed orders become immediately unavailable for swaps,\nand peers are notified that the order is no longer valid. Any portion of the order that is\non hold due to ongoing swaps will not be removed until after the swap attempts complete.\nshell: opendex-cli removeorder \u003corder_id\u003e [quantity]",
         "operationId": "RemoveOrder",
         "responses": {
           "200": {
@@ -611,7 +611,7 @@
     },
     "/v1/removepair": {
       "post": {
-        "summary": "Removes a trading pair from the list of currently supported trading pair. This call will\neffectively cancel any standing orders for that trading pair. Peers are informed when a pair\nis no longer supported so that they will know to stop sending orders for it.\nshell: xucli removepair \u003cpair_id\u003e",
+        "summary": "Removes a trading pair from the list of currently supported trading pair. This call will\neffectively cancel any standing orders for that trading pair. Peers are informed when a pair\nis no longer supported so that they will know to stop sending orders for it.\nshell: opendex-cli removepair \u003cpair_id\u003e",
         "operationId": "RemovePair",
         "responses": {
           "200": {
@@ -638,7 +638,7 @@
     },
     "/v1/setloglevel": {
       "post": {
-        "summary": "Set the logging level.\nshell: xucli loglevel \u003clevel\u003e",
+        "summary": "Set the logging level.\nshell: opendex-cli loglevel \u003clevel\u003e",
         "operationId": "SetLogLevel",
         "responses": {
           "200": {
@@ -665,7 +665,7 @@
     },
     "/v1/shutdown": {
       "post": {
-        "summary": "Begin gracefully shutting down opendex.\nshell: xucli shutdown",
+        "summary": "Begin gracefully shutting down opendex.\nshell: opendex-cli shutdown",
         "operationId": "Shutdown",
         "responses": {
           "200": {
@@ -790,7 +790,7 @@
     },
     "/v1/tradehistory": {
       "post": {
-        "summary": "Gets a list of completed trades.\nshell: xucli tradehistory [limit]",
+        "summary": "Gets a list of completed trades.\nshell: opendex-cli tradehistory [limit]",
         "operationId": "TradeHistory",
         "responses": {
           "200": {
@@ -817,7 +817,7 @@
     },
     "/v1/tradinglimits": {
       "get": {
-        "summary": "Gets the trading limits for one or all currencies.\nshell: xucli tradinglimits [currency]",
+        "summary": "Gets the trading limits for one or all currencies.\nshell: opendex-cli tradinglimits [currency]",
         "operationId": "TradingLimits",
         "responses": {
           "200": {
@@ -843,7 +843,7 @@
     },
     "/v1/unban": {
       "post": {
-        "summary": "Removes a ban from a node manually and, optionally, attempts to connect to it.\nshell: xucli unban \u003cnode_identifier\u003e [reconnect]",
+        "summary": "Removes a ban from a node manually and, optionally, attempts to connect to it.\nshell: opendex-cli unban \u003cnode_identifier\u003e [reconnect]",
         "operationId": "Unban",
         "responses": {
           "200": {
@@ -870,7 +870,7 @@
     },
     "/v1/walletdeposit": {
       "post": {
-        "summary": "Gets an address to deposit a given currency into the opendex wallets.\nshell: xucli walletdeposit \u003ccurrency\u003e",
+        "summary": "Gets an address to deposit a given currency into the opendex wallets.\nshell: opendex-cli walletdeposit \u003ccurrency\u003e",
         "operationId": "WalletDeposit",
         "responses": {
           "200": {
@@ -897,7 +897,7 @@
     },
     "/v1/walletwithdraw": {
       "post": {
-        "summary": "Withdraws a given currency from the opendex wallets to a specified address.\nshell: xucli withdraw [amount] [currency] \u003cdestination\u003e [fee]",
+        "summary": "Withdraws a given currency from the opendex wallets to a specified address.\nshell: opendex-cli withdraw [amount] [currency] \u003cdestination\u003e [fee]",
         "operationId": "WalletWithdraw",
         "responses": {
           "200": {

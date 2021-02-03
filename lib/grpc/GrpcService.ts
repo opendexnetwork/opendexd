@@ -166,7 +166,7 @@ const getCancelled$ = (call: ServerWritableStream<any, any>) => {
   return fromEvent<void>(call, 'cancelled').pipe(take(1));
 };
 
-/** Class containing the available RPC methods for XUD */
+/** Class containing the available RPC methods for opendex */
 class GrpcService implements grpc.UntypedServiceImplementation {
   [name: string]: any;
   public locked = false;
@@ -206,8 +206,8 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   ): service is Service => {
     if (!service) {
       const err = this.locked
-        ? { code: status.UNIMPLEMENTED, message: 'xud is locked', name: 'LockedError' }
-        : { code: status.UNAVAILABLE, message: 'xud is starting', name: 'NotReadyError' };
+        ? { code: status.UNIMPLEMENTED, message: 'opendex is locked', name: 'LockedError' }
+        : { code: status.UNAVAILABLE, message: 'opendex is starting', name: 'NotReadyError' };
       if (typeof callbackOrCall === 'function') {
         const callback = callbackOrCall;
         callback(err, null);
@@ -903,7 +903,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     if (!this.service) {
       call.emit('error', {
         code: grpc.status.UNAVAILABLE,
-        message: 'xud is starting',
+        message: 'opendex is starting',
         name: 'NotReadyError',
       });
       return;
@@ -1053,7 +1053,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     call,
   ) => {
     if (!this.service) {
-      call.emit('error', { code: grpc.status.UNAVAILABLE, message: 'xud is starting', name: 'NotReadyError' });
+      call.emit('error', { code: grpc.status.UNAVAILABLE, message: 'opendex is starting', name: 'NotReadyError' });
       return;
     }
     const cancelled$ = getCancelled$(call);
@@ -1086,7 +1086,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     opendexrpc.SwapFailure
   > = (call) => {
     if (!this.service) {
-      call.emit('error', { code: grpc.status.UNAVAILABLE, message: 'xud is starting', name: 'NotReadyError' });
+      call.emit('error', { code: grpc.status.UNAVAILABLE, message: 'opendex is starting', name: 'NotReadyError' });
       return;
     }
     const cancelled$ = getCancelled$(call);
@@ -1107,7 +1107,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     call,
   ) => {
     if (!this.service) {
-      call.emit('error', { code: grpc.status.UNAVAILABLE, message: 'xud is starting', name: 'NotReadyError' });
+      call.emit('error', { code: grpc.status.UNAVAILABLE, message: 'opendex is starting', name: 'NotReadyError' });
       return;
     }
     const cancelled$ = getCancelled$(call);
@@ -1129,7 +1129,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
     opendexrpc.SwapAccepted
   > = (call) => {
     if (!this.service) {
-      call.emit('error', { code: grpc.status.UNAVAILABLE, message: 'xud is starting', name: 'NotReadyError' });
+      call.emit('error', { code: grpc.status.UNAVAILABLE, message: 'opendex is starting', name: 'NotReadyError' });
       return;
     }
 

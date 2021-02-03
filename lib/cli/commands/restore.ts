@@ -9,7 +9,7 @@ import { getDefaultCertPath, waitForCert } from '../utils';
 
 export const command = 'restore [backup_directory]';
 
-export const describe = 'restore an xud instance from seed';
+export const describe = 'restore an opendex instance from seed';
 
 export const builder = {
   backup_directory: {
@@ -67,7 +67,7 @@ export const handler = async (argv: Arguments<any>) => {
         fs.readFile(join(backupDir, filename)).then((fileContent) => {
           if (filename.startsWith('lnd-')) {
             request.getLndBackupsMap().set(filename.substr(4), fileContent);
-          } else if (filename === 'xud') {
+          } else if (filename === 'opendex') {
             request.setXudDatabase(fileContent);
           }
         }),
@@ -87,7 +87,7 @@ export const handler = async (argv: Arguments<any>) => {
   });
 
   console.log(`
-You are restoring an xud node key and underlying wallets. All will be secured by
+You are restoring an opendex node key and underlying wallets. All will be secured by
 a single password provided below.
   `);
   rl.question('Enter your 24 word mnemonic separated by spaces: ', (mnemonicStr) => {
@@ -129,7 +129,7 @@ a single password provided below.
           }
 
           const client = await loadXudInitClient(argv);
-          // wait up to 3 seconds for rpc server to listen before call in case xud was just started
+          // wait up to 3 seconds for rpc server to listen before call in case opendex was just started
           client.waitForReady(Date.now() + 3000, () => {
             client.restoreNode(request, callback(argv, formatOutput));
           });

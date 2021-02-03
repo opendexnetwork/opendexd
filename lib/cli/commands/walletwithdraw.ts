@@ -5,7 +5,7 @@ import { coinsToSats } from '../utils';
 
 export const command = 'walletwithdraw <amount> <currency> <destination> [fee]';
 
-export const describe = 'withdraws on-chain funds from xud';
+export const describe = 'withdraws on-chain funds from opendex';
 
 export const builder = (argv: Argv) =>
   argv

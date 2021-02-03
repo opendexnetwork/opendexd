@@ -5367,13 +5367,13 @@ type XudInitClient interface {
 	// Creates an opendex identity node key and underlying wallets. The node key and
 	// wallets are derived from a single seed and encrypted using a single
 	// password provided as a parameter to the call.
-	// shell: xucli create
+	// shell: opendex-cli create
 	CreateNode(ctx context.Context, in *CreateNodeRequest, opts ...grpc.CallOption) (*CreateNodeResponse, error)
 	// Restores an opendex instance and underlying wallets from a seed.
-	// shell: xucli restore [backup_directory]
+	// shell: opendex-cli restore [backup_directory]
 	RestoreNode(ctx context.Context, in *RestoreNodeRequest, opts ...grpc.CallOption) (*RestoreNodeResponse, error)
 	// Unlocks and decrypts the opendex node key and any underlying wallets.
-	// shell: xucli unlock
+	// shell: opendex-cli unlock
 	UnlockNode(ctx context.Context, in *UnlockNodeRequest, opts ...grpc.CallOption) (*UnlockNodeResponse, error)
 }
 
@@ -5417,13 +5417,13 @@ type XudInitServer interface {
 	// Creates an opendex identity node key and underlying wallets. The node key and
 	// wallets are derived from a single seed and encrypted using a single
 	// password provided as a parameter to the call.
-	// shell: xucli create
+	// shell: opendex-cli create
 	CreateNode(context.Context, *CreateNodeRequest) (*CreateNodeResponse, error)
 	// Restores an opendex instance and underlying wallets from a seed.
-	// shell: xucli restore [backup_directory]
+	// shell: opendex-cli restore [backup_directory]
 	RestoreNode(context.Context, *RestoreNodeRequest) (*RestoreNodeResponse, error)
 	// Unlocks and decrypts the opendex node key and any underlying wallets.
-	// shell: xucli unlock
+	// shell: opendex-cli unlock
 	UnlockNode(context.Context, *UnlockNodeRequest) (*UnlockNodeResponse, error)
 }
 
@@ -5512,106 +5512,106 @@ var _XudInit_serviceDesc = grpc.ServiceDesc{
 type XudClient interface {
 	// Adds a currency to the list of supported currencies. Once added, the currency may be used for
 	// new trading pairs.
-	// shell: xucli addcurrency <currency> <swap_client> [decimal_places] [token_address]
+	// shell: opendex-cli addcurrency <currency> <swap_client> [decimal_places] [token_address]
 	AddCurrency(ctx context.Context, in *Currency, opts ...grpc.CallOption) (*AddCurrencyResponse, error)
 	// Adds a trading pair to the list of supported trading pairs. The newly supported pair is
 	// advertised to peers so they may begin sending orders for it.
-	// shell: xucli addpair <base_currency> <quote_currency>
+	// shell: opendex-cli addpair <base_currency> <quote_currency>
 	AddPair(ctx context.Context, in *AddPairRequest, opts ...grpc.CallOption) (*AddPairResponse, error)
 	// Bans a node and immediately disconnects from it. This can be used to prevent any connections
 	// to a specific node.
-	// shell: xucli ban <node_identifier>
+	// shell: opendex-cli ban <node_identifier>
 	Ban(ctx context.Context, in *BanRequest, opts ...grpc.CallOption) (*BanResponse, error)
 	// Changes the opendex master password, including the wallet passwords for any underlying clients.
-	// shell: xucli changepass
+	// shell: opendex-cli changepass
 	ChangePassword(ctx context.Context, in *ChangePasswordRequest, opts ...grpc.CallOption) (*ChangePasswordResponse, error)
 	// Closes any existing payment channels with a peer for the specified currency.
-	// shell: xucli closechannel <currency> [node_identifier ] [--force]
+	// shell: opendex-cli closechannel <currency> [node_identifier ] [--force]
 	CloseChannel(ctx context.Context, in *CloseChannelRequest, opts ...grpc.CallOption) (*CloseChannelResponse, error)
 	// Attempts to connect to a node. Once connected, the node is added to the list of peers and
 	// becomes available for swaps and trading. A handshake exchanges information about the peer's
 	// supported trading and swap clients. Orders will be shared with the peer upon connection and
 	// upon new order placements.
-	// shell: xucli connect <node_uri>
+	// shell: opendex-cli connect <node_uri>
 	Connect(ctx context.Context, in *ConnectRequest, opts ...grpc.CallOption) (*ConnectResponse, error)
 	// Gets an address to deposit a given currency into the opendex wallets.
-	// shell: xucli walletdeposit <currency>
+	// shell: opendex-cli walletdeposit <currency>
 	WalletDeposit(ctx context.Context, in *DepositRequest, opts ...grpc.CallOption) (*DepositResponse, error)
 	// Gets an address to deposit a given currency directly into a channel.
-	// shell: xucli deposit <currency>
+	// shell: opendex-cli deposit <currency>
 	Deposit(ctx context.Context, in *DepositRequest, opts ...grpc.CallOption) (*DepositResponse, error)
 	// Discover nodes from a specific peer and apply new connections
 	DiscoverNodes(ctx context.Context, in *DiscoverNodesRequest, opts ...grpc.CallOption) (*DiscoverNodesResponse, error)
 	// Gets the total balance available across all payment channels and wallets for one or all currencies.
-	// shell: xucli getbalance [currency]
+	// shell: opendex-cli getbalance [currency]
 	GetBalance(ctx context.Context, in *GetBalanceRequest, opts ...grpc.CallOption) (*GetBalanceResponse, error)
 	// Gets general information about this node.
-	// shell: xucli getinfo
+	// shell: opendex-cli getinfo
 	GetInfo(ctx context.Context, in *GetInfoRequest, opts ...grpc.CallOption) (*GetInfoResponse, error)
 	// Gets the master seed mnemonic .
-	// shell: xucli getnemonic
+	// shell: opendex-cli getnemonic
 	GetMnemonic(ctx context.Context, in *GetMnemonicRequest, opts ...grpc.CallOption) (*GetMnemonicResponse, error)
 	// Gets general information about a node.
-	// shell: xucli getnodeinfo <node_identifier>
+	// shell: opendex-cli getnodeinfo <node_identifier>
 	GetNodeInfo(ctx context.Context, in *GetNodeInfoRequest, opts ...grpc.CallOption) (*GetNodeInfoResponse, error)
 	// Gets orders from the order book. This call returns the state of the order book at a given point
 	// in time, although it is not guaranteed to still be vaild by the time a response is received
 	// and processed by a client. It accepts an optional trading pair id parameter. If specified, only
 	// orders for that particular trading pair are returned. Otherwise, all orders are returned. Orders
 	// are separated into buys and sells for each trading pair, but unsorted.
-	// shell: xucli listorders [pair_id] [include_own_orders] [limit]
+	// shell: opendex-cli listorders [pair_id] [include_own_orders] [limit]
 	ListOrders(ctx context.Context, in *ListOrdersRequest, opts ...grpc.CallOption) (*ListOrdersResponse, error)
 	// Gets a list of this node's supported currencies.
-	// shell: xucli listcurrencies
+	// shell: opendex-cli listcurrencies
 	ListCurrencies(ctx context.Context, in *ListCurrenciesRequest, opts ...grpc.CallOption) (*ListCurrenciesResponse, error)
 	// Gets a list of this nodes suported trading pairs.
-	// shell: xucli listpairs
+	// shell: opendex-cli listpairs
 	ListPairs(ctx context.Context, in *ListPairsRequest, opts ...grpc.CallOption) (*ListPairsResponse, error)
 	// Gets a list of connected peers.
-	// shell: xucli listpeers
+	// shell: opendex-cli listpeers
 	ListPeers(ctx context.Context, in *ListPeersRequest, opts ...grpc.CallOption) (*ListPeersResponse, error)
 	// Opens a payment channel to a peer for the specified amount and currency.
-	// shell: xucli openchannel <currency> <amount> [node_identifier] [push_amount]
+	// shell: opendex-cli openchannel <currency> <amount> [node_identifier] [push_amount]
 	OpenChannel(ctx context.Context, in *OpenChannelRequest, opts ...grpc.CallOption) (*OpenChannelResponse, error)
 	// Gets an order book depth chart where orders are grouped into "buckets"
 	// according to their price rounded to a given level of precision.
-	// shell: xucli orderbook [pair_id] [precision]
+	// shell: opendex-cli orderbook [pair_id] [precision]
 	OrderBook(ctx context.Context, in *OrderBookRequest, opts ...grpc.CallOption) (*OrderBookResponse, error)
 	// Adds an order to the order book.
 	// If price is zero or unspecified a market order will get added.
 	PlaceOrder(ctx context.Context, in *PlaceOrderRequest, opts ...grpc.CallOption) (Xud_PlaceOrderClient, error)
 	// The synchronous, non-streaming version of PlaceOrder.
-	// shell: xucli buy <quantity> <pair_id> <price> [order_id] [stream]
-	// shell: xucli sell <quantity> <pair_id> <price> [order_id] [stream]
+	// shell: opendex-cli buy <quantity> <pair_id> <price> [order_id] [stream]
+	// shell: opendex-cli sell <quantity> <pair_id> <price> [order_id] [stream]
 	PlaceOrderSync(ctx context.Context, in *PlaceOrderRequest, opts ...grpc.CallOption) (*PlaceOrderResponse, error)
 	// Executes a swap on a maker peer order.
 	ExecuteSwap(ctx context.Context, in *ExecuteSwapRequest, opts ...grpc.CallOption) (*SwapSuccess, error)
 	// Removes a currency from the list of supported currencies. Only currencies that are not in use
 	// for any currently supported trading pairs may be removed. Once removed, the currency can no
 	// longer be used for any supported trading pairs.
-	// shell: xucli removecurrency <currency>
+	// shell: opendex-cli removecurrency <currency>
 	RemoveCurrency(ctx context.Context, in *RemoveCurrencyRequest, opts ...grpc.CallOption) (*RemoveCurrencyResponse, error)
 	// Removes an order from the order book by its local id. This should be called when an order is
 	// canceled or filled outside of opendex. Removed orders become immediately unavailable for swaps,
 	// and peers are notified that the order is no longer valid. Any portion of the order that is
 	// on hold due to ongoing swaps will not be removed until after the swap attempts complete.
-	// shell: xucli removeorder <order_id> [quantity]
+	// shell: opendex-cli removeorder <order_id> [quantity]
 	RemoveOrder(ctx context.Context, in *RemoveOrderRequest, opts ...grpc.CallOption) (*RemoveOrderResponse, error)
 	// Removes all orders from the order book. Removed orders become immediately unavailable for swaps,
 	// and peers are notified that the orders are no longer valid. Any portion of the orders that is
 	// on hold due to ongoing swaps will not be removed until after the swap attempts complete.
-	// shell: xucli removeallorders
+	// shell: opendex-cli removeallorders
 	RemoveAllOrders(ctx context.Context, in *RemoveAllOrdersRequest, opts ...grpc.CallOption) (*RemoveAllOrdersResponse, error)
 	// Removes a trading pair from the list of currently supported trading pair. This call will
 	// effectively cancel any standing orders for that trading pair. Peers are informed when a pair
 	// is no longer supported so that they will know to stop sending orders for it.
-	// shell: xucli removepair <pair_id>
+	// shell: opendex-cli removepair <pair_id>
 	RemovePair(ctx context.Context, in *RemovePairRequest, opts ...grpc.CallOption) (*RemovePairResponse, error)
 	// Set the logging level.
-	// shell: xucli loglevel <level>
+	// shell: opendex-cli loglevel <level>
 	SetLogLevel(ctx context.Context, in *SetLogLevelRequest, opts ...grpc.CallOption) (*SetLogLevelResponse, error)
 	// Begin gracefully shutting down opendex.
-	// shell: xucli shutdown
+	// shell: opendex-cli shutdown
 	Shutdown(ctx context.Context, in *ShutdownRequest, opts ...grpc.CallOption) (*ShutdownResponse, error)
 	// Subscribes to orders being added to and removed from the order book. This call allows the client
 	// to maintain an up-to-date view of the order book. For example, an exchange that wants to show
@@ -5633,16 +5633,16 @@ type XudClient interface {
 	// accepts a swap request from a peer, but before the swap has actually succeeded.
 	SubscribeSwapsAccepted(ctx context.Context, in *SubscribeSwapsAcceptedRequest, opts ...grpc.CallOption) (Xud_SubscribeSwapsAcceptedClient, error)
 	// Gets a list of completed trades.
-	// shell: xucli tradehistory [limit]
+	// shell: opendex-cli tradehistory [limit]
 	TradeHistory(ctx context.Context, in *TradeHistoryRequest, opts ...grpc.CallOption) (*TradeHistoryResponse, error)
 	// Gets the trading limits for one or all currencies.
-	// shell: xucli tradinglimits [currency]
+	// shell: opendex-cli tradinglimits [currency]
 	TradingLimits(ctx context.Context, in *TradingLimitsRequest, opts ...grpc.CallOption) (*TradingLimitsResponse, error)
 	// Removes a ban from a node manually and, optionally, attempts to connect to it.
-	// shell: xucli unban <node_identifier> [reconnect]
+	// shell: opendex-cli unban <node_identifier> [reconnect]
 	Unban(ctx context.Context, in *UnbanRequest, opts ...grpc.CallOption) (*UnbanResponse, error)
 	// Withdraws a given currency from the opendex wallets to a specified address.
-	// shell: xucli withdraw [amount] [currency] <destination> [fee]
+	// shell: opendex-cli withdraw [amount] [currency] <destination> [fee]
 	WalletWithdraw(ctx context.Context, in *WithdrawRequest, opts ...grpc.CallOption) (*WithdrawResponse, error)
 }
 
@@ -6097,106 +6097,106 @@ func (c *xudClient) WalletWithdraw(ctx context.Context, in *WithdrawRequest, opt
 type XudServer interface {
 	// Adds a currency to the list of supported currencies. Once added, the currency may be used for
 	// new trading pairs.
-	// shell: xucli addcurrency <currency> <swap_client> [decimal_places] [token_address]
+	// shell: opendex-cli addcurrency <currency> <swap_client> [decimal_places] [token_address]
 	AddCurrency(context.Context, *Currency) (*AddCurrencyResponse, error)
 	// Adds a trading pair to the list of supported trading pairs. The newly supported pair is
 	// advertised to peers so they may begin sending orders for it.
-	// shell: xucli addpair <base_currency> <quote_currency>
+	// shell: opendex-cli addpair <base_currency> <quote_currency>
 	AddPair(context.Context, *AddPairRequest) (*AddPairResponse, error)
 	// Bans a node and immediately disconnects from it. This can be used to prevent any connections
 	// to a specific node.
-	// shell: xucli ban <node_identifier>
+	// shell: opendex-cli ban <node_identifier>
 	Ban(context.Context, *BanRequest) (*BanResponse, error)
 	// Changes the opendex master password, including the wallet passwords for any underlying clients.
-	// shell: xucli changepass
+	// shell: opendex-cli changepass
 	ChangePassword(context.Context, *ChangePasswordRequest) (*ChangePasswordResponse, error)
 	// Closes any existing payment channels with a peer for the specified currency.
-	// shell: xucli closechannel <currency> [node_identifier ] [--force]
+	// shell: opendex-cli closechannel <currency> [node_identifier ] [--force]
 	CloseChannel(context.Context, *CloseChannelRequest) (*CloseChannelResponse, error)
 	// Attempts to connect to a node. Once connected, the node is added to the list of peers and
 	// becomes available for swaps and trading. A handshake exchanges information about the peer's
 	// supported trading and swap clients. Orders will be shared with the peer upon connection and
 	// upon new order placements.
-	// shell: xucli connect <node_uri>
+	// shell: opendex-cli connect <node_uri>
 	Connect(context.Context, *ConnectRequest) (*ConnectResponse, error)
 	// Gets an address to deposit a given currency into the opendex wallets.
-	// shell: xucli walletdeposit <currency>
+	// shell: opendex-cli walletdeposit <currency>
 	WalletDeposit(context.Context, *DepositRequest) (*DepositResponse, error)
 	// Gets an address to deposit a given currency directly into a channel.
-	// shell: xucli deposit <currency>
+	// shell: opendex-cli deposit <currency>
 	Deposit(context.Context, *DepositRequest) (*DepositResponse, error)
 	// Discover nodes from a specific peer and apply new connections
 	DiscoverNodes(context.Context, *DiscoverNodesRequest) (*DiscoverNodesResponse, error)
 	// Gets the total balance available across all payment channels and wallets for one or all currencies.
-	// shell: xucli getbalance [currency]
+	// shell: opendex-cli getbalance [currency]
 	GetBalance(context.Context, *GetBalanceRequest) (*GetBalanceResponse, error)
 	// Gets general information about this node.
-	// shell: xucli getinfo
+	// shell: opendex-cli getinfo
 	GetInfo(context.Context, *GetInfoRequest) (*GetInfoResponse, error)
 	// Gets the master seed mnemonic .
-	// shell: xucli getnemonic
+	// shell: opendex-cli getnemonic
 	GetMnemonic(context.Context, *GetMnemonicRequest) (*GetMnemonicResponse, error)
 	// Gets general information about a node.
-	// shell: xucli getnodeinfo <node_identifier>
+	// shell: opendex-cli getnodeinfo <node_identifier>
 	GetNodeInfo(context.Context, *GetNodeInfoRequest) (*GetNodeInfoResponse, error)
 	// Gets orders from the order book. This call returns the state of the order book at a given point
 	// in time, although it is not guaranteed to still be vaild by the time a response is received
 	// and processed by a client. It accepts an optional trading pair id parameter. If specified, only
 	// orders for that particular trading pair are returned. Otherwise, all orders are returned. Orders
 	// are separated into buys and sells for each trading pair, but unsorted.
-	// shell: xucli listorders [pair_id] [include_own_orders] [limit]
+	// shell: opendex-cli listorders [pair_id] [include_own_orders] [limit]
 	ListOrders(context.Context, *ListOrdersRequest) (*ListOrdersResponse, error)
 	// Gets a list of this node's supported currencies.
-	// shell: xucli listcurrencies
+	// shell: opendex-cli listcurrencies
 	ListCurrencies(context.Context, *ListCurrenciesRequest) (*ListCurrenciesResponse, error)
 	// Gets a list of this nodes suported trading pairs.
-	// shell: xucli listpairs
+	// shell: opendex-cli listpairs
 	ListPairs(context.Context, *ListPairsRequest) (*ListPairsResponse, error)
 	// Gets a list of connected peers.
-	// shell: xucli listpeers
+	// shell: opendex-cli listpeers
 	ListPeers(context.Context, *ListPeersRequest) (*ListPeersResponse, error)
 	// Opens a payment channel to a peer for the specified amount and currency.
-	// shell: xucli openchannel <currency> <amount> [node_identifier] [push_amount]
+	// shell: opendex-cli openchannel <currency> <amount> [node_identifier] [push_amount]
 	OpenChannel(context.Context, *OpenChannelRequest) (*OpenChannelResponse, error)
 	// Gets an order book depth chart where orders are grouped into "buckets"
 	// according to their price rounded to a given level of precision.
-	// shell: xucli orderbook [pair_id] [precision]
+	// shell: opendex-cli orderbook [pair_id] [precision]
 	OrderBook(context.Context, *OrderBookRequest) (*OrderBookResponse, error)
 	// Adds an order to the order book.
 	// If price is zero or unspecified a market order will get added.
 	PlaceOrder(*PlaceOrderRequest, Xud_PlaceOrderServer) error
 	// The synchronous, non-streaming version of PlaceOrder.
-	// shell: xucli buy <quantity> <pair_id> <price> [order_id] [stream]
-	// shell: xucli sell <quantity> <pair_id> <price> [order_id] [stream]
+	// shell: opendex-cli buy <quantity> <pair_id> <price> [order_id] [stream]
+	// shell: opendex-cli sell <quantity> <pair_id> <price> [order_id] [stream]
 	PlaceOrderSync(context.Context, *PlaceOrderRequest) (*PlaceOrderResponse, error)
 	// Executes a swap on a maker peer order.
 	ExecuteSwap(context.Context, *ExecuteSwapRequest) (*SwapSuccess, error)
 	// Removes a currency from the list of supported currencies. Only currencies that are not in use
 	// for any currently supported trading pairs may be removed. Once removed, the currency can no
 	// longer be used for any supported trading pairs.
-	// shell: xucli removecurrency <currency>
+	// shell: opendex-cli removecurrency <currency>
 	RemoveCurrency(context.Context, *RemoveCurrencyRequest) (*RemoveCurrencyResponse, error)
 	// Removes an order from the order book by its local id. This should be called when an order is
 	// canceled or filled outside of opendex. Removed orders become immediately unavailable for swaps,
 	// and peers are notified that the order is no longer valid. Any portion of the order that is
 	// on hold due to ongoing swaps will not be removed until after the swap attempts complete.
-	// shell: xucli removeorder <order_id> [quantity]
+	// shell: opendex-cli removeorder <order_id> [quantity]
 	RemoveOrder(context.Context, *RemoveOrderRequest) (*RemoveOrderResponse, error)
 	// Removes all orders from the order book. Removed orders become immediately unavailable for swaps,
 	// and peers are notified that the orders are no longer valid. Any portion of the orders that is
 	// on hold due to ongoing swaps will not be removed until after the swap attempts complete.
-	// shell: xucli removeallorders
+	// shell: opendex-cli removeallorders
 	RemoveAllOrders(context.Context, *RemoveAllOrdersRequest) (*RemoveAllOrdersResponse, error)
 	// Removes a trading pair from the list of currently supported trading pair. This call will
 	// effectively cancel any standing orders for that trading pair. Peers are informed when a pair
 	// is no longer supported so that they will know to stop sending orders for it.
-	// shell: xucli removepair <pair_id>
+	// shell: opendex-cli removepair <pair_id>
 	RemovePair(context.Context, *RemovePairRequest) (*RemovePairResponse, error)
 	// Set the logging level.
-	// shell: xucli loglevel <level>
+	// shell: opendex-cli loglevel <level>
 	SetLogLevel(context.Context, *SetLogLevelRequest) (*SetLogLevelResponse, error)
 	// Begin gracefully shutting down opendex.
-	// shell: xucli shutdown
+	// shell: opendex-cli shutdown
 	Shutdown(context.Context, *ShutdownRequest) (*ShutdownResponse, error)
 	// Subscribes to orders being added to and removed from the order book. This call allows the client
 	// to maintain an up-to-date view of the order book. For example, an exchange that wants to show
@@ -6218,16 +6218,16 @@ type XudServer interface {
 	// accepts a swap request from a peer, but before the swap has actually succeeded.
 	SubscribeSwapsAccepted(*SubscribeSwapsAcceptedRequest, Xud_SubscribeSwapsAcceptedServer) error
 	// Gets a list of completed trades.
-	// shell: xucli tradehistory [limit]
+	// shell: opendex-cli tradehistory [limit]
 	TradeHistory(context.Context, *TradeHistoryRequest) (*TradeHistoryResponse, error)
 	// Gets the trading limits for one or all currencies.
-	// shell: xucli tradinglimits [currency]
+	// shell: opendex-cli tradinglimits [currency]
 	TradingLimits(context.Context, *TradingLimitsRequest) (*TradingLimitsResponse, error)
 	// Removes a ban from a node manually and, optionally, attempts to connect to it.
-	// shell: xucli unban <node_identifier> [reconnect]
+	// shell: opendex-cli unban <node_identifier> [reconnect]
 	Unban(context.Context, *UnbanRequest) (*UnbanResponse, error)
 	// Withdraws a given currency from the opendex wallets to a specified address.
-	// shell: xucli withdraw [amount] [currency] <destination> [fee]
+	// shell: opendex-cli withdraw [amount] [currency] <destination> [fee]
 	WalletWithdraw(context.Context, *WithdrawRequest) (*WithdrawResponse, error)
 }
 

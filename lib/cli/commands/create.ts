@@ -6,7 +6,7 @@ import { getDefaultCertPath, waitForCert, showSeed } from '../utils';
 
 export const command = 'create';
 
-export const describe = 'create a new xud instance and set a password';
+export const describe = 'create a new opendex instance and set a password';
 
 export const builder = {};
 
@@ -32,7 +32,7 @@ export const handler = (argv: Arguments<any>) => {
   });
 
   console.log(`\
-You are creating an xud node key and underlying wallets. All will be secured by \
+You are creating an opendex node key and underlying wallets. All will be secured by \
 a single password provided below.
 `);
   process.stdout.write('Enter a password: ');
@@ -55,7 +55,7 @@ a single password provided below.
         }
 
         const client = await loadXudInitClient(argv);
-        // wait up to 3 seconds for rpc server to listen before call in case xud was just started
+        // wait up to 3 seconds for rpc server to listen before call in case opendex was just started
         client.waitForReady(Date.now() + 3000, () => {
           client.createNode(request, callback(argv, formatOutput));
         });
