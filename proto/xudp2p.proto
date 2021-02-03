@@ -1,0 +1,143 @@
+syntax = "proto3";
+
+package xudp2p;
+
+message Address {
+    string host = 1;
+    uint32 port = 2;
+}
+
+message Order {
+    string id = 1;
+    string pair_id = 2;
+    double price = 3;
+    uint64 quantity = 4;
+    bool is_buy = 5;
+    string replace_order_id = 6;
+}
+
+message Node {
+    string node_pub_key = 1;
+    repeated Address addresses = 2;
+}
+
+message LndUris {
+    repeated string lnd_uri = 1;
+}
+
+message NodeState {
+    repeated Address addresses = 3;
+    repeated string pairs = 4;
+    map<string, string> lnd_pub_keys = 6;
+    map<string, string> token_identifiers = 7;
+    map<string, LndUris> lnd_uris = 8;
+    string connext_identifier = 9;
+}
+
+message PingPacket {
+    string id = 1;
+}
+
+message PongPacket {
+    string id = 1;
+    string req_id = 2;
+}
+
+message OrderPacket {
+    string id = 1;
+    Order order = 2;
+}
+
+message OrderInvalidationPacket {
+    string id = 1;
+    string order_id = 2;
+    string pair_id = 3;
+    uint64 quantity = 4;
+}
+
+message GetOrdersPacket {
+    string id = 1;
+    repeated string pair_ids = 2;
+}
+
+message OrdersPacket {
+    string id = 1;
+    string req_id = 2;
+    repeated Order orders = 3;
+}
+
+message NodeStateUpdatePacket {
+    string id = 1;
+    NodeState node_state = 5;
+}
+
+message SessionInitPacket {
+    string id = 1;
+    string sign = 2;
+    // The node pub key of the peer we are connecting to.
+    string peer_pub_key = 3;
+    string ephemeral_pub_key = 4;
+    NodeState node_state = 5;
+    // The version of xud we are running.
+    string version = 6;
+    // Our local node pub key.
+    string node_pub_key = 7;
+}
+
+message SessionAckPacket {
+    string id = 1;
+    string req_id = 2;
+    string ephemeral_pub_key = 3;
+}
+
+message DisconnectingPacket {
+    string id = 1;
+    uint32 reason = 2;
+    string payload = 3;
+}
+
+message GetNodesPacket {
+    string id = 1;
+}
+
+message NodesPacket {
+    string id = 1;
+    string req_id = 2;
+    repeated Node nodes = 3;
+}
+
+message SanitySwapInitPacket {
+    string id = 1;
+    string currency = 2;
+    string r_hash = 3;
+}
+
+message SanitySwapAckPacket {
+    string id = 1;
+    string req_id = 2;
+}
+
+message SwapRequestPacket {
+    string id = 1;
+    uint64 proposed_quantity = 2;
+    string pair_id = 3;
+    string order_id = 4;
+    string r_hash = 5;
+    uint32 taker_cltv_delta = 6;
+}
+
+message SwapAcceptedPacket {
+    string id = 1;
+    string req_id = 2;
+    string r_hash = 3;
+    double quantity = 4;
+    uint32 maker_cltv_delta = 5;
+}
+
+message SwapFailedPacket {
+    string id = 1;
+    string req_id = 2;
+    string r_hash = 3;
+    string error_message = 4;
+    uint32 failure_reason = 5;
+}

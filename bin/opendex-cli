@@ -1,0 +1,43 @@
+#!/usr/bin/env node
+const dotenv = require('dotenv');
+
+dotenv.config({
+  path: '../.env',
+});
+
+require('yargs')
+  .options({
+    rpc: {
+      hidden: true,
+    },
+    rpcport: {
+      alias: 'p',
+      describe: 'RPC service port',
+      type: 'number',
+    },
+    rpchost: {
+      alias: 'h',
+      describe: 'RPC service hostname',
+      type: 'string',
+    },
+    tlscertpath: {
+      alias: 'c',
+      describe: 'Path to the TLS certificate of xud',
+      type: 'string',
+    },
+    json: {
+      alias: 'j',
+      describe: 'Display output in json format',
+      type: 'boolean',
+      default: false,
+    },
+    opendexdir: {
+      alias: 'x',
+      describe: 'Data directory for xud',
+      type: 'string',
+    },
+  })
+  .commandDir('../dist/cli/commands/', { recurse: true })
+  .demandCommand(1, '')
+  .strict()
+  .argv; // we must read the argv property for the command line args to initialize properly

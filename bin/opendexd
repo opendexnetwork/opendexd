@@ -1,0 +1,239 @@
+#!/usr/bin/env node
+
+const Xud = require('../dist/OpenDEX').default;
+
+const { argv } = require('yargs')
+  .options({
+    dbpath: {
+      describe: 'The file path for the database',
+      type: 'string',
+      alias: 'd',
+    },
+    initdb: {
+      describe: 'Whether to initialize the db with data',
+      type: 'boolean',
+      default: undefined,
+    },
+    loglevel: {
+      describe: 'Verbosity of the logger',
+      type: 'string',
+      alias: 'l',
+    },
+    logpath: {
+      describe: 'Path to the log file',
+      type: 'string',
+    },
+    logdateformat: {
+      describe: 'Format of the logger date',
+      type: 'string',
+    },
+    mainnet: {
+      describe: 'Whether to run XUD on mainnet',
+      type: 'boolean',
+      default: undefined,
+    },
+    testnet: {
+      describe: 'Whether to run XUD on testnet',
+      type: 'boolean',
+      default: undefined,
+    },
+    simnet: {
+      describe: 'Whether to run XUD on simnet',
+      type: 'boolean',
+      default: undefined,
+    },
+    regtest: {
+      describe: 'Whether to run XUD on regtest',
+      type: 'boolean',
+      default: undefined,
+    },
+    maxlimits: {
+      describe: 'Whether to use max channel sizes as trading limits',
+      type: 'boolean',
+      default: undefined,
+    },
+    noencrypt: {
+      describe: 'Whether to disable nodekey encryption',
+      type: 'boolean',
+      default: undefined,
+    },
+    nomatching: {
+      describe: 'Whether to disable matching within xud',
+      type: 'boolean',
+      default: undefined,
+    },
+    nosanityswaps: {
+      describe: 'Whether to disable sanity swaps',
+      type: 'boolean',
+      default: undefined,
+    },
+    nobalancechecks: {
+      describe: 'Whether to disable balance checks',
+      type: 'boolean',
+      default: undefined,
+    },
+    strict: {
+      describe: 'strict mode for production use',
+      type: 'boolean',
+      default: undefined,
+    },
+    opendexdir: {
+      describe: 'Data directory for xud',
+      type: 'string',
+      alias: 'x',
+    },
+    'http.port': {
+      describe: 'Port to listen for http requests',
+      type: 'number',
+    },
+    'http.host': {
+      describe: 'Host of the http server',
+      type: 'string',
+    },
+    'lnd.[currency].certpath': {
+      describe: 'Path to the SSL certificate for lnd',
+      type: 'string',
+    },
+    'lnd.[currency].cltvdelta': {
+      describe: 'CLTV delta for the final timelock',
+      type: 'number',
+    },
+    'lnd.[currency].disable': {
+      describe: 'Disable lnd integration',
+      type: 'boolean',
+      default: undefined,
+    },
+    'lnd.[currency].host': {
+      describe: 'Host of the lnd gRPC interface',
+      type: 'string',
+    },
+    'lnd.[currency].macaroonpath': {
+      describe: 'Path of the admin macaroon for lnd',
+      type: 'string',
+    },
+    'lnd.[currency].nomacaroons': {
+      describe: 'Whether to disable macaroons for lnd',
+      type: 'boolean',
+      default: undefined,
+    },
+    'lnd.[currency].port': {
+      describe: 'Port for the lnd gRPC interface',
+      type: 'number',
+    },
+    'p2p.addresses': {
+      describe: 'String array of reachable addresses',
+      type: 'array',
+    },
+    'p2p.listen': {
+      describe: 'Listen for incoming peers',
+      type: 'boolean',
+      default: undefined,
+    },
+    'p2p.discover': {
+      describe: 'Automatically find & connect new nodes',
+      type: 'boolean',
+      default: undefined,
+    },
+    'p2p.discoverminutes': {
+      describe: 'Interval minutes for discover option',
+      type: 'number',
+    },
+    'p2p.detectexternalip': {
+      describe: 'Detect & advertise external ip address',
+      type: 'boolean',
+      default: undefined,
+    },
+    'p2p.port': {
+      describe: 'Port to listen for incoming peers',
+      type: 'number',
+      alias: 'p',
+    },
+    'p2p.tor': {
+      describe: 'Allow connections to tor nodes',
+      type: 'boolean',
+      default: undefined,
+      alias: 't',
+    },
+    'p2p.torport': {
+      describe: 'Port that Tor\'s exposed SOCKS5 proxy is listening on.',
+      type: 'number',
+    },
+    'connext.disable': {
+      describe: 'Disable Connext integration',
+      type: 'boolean',
+      default: undefined,
+    },
+    'connext.host': {
+      describe: 'Host of the Connext client',
+      type: 'string',
+    },
+    'connext.port': {
+      describe: 'Port for Connext client',
+      type: 'number',
+    },
+    'connext.webhookhost': {
+      describe: 'Host for the webhooks from Connext client',
+      type: 'string',
+    },
+    'connext.webhookport': {
+      describe: 'Port for the webhooks from Connext client',
+      type: 'number',
+    },
+    'rpc.host': {
+      describe: 'gRPC service host',
+      type: 'string',
+    },
+    'rpc.port': {
+      describe: 'gRPC service port',
+      type: 'number',
+      alias: 'r',
+    },
+  })
+  .coerce('lnd', (arg) => {
+    delete arg['[currency]'];
+
+    const parseBoolean = (obj, key) => {
+      if (typeof obj[key] === 'string') {
+        obj[key] = obj[key].toLowerCase() === 'true';
+      }
+    };
+    const parseNumber = (obj, key) => {
+      if (obj[key]) {
+        obj[key] = parseInt(obj[key], 10);
+      }
+    };
+
+    const currencies = Object.keys(arg);
+
+    currencies.forEach((currency) => {
+      parseBoolean(arg[currency], 'disable');
+      parseBoolean(arg[currency], 'nomacaroons');
+      parseNumber(arg[currency], 'cltvdelta');
+      parseNumber(arg[currency], 'port');
+    });
+
+    // make all currencies upper case
+    for (let n = 0; n < currencies.length; n += 1) {
+      const currency = currencies[n];
+      if (currency !== currency.toUpperCase()) {
+        arg[currency.toUpperCase()] = arg[currency];
+        delete arg[currency];
+      }
+    }
+
+    return arg;
+  })
+  .conflicts('mainnet', ['testnet', 'simnet', 'regtest'])
+  .conflicts('testnet', ['mainnet', 'simnet', 'regtest'])
+  .conflicts('simnet', ['mainnet', 'testnet', 'regtest'])
+  .conflicts('regtest', ['mainnet', 'testnet', 'simnet']);
+
+// delete non-config keys from argv
+delete argv._;
+delete argv.version;
+delete argv.help;
+delete argv.$0;
+
+const xud = new Xud();
+
+xud.start(argv);
