@@ -206,7 +206,7 @@ class GrpcService implements grpc.UntypedServiceImplementation {
   ): service is Service => {
     if (!service) {
       const err = this.locked
-        ? { code: status.UNIMPLEMENTED, message: 'opendex is locked', name: 'LockedError' }
+        ? { code: status.UNIMPLEMENTED, message: 'opendexd is locked', name: 'LockedError' }
         : { code: status.UNAVAILABLE, message: 'opendex is starting', name: 'NotReadyError' };
       if (typeof callbackOrCall === 'function') {
         const callback = callbackOrCall;

@@ -29,7 +29,7 @@ const ensureConnection = async (argv: Arguments, printError?: boolean) => {
   client.waitForReady(Date.now() + 3000, (error?: Error) => {
     if (error) {
       if (error.message === 'Failed to connect before the deadline') {
-        console.error(`could not connect to opendex at ${argv.rpchost}:${argv.rpcport}, is opendex running?`);
+        console.error(`could not connect to opendex at ${argv.rpchost}:${argv.rpcport}, is opendexd running?`);
         process.exit(1);
       }
 
@@ -60,7 +60,7 @@ const streamOrders = (argv: Arguments<any>) => {
   ordersSubscription.on('error', async (err: ServiceError) => {
     if (err.code === status.UNIMPLEMENTED) {
       console.error(
-        "opendex is locked, run 'opendex-cli unlock', 'opendex-cli create', or 'opendex-cli restore' then try again",
+        "opendexd is locked, run 'opendex-cli unlock', 'opendex-cli create', or 'opendex-cli restore' then try again",
       );
       process.exit(1);
     }
