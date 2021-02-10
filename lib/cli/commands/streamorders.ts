@@ -60,7 +60,7 @@ const streamOrders = (argv: Arguments<any>) => {
   ordersSubscription.on('error', async (err: ServiceError) => {
     if (err.code === status.UNIMPLEMENTED) {
       console.error(
-        "opendex is locked, run 'opendex-cli unlock', 'opendex-cli create', or 'opendex-cli restore' then try again",
+        "opendexd is locked, run 'opendex-cli unlock', 'opendex-cli create', or 'opendex-cli restore' then try again",
       );
       process.exit(1);
     }

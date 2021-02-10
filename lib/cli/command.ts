@@ -92,9 +92,9 @@ export const callback = (argv: Arguments, formatOutput?: Function, displayJson?:
         console.error('opendex is starting... try again in a few seconds');
       } else if (error.details === 'failed to connect to all addresses') {
         console.error(`could not connect to opendex at ${argv.rpchost}:${argv.rpcport}, is opendex running?`);
-      } else if (error.code === grpc.status.UNIMPLEMENTED && error.message.includes('opendex is locked')) {
+      } else if (error.code === grpc.status.UNIMPLEMENTED && error.message.includes('opendexd is locked')) {
         console.error(
-          "opendex is locked, run 'opendex-cli unlock', 'opendex-cli create', or 'opendex-cli restore' then try again",
+          "opendexd is locked, run 'opendex-cli unlock', 'opendex-cli create', or 'opendex-cli restore' then try again",
         );
       } else if (
         error.code === grpc.status.UNIMPLEMENTED &&
