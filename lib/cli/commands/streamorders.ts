@@ -29,7 +29,7 @@ const ensureConnection = async (argv: Arguments, printError?: boolean) => {
   client.waitForReady(Date.now() + 3000, (error?: Error) => {
     if (error) {
       if (error.message === 'Failed to connect before the deadline') {
-        console.error(`could not connect to opendex at ${argv.rpchost}:${argv.rpcport}, is opendex running?`);
+        console.error(`could not connect to opendex at ${argv.rpchost}:${argv.rpcport}, is opendexd running?`);
         process.exit(1);
       }
 

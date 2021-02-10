@@ -91,7 +91,7 @@ export const callback = (argv: Arguments, formatOutput?: Function, displayJson?:
       if (error.code === grpc.status.UNAVAILABLE && error.message.includes('opendex is starting')) {
         console.error('opendex is starting... try again in a few seconds');
       } else if (error.details === 'failed to connect to all addresses') {
-        console.error(`could not connect to opendex at ${argv.rpchost}:${argv.rpcport}, is opendex running?`);
+        console.error(`could not connect to opendex at ${argv.rpchost}:${argv.rpcport}, is opendexd running?`);
       } else if (error.code === grpc.status.UNIMPLEMENTED && error.message.includes('opendexd is locked')) {
         console.error(
           "opendexd is locked, run 'opendex-cli unlock', 'opendex-cli create', or 'opendex-cli restore' then try again",
