@@ -66,7 +66,7 @@ const getRouterNodeIdentifier = (network: string): string => {
       return 'vector8kVKCFZKgNZHeGBN6HpdeE8qjDnGbmAkTQj56snsuejviU3nBB';
     case 'testnet':
       // public key of our testnet router node
-      return 'vector6Y5JHqC9z6HyZ6kD9SuPMiNrdRVts4un3ekMsdso21oJkZ9vHh';
+      return 'vector7EM2eb7cBa32SrLcX4m71jf2dbnkgvKtEuAfVsAmpRZPXHPKUC';
     case 'mainnet':
       throw new Error('mainnet router node has not been created, yet');
     default:
