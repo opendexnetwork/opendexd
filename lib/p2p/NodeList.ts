@@ -54,12 +54,9 @@ class NodeList extends EventEmitter {
   private static readonly BAN_THRESHOLD = -50;
   private static readonly MAX_REPUTATION_SCORE = 100;
 
-  // private static readonly PRIMARY_PEER_CONN_FAILURES_THRESHOLD = 200;
-  // private static readonly SECONDARY_PEER_CONN_FAILURES_THRESHOLD = 1500;
-
   public get count() {
     // number of nodes currently connected
-    console.log('NL connected node count is ', this.inbound.size + this.outbound.size + this.customOutbound.size);
+    //console.log('NL connected node count is ', this.inbound.size + this.outbound.size + this.customOutbound.size);
     return this.inbound.size + this.outbound.size + this.customOutbound.size;
   }
 
@@ -103,24 +100,6 @@ class NodeList extends EventEmitter {
     this.customOutbound.forEach(callback);
     this.inbound.forEach(callback);
   };
-
-  /* public rank = (): { primary: NodeInstance[]; secondary: NodeInstance[] } => {
-    const primary: NodeInstance[] = [];
-    const secondary: NodeInstance[] = [];
-
-    this.nodes.forEach((node) => {
-      if (node.consecutiveConnFailures < NodeList.PRIMARY_PEER_CONN_FAILURES_THRESHOLD) {
-        primary.push(node);
-      } else if (node.consecutiveConnFailures < NodeList.SECONDARY_PEER_CONN_FAILURES_THRESHOLD) {
-        secondary.push(node);
-      }
-    });
-
-    if (primary.length === 0) {
-      return { primary: secondary, secondary: [] };
-    }
-    return { primary, secondary };
-  }; */
 
   /**
    * Get the node for a given node id.
@@ -212,7 +191,7 @@ class NodeList extends EventEmitter {
     const nodes = await this.repository.getNodes();
     const reputationLoadPromises: Promise<void>[] = [];
     nodes.forEach((node) => {
-      console.log('NL loading node', node.nodePubKey);
+      //console.log('NL loading node', node.nodePubKey);
       this.addNode(node, 'none', true);
       const reputationLoadPromise = this.repository.getReputationEvents(node).then((events) => {
         node.reputationScore = 0;
@@ -223,7 +202,7 @@ class NodeList extends EventEmitter {
       reputationLoadPromises.push(reputationLoadPromise);
     });
     await Promise.all(reputationLoadPromises);
-    console.log('NL done loading seed nodes');
+    //console.log('NL done loading seed nodes');
   };
 
   /**
@@ -238,7 +217,7 @@ class NodeList extends EventEmitter {
     } else {
       const node = await this.repository.addNodeIfNotExists(nodeCreationAttributes);
       if (node) {
-        // TODO node.reputationScore = 0;
+        node.reputationScore = 0;
         this.addNode(node, sourceIP);
       }
     }
@@ -256,7 +235,7 @@ class NodeList extends EventEmitter {
     if (nodeId) {
       this.addrManager.Delete(nodeId);
     }
-    // this.repository.deleteNode(pubKey); // TODO actually delete node
+    this.repository.deleteNode(pubKey);
   };
 
   /**
@@ -268,7 +247,7 @@ class NodeList extends EventEmitter {
     addresses: Address[] = [],
     lastAddress?: Address,
   ): Promise<boolean> => {
-    console.log('NL updating addresses...');
+    //console.log('NL updating addresses...');
     const node = this.get(nodePubKey);
     if (node) {
       // avoid overriding the `lastConnected` field for existing matching addresses unless a new value was set
@@ -320,7 +299,7 @@ class NodeList extends EventEmitter {
     const node = this.get(nodePubKey);
 
     if (node) {
-      console.log('NL found node we are trying to ban');
+      //console.log('NL found node we are trying to ban');
       const promises: PromiseLike<any>[] = [];
 
       NodeList.updateReputationScore(node, event);
@@ -366,33 +345,16 @@ class NodeList extends EventEmitter {
     return false;
   };
 
-  /* public incrementConsecutiveConnFailures = async (nodePubKey: string) => {
-    const node = this.nodes.get(nodePubKey);
-    if (node) {
-      node.consecutiveConnFailures += 1;
-      await node.save();
-    }
-  }; */
-
-  /*
-  public resetConsecutiveConnFailures = async (nodePubKey: string) => {
-    const node = this.nodes.get(nodePubKey);
-    if (node && node.consecutiveConnFailures > 0) {
-      node.consecutiveConnFailures = 0;
-      await node.save();
-    }
-  }; */
-
   private setBanStatus = (node: NodeInstance, status: boolean) => {
     node.banned = status;
-    console.log('NL setting ban status');
-    console.log('NL currently connected to: ', this.outbound, this.inbound, this.customOutbound);
+    //console.log('NL setting ban status');
+    //console.log('NL currently connected to: ', this.outbound, this.inbound, this.customOutbound);
     return node.save();
   };
 
   private addNode = (node: NodeInstance, sourceIP: string, isSeedNode?: boolean) => {
     const { nodePubKey } = node;
-    // console.log("NL adding node: ", node);
+    // //console.log("NL adding node: ", node);
     const alias = pubKeyToAlias(nodePubKey);
     if (this.aliasToPubKeyMap.has(alias) && this.aliasToPubKeyMap.get(alias) !== nodePubKey) {
       this.aliasToPubKeyMap.set(alias, 'CONFLICT');
@@ -400,7 +362,6 @@ class NodeList extends EventEmitter {
       this.aliasToPubKeyMap.set(alias, nodePubKey);
     }
     this.addrManager.Add(node, sourceIP, 0, isSeedNode);
-    // this.nodeIdMap.set(node.id, node);
     this.pubKeyToAliasMap.set(nodePubKey, alias);
   };
 }

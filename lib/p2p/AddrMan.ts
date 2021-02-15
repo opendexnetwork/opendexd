@@ -3,7 +3,6 @@
 import assert from 'assert';
 import { createHash } from 'crypto';
 import { NodeInstance } from '../db/types';
-// import { NodeState } from './types';
 // import Logger from '../Logger';
 
 class AddrInfo {
@@ -109,8 +108,6 @@ class AddrMan {
   public nIdCount = -1;
   // table with information about all nIds
   public addrMap = new Map<number, AddrInfo>();
-  // find an nId based on its network address
-  // public addrMap = new Map<NodeInstance, number>();
   // randomly-ordered vector of all nIds
   public vRandom: number[] = [];
   // number of "tried" entries
@@ -119,24 +116,22 @@ class AddrMan {
   public nNew = 0;
   // last time Good was called
   public nLastGood = 0;
-  // pnId ?
-  // public pnId;
   // Holds addrs inserted into tried table that collide with existing entries. Test-before-evict discipline used to resolve these collisions.
   public mTriedCollisions = new Set();
   // secret key to randomize bucket select with
   private nKey: number;
   // total number of buckets for tried addresses
-  private static readonly TRIED_BUCKET_COUNT_LOG2 = 4; // 8;
+  private static readonly TRIED_BUCKET_COUNT_LOG2 = 8; // 8;
   // total number of buckets for new addresses
-  private static readonly NEW_BUCKET_COUNT_LOG2 = 4; // 10;
+  private static readonly NEW_BUCKET_COUNT_LOG2 = 10; // 10;
   // maximum allowed number of entries in buckets for new and tried addresses
-  private static readonly BUCKET_SIZE_LOG2 = 4; // 6;
+  private static readonly BUCKET_SIZE_LOG2 = 6; // 6;
   // over how many buckets entries with tried addresses from a single group  (/16 for IPv4) are spread
-  public static readonly TRIED_BUCKETS_PER_SOURCE_GROUP = 4; // 8;
+  public static readonly TRIED_BUCKETS_PER_SOURCE_GROUP = 8; // 8;
   // over how many buckets entries with new addresses originating from a single group are spread
-  public static readonly NEW_BUCKETS_PER_SOURCE_GROUP = 4; // 64
+  public static readonly NEW_BUCKETS_PER_SOURCE_GROUP = 64; // 64
   // in how many buckets for entries with new addresses a single address may occur
-  private static readonly NEW_BUCKETS_PER_ADDRESS = 4; // 8
+  private static readonly NEW_BUCKETS_PER_ADDRESS = 8; // 8
   // how old addresses can maximally be
   public static readonly HORIZON_DAYS = 30;
   // after how many failed attempts we give up on a new node
@@ -167,9 +162,9 @@ class AddrMan {
   // list of "new" buckets
   public vvNew: number[][] = new Array(AddrMan.NEW_BUCKET_COUNT)
     .fill(-1)
-    .map(() => new Array(AddrMan.BUCKET_SIZE).fill(-1)); // = new Array(AddrMan.NEW_BUCKET_COUNT).fill(-1).map(() => new Array(AddrMan.BUCKET_SIZE).fill(-1));
+    .map(() => new Array(AddrMan.BUCKET_SIZE).fill(-1)); 
 
-  // constructor: logger, key, other vars?`
+  // constructor: logger?
   constructor({ key }: { key: number }) {
     this.nKey = key;
   }
@@ -177,40 +172,24 @@ class AddrMan {
   // Find an entry by url. Returns last known instance of NodeInstance n
   public Find = (n: NodeInstance): [number, AddrInfo | undefined] => {
     if (this.addrMap.size >= 1) {
-      // let toFind = n.nodePubKey;
-      /* if (toFind === null) {
-        //console.log("AM", n.addressesText, JSON.parse(n.addressesText));
-        let parsed = JSON.parse(n['addressesText'])[0];
-        toFind =`${parsed['host']}:${parsed['port']}`;
-      } */
-      // console.log("AM finding ", toFind);
-
-      // let url = "";
-      // console.log("AM searching for node in addrMap");
+      // //console.log("AM searching for node in addrMap");
       for (const [k, v] of this.addrMap) {
-        /* if (v.node.lastAddressText !== "null") {
-          url = `${v.node.lastAddressText}`;
-        } else{
-          let parsed = JSON.parse(v.node['addressesText'])[0];
-          url = `${parsed['host']}:${parsed['port']}`;
-        } */
-
         if (v.node.nodePubKey === n.nodePubKey) {
-          console.log('AM found node in addrMap');
+          //console.log('AM found node in addrMap');
           return [k, v];
         }
       }
     }
-    // console.log("did not find node in addrMap");
+    // //console.log("did not find node in addrMap");
     return [-2, undefined];
   };
 
   public ShowContents = (): void => {
-    console.log('==== AddrMap ====');
+    //console.log('==== AddrMap ====');
     for (const [k, v] of this.addrMap) {
       console.log(k, v.node!.addressesText);
     }
-    console.log('=================');
+    //console.log('=================');
   };
 
   public GetNodeByPubKey = (pubkey: string): NodeInstance | undefined => {
@@ -278,13 +257,13 @@ class AddrMan {
 
       // first make space to add it (the existing tried entry there is moved to new, deleting whatever is there).
       if (this.vvTried[nKBucket][nKBucketPos] !== -1) {
-        console.log('AM tried slot is not empty, has: ', this.vvTried[nKBucket][nKBucketPos]);
+        //console.log('AM tried slot is not empty, has: ', this.vvTried[nKBucket][nKBucketPos]);
         // find and item to evict
         const nIdEvict = this.vvTried[nKBucket][nKBucketPos];
-        console.log('nId is', nIdEvict);
+        //console.log('nId is', nIdEvict);
         assert(this.addrMap.has(nIdEvict));
         const entryOld = this.addrMap.get(nIdEvict);
-        console.log('entryOld is', entryOld!.node.nodePubKey);
+        //console.log('entryOld is', entryOld!.node.nodePubKey);
 
         // Remove the to-be-evicted item from the tried set.
         if (entryOld) {
@@ -295,7 +274,7 @@ class AddrMan {
           // find which new bucket it belongs to
           const nUBucket = entryOld.GetNewBucket(this.nKey);
           const nUBucketPos = entryOld.GetBucketPosition(this.nKey, true, nUBucket);
-          console.log('clearing: ', nUBucket, nUBucketPos);
+          //console.log('clearing: ', nUBucket, nUBucketPos);
           this.ClearNew(nUBucket, nUBucketPos);
           assert(this.vvNew[nUBucket][nUBucketPos] === -1);
 
@@ -333,13 +312,13 @@ class AddrMan {
   // Clear a position in a "new" table. This is the only place where entries are actually deleted
   public ClearNew = (nUBucket: number, nUBucketPos: number): void => {
     // if there is an entry in the specified bucket, delete it
-    console.log('AM clearing entry in new table');
+    //console.log('AM clearing entry in new table');
     if (this.vvNew[nUBucket][nUBucketPos] !== -1) {
       const nIdDelete = this.vvNew[nUBucket][nUBucketPos];
-      console.log('AM deleting nId', nIdDelete);
+      //console.log('AM deleting nId', nIdDelete);
       const entryDelete = this.addrMap.get(nIdDelete);
       if (entryDelete) {
-        console.log('AM deleting node ', entryDelete.node.nodePubKey);
+        //console.log('AM deleting node ', entryDelete.node.nodePubKey);
         assert(entryDelete.nRefCount > 0);
         entryDelete.nRefCount -= 1;
         this.addrMap.set(nIdDelete, entryDelete);
@@ -348,10 +327,10 @@ class AddrMan {
           this.Delete(nIdDelete);
         }
       } else {
-        console.log('AM no entry to clear, not deleting anything');
+        //console.log('AM no entry to clear, not deleting anything');
       }
     } else {
-      console.log('AM entry is already clear');
+      //console.log('AM entry is already clear');
     }
   };
   // Mark an entry "good", possibly moving it from "new" to "tried"
@@ -422,7 +401,7 @@ class AddrMan {
     }
 
     if (entry !== undefined) {
-      console.log('updating existing entry');
+      //console.log('AM updating existing entry instead of adding new');
 
       const time = new Date().getTime() / 1000;
 
@@ -458,7 +437,7 @@ class AddrMan {
         return false;
       }
     } else {
-      console.log('AM creating new entry');
+      //console.log('AM creating new entry');
       entry = this.Create(addr, sourceIP);
       entry.nTime = Math.max(0, entry.nTime - nTimePenalty);
       entry.nRefCount = 0;
@@ -469,7 +448,7 @@ class AddrMan {
 
     const nUBucket = entry.GetNewBucket(this.nKey, sourceIP);
     const nUBucketPos = entry.GetBucketPosition(this.nKey, true, nUBucket);
-    // console.log("y is ", nUBucket, "x is ", nUBucketPos);
+    // //console.log("y is ", nUBucket, "x is ", nUBucketPos);
 
     if (this.vvNew[nUBucket][nUBucketPos] !== nId) {
       // only true if something else is there
@@ -484,13 +463,13 @@ class AddrMan {
         }
       }
       if (fInsert) {
-        // console.log("AM overwriting existing entry...");
-        console.log('clearing: ', nUBucket, nUBucketPos);
+        // //console.log("AM overwriting existing entry...");
+        //console.log('clearing: ', nUBucket, nUBucketPos);
         this.ClearNew(nUBucket, nUBucketPos);
         entry.nRefCount += 1;
         this.addrMap.set(nId, entry);
         this.vvNew[nUBucket][nUBucketPos] = nId;
-        console.log('moving seed node to a tried bucket');
+        //console.log('moving seed node to a tried bucket');
         if (isSeedNode) {
           this.MakeTried(nId);
         }
@@ -498,29 +477,25 @@ class AddrMan {
         this.Delete(nId);
       }
     }
-    // console.log("AM vvNew inserted bucket is now: ", this.vvNew[nUBucket]);
-    // console.log("AM addrMap is now: ", this.addrMap);
+    // //console.log("AM vvNew inserted bucket is now: ", this.vvNew[nUBucket]);
+    // //console.log("AM addrMap is now: ", this.addrMap);
     return fNew;
   };
   // Update metadata:  attempted to connect but all addresses were bad
   public Attempt = (addr: NodeInstance): void => {
-    console.log('AM attempt fxn');
+    //console.log('AM attempt fxn');
     const [nId, info] = this.Find(addr);
 
     if (!(nId && info)) {
-      console.log('AM attempt fxn Find() failed');
+      //console.log('AM attempt fxn Find() failed');
       return;
     }
-    // if (info) {
-    // if (info.node.lastAddress.host !== addr.lastAddress.host) {
-    //  return;
-    // }
     info.nLastTry = new Date().getTime() / 1000;
     if (info.nLastAttempt < this.nLastGood) {
       info.nLastAttempt = info.nLastTry;
       info.nAttempts += 1;
     }
-    console.log('AM attempt fxn updated metadata successfully');
+    //console.log('AM attempt fxn updated metadata successfully');
     this.addrMap.set(nId, info); // unneccessary b/c info is reference?
     // }
   };
@@ -558,7 +533,7 @@ class AddrMan {
       }
     } else {
       let fChanceFactor = 1.0;
-      // console.log("AM vvNew is ", this.vvNew);
+      // //console.log("AM vvNew is ", this.vvNew);
       while (true) {
         let nKBucket = this.getRandomInt(AddrMan.NEW_BUCKET_COUNT);
         let nKBucketPos = this.getRandomInt(AddrMan.BUCKET_SIZE);
@@ -567,7 +542,7 @@ class AddrMan {
           nKBucketPos = (nKBucketPos + this.getRandomInt(AddrMan.BUCKET_SIZE)) % AddrMan.BUCKET_SIZE;
         }
         const nId = this.vvNew[nKBucket][nKBucketPos];
-        // console.log("AM selected nId is: ", nId);
+        // //console.log("AM selected nId is: ", nId);
 
         const info = this.addrMap.get(nId);
         if (info !== undefined && this.getRandomInt(2 ** 30) < fChanceFactor * info.GetChance() * 2 ** 30) {
