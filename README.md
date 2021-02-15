@@ -8,21 +8,21 @@
 
 ![OpenDEX logo](logo.png)
 
-The OpenDEX Daemon ([`opendexd`](https://github.com/opendexnetwork/opendexd)) is the reference implementation powering [OpenDEX](https://opendex.network), a decentralized exchange built on top of the [Lightning](https://lightning.network/) and [Connext](https://connext.network/) networks. `opendexd` brings individual traders, market makers and exchanges onto OpenDEX to form a single global trading network and liquidity pool.
+The OpenDEX Daemon ([`opendexd`](https://github.com/opendexnetwork/opendexd)) is the reference implementation powering [OpenDEX](https://opendex.network), a decentralized exchange built on top of the [Lightning](https://lightning.network/) and [Connext](https://connext.network/) networks.
 
-Get started 👉 [here](https://opendex.network/docs/start-earning/market-maker-guide) 👈
+Get started 👉 [here](https://opendex.network/docs) 👈
 
 ## OpenDEX Network Specification Compliance
-`opendexd` implements the [OpenDEX protocol](https://opendex.network) and fully conforms to its so-called [BOLD](https://opendex.network/read/00-introduction) specifications. BOLD stands for:
+`opendexd` implements the [OpenDEX protocol](https://opendex.network/bold) and fully conforms to its so-called [BOLD](https://opendex.network/read/00-introduction) specifications. BOLD stands for:
 Basis of L3 DEX. The naming is intentionally derived from [BOLT](https://github.com/lightningnetwork/lightning-rfc), the Lightning Network specifications and role model of OpenDEX. The specifications are currently being drafted by several implementers based around the world, including the developers of `opendexd`. The BOLDs, as well as `opendexd`s implementation of it is still a work-in-progress. The current status of `opendexd`'s BOLD compliance is:
-  - [X] [BOLD #1: Message Format](https://opendex.network/read/01-message-format)
-  - [X] [BOLD #2: Peer Protocol](https://opendex.network/read/02-peer-protocol)
-  - [X] [BOLD #3: Trade Protocol](https://opendex.network/read/03-trade-protocol)
-  - [X] [BOLD #4: Swap Protocol](https://opendex.network/read/04-swap-protocol)
+  - [X] [BOLD #1: Message Format](https://opendex.network/bold/01-message-format)
+  - [X] [BOLD #2: Peer Protocol](https://opendex.network/bold/02-peer-protocol)
+  - [X] [BOLD #3: Trade Protocol](https://opendex.network/bold/03-trade-protocol)
+  - [X] [BOLD #4: Swap Protocol](https://opendex.network/bold/04-swap-protocol)
 
 `opendexd` encompasses the following components:
 
-* Integration with [lnd](https://github.com/lightningnetwork/lnd) and [connext](https://github.com/connext/rest-api-client) clients.
+* Integration with [lnd](https://github.com/lightningnetwork/lnd) and [connext](https://github.com/connext) clients.
 * Decentralized order book to locally aggregate orders from the known network.
 * Matching engine to match new local orders with existing local and remote orders and initiate atomic swaps with remote peers.
 * Peer-to-peer networking with and discovery of other nodes.
@@ -33,11 +33,10 @@ Basis of L3 DEX. The naming is intentionally derived from [BOLT](https://github.
 The daemon has been designed to be as developer friendly as possible in order to facilitate application development on top of `opendexd`.
 * [opendex.network/docs](https://opendex.network/docs): the starting point and up-to-date collection of guides, links and examples
 * [api.opendex.network](https://api.opendex.network): The automatically generated gRPC API documentation
-* [typedoc.opendex.network](https://typedoc.opendex.network): The automatically generated code documentation
 
 ## Installation
 
-This section contains brief instructions for installing `opendexd` manually, without treating setup of dependencies like `bitcoind` or `lnd`. It is mainly geared towards developers. For all other users, we recommend our streamlined [opendex-docker](https://opendex.network/docs/start-earning/market-maker-guide) setup.
+This section contains brief instructions for installing `opendexd` manually, without treating setup of dependencies like `bitcoind` or `lnd`. It is mainly geared towards developers. For all other users, we recommend our streamlined [opendex-docker](https://opendex.network/docs) setup.
 
 ## Prerequisites
 - [rsync >=3.1.3](https://rsync.samba.org/)
