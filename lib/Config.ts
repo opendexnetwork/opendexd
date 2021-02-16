@@ -198,7 +198,7 @@ class Config {
 
     await this.mkDirIfNotExist(this.opendexdir);
 
-    const configPath = path.join(this.opendexdir, 'opendex.conf');
+    const configPath = process.env.XUD_CONF || path.join(this.opendexdir, 'opendex.conf');
     const configProps = await Config.readConfigProps(configPath);
 
     if (configProps) {
