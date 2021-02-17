@@ -56,7 +56,7 @@ class NodeList extends EventEmitter {
 
   public get count() {
     // number of nodes currently connected
-    //console.log('NL connected node count is ', this.inbound.size + this.outbound.size + this.customOutbound.size);
+    // console.log('NL connected node count is ', this.inbound.size + this.outbound.size + this.customOutbound.size);
     return this.inbound.size + this.outbound.size + this.customOutbound.size;
   }
 
@@ -191,7 +191,7 @@ class NodeList extends EventEmitter {
     const nodes = await this.repository.getNodes();
     const reputationLoadPromises: Promise<void>[] = [];
     nodes.forEach((node) => {
-      //console.log('NL loading node', node.nodePubKey);
+      // console.log('NL loading node', node.nodePubKey);
       this.addNode(node, 'none', true);
       const reputationLoadPromise = this.repository.getReputationEvents(node).then((events) => {
         node.reputationScore = 0;
@@ -202,7 +202,7 @@ class NodeList extends EventEmitter {
       reputationLoadPromises.push(reputationLoadPromise);
     });
     await Promise.all(reputationLoadPromises);
-    //console.log('NL done loading seed nodes');
+    // console.log('NL done loading seed nodes');
   };
 
   /**
@@ -247,7 +247,7 @@ class NodeList extends EventEmitter {
     addresses: Address[] = [],
     lastAddress?: Address,
   ): Promise<boolean> => {
-    //console.log('NL updating addresses...');
+    // console.log('NL updating addresses...');
     const node = this.get(nodePubKey);
     if (node) {
       // avoid overriding the `lastConnected` field for existing matching addresses unless a new value was set
@@ -299,7 +299,7 @@ class NodeList extends EventEmitter {
     const node = this.get(nodePubKey);
 
     if (node) {
-      //console.log('NL found node we are trying to ban');
+      // console.log('NL found node we are trying to ban');
       const promises: PromiseLike<any>[] = [];
 
       NodeList.updateReputationScore(node, event);
@@ -347,8 +347,8 @@ class NodeList extends EventEmitter {
 
   private setBanStatus = (node: NodeInstance, status: boolean) => {
     node.banned = status;
-    //console.log('NL setting ban status');
-    //console.log('NL currently connected to: ', this.outbound, this.inbound, this.customOutbound);
+    // console.log('NL setting ban status');
+    // console.log('NL currently connected to: ', this.outbound, this.inbound, this.customOutbound);
     return node.save();
   };
 
