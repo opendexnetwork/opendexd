@@ -1,5 +1,5 @@
 import chai, { expect } from 'chai';
-import Xud from '../../lib/OpenDEX';
+import OpenDEX from '../../lib/OpenDEX';
 import chaiAsPromised from 'chai-as-promised';
 import { toUri } from '../../lib/utils/uriUtils';
 import { OpenDEXnetwork } from '../../lib/constants/enums';
@@ -12,8 +12,8 @@ describe('P2P Networks Tests', () => {
     it(`should fail to connect a node from ${srcNodeNetwork} to a node from ${destNodeNetwork}`, async () => {
       const srcNodeConfig = createConfig(1, 0, false, srcNodeNetwork);
       const destNodeConfig = createConfig(2, 0, false, destNodeNetwork);
-      const srcNode = new Xud();
-      const destNode = new Xud();
+      const srcNode = new OpenDEX();
+      const destNode = new OpenDEX();
       await Promise.all([srcNode.start(srcNodeConfig), destNode.start(destNodeConfig)]);
 
       const host = 'localhost';
@@ -37,8 +37,8 @@ describe('P2P Networks Tests', () => {
     it(`should successfully connect a node from ${srcNodeNetwork} to a node from ${destNodeNetwork}`, async () => {
       const srcNodeConfig = createConfig(1, 0, false, srcNodeNetwork);
       const destNodeConfig = createConfig(2, 0, false, destNodeNetwork);
-      const srcNode = new Xud();
-      const destNode = new Xud();
+      const srcNode = new OpenDEX();
+      const destNode = new OpenDEX();
       await Promise.all([srcNode.start(srcNodeConfig), destNode.start(destNodeConfig)]);
       const srcNodePubKey = srcNode['pool'].nodePubKey;
       const destNodePubKey = destNode['pool'].nodePubKey;

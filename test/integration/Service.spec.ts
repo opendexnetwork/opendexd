@@ -3,13 +3,13 @@ import chaiAsPromised from 'chai-as-promised';
 import { OrderSide, Owner, SwapClientType } from '../../lib/constants/enums';
 import p2pErrors from '../../lib/p2p/errors';
 import Service from '../../lib/service/Service';
-import Xud from '../../lib/OpenDEX';
+import OpenDEX from '../../lib/OpenDEX';
 import { getTempDir } from '../utils';
 
 chai.use(chaiAsPromised);
 
 describe('API Service', () => {
-  let xud: Xud;
+  let OpenDEX: OpenDEX;
   let service: Service;
   let orderId: string | undefined;
 
@@ -44,9 +44,9 @@ describe('API Service', () => {
       connext: { disable: true },
     };
 
-    xud = new Xud();
-    await xud.start(config);
-    service = xud.service;
+    OpenDEX = new OpenDEX();
+    await OpenDEX.start(config);
+    service = OpenDEX.service;
   });
 
   it('should add two currencies', async () => {
@@ -109,7 +109,7 @@ describe('API Service', () => {
   });
 
   it('should remove an order', () => {
-    const tp = xud['orderBook'].tradingPairs.get('LTC/BTC')!;
+    const tp = OpenDEX['orderBook'].tradingPairs.get('LTC/BTC')!;
     expect(tp.ownOrders.buyMap.has(orderId!)).to.be.true;
     const args = { orderId: '1' };
     service.removeOrder(args);
@@ -206,7 +206,7 @@ describe('API Service', () => {
   it('should shutdown', async () => {
     service.shutdown();
     const shutdownPromise = new Promise((resolve) => {
-      xud.on('shutdown', () => resolve());
+      OpenDEX.on('shutdown', () => resolve());
     });
     await expect(shutdownPromise).to.be.fulfilled;
   });

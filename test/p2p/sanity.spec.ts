@@ -1,5 +1,5 @@
 import chai, { expect } from 'chai';
-import Xud from '../../lib/OpenDEX';
+import OpenDEX from '../../lib/OpenDEX';
 import chaiAsPromised from 'chai-as-promised';
 import { toUri } from '../../lib/utils/uriUtils';
 import { getUnusedPort, getTempDir } from '../utils';
@@ -43,11 +43,11 @@ export const createConfig = (
 
 describe('P2P Sanity Tests', () => {
   let nodeOneConfig: any;
-  let nodeOne: Xud;
+  let nodeOne: OpenDEX;
   let nodeOneUri: string;
   let nodeOnePubKey: string;
   let nodeTwoConfig: any;
-  let nodeTwo: Xud;
+  let nodeTwo: OpenDEX;
   let nodeTwoUri: string;
   let nodeTwoPubKey: string;
   let nodeTwoPort: number;
@@ -57,8 +57,8 @@ describe('P2P Sanity Tests', () => {
     nodeOneConfig = createConfig(1, 0);
     nodeTwoConfig = createConfig(2, 0);
 
-    nodeOne = new Xud();
-    nodeTwo = new Xud();
+    nodeOne = new OpenDEX();
+    nodeTwo = new OpenDEX();
 
     await Promise.all([nodeOne.start(nodeOneConfig), nodeTwo.start(nodeTwoConfig)]);
 
