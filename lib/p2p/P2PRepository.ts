@@ -12,7 +12,6 @@ class P2PRepository {
   constructor(private models: Models) {}
 
   public getNodes = async (): Promise<NodeInstance[]> => {
-    // console.log('PR getting nodes from db');
     return this.models.Node.findAll();
   };
 

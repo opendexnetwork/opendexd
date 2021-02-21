@@ -32,8 +32,6 @@ interface NodeList {
 
 /** Represents a list of nodes for managing network peers activity */
 class NodeList extends EventEmitter {
-  /** A map of node pub keys to node instances. */
-  // private nodes = Map<string, NodeInstance>();
   /** Stochastic data structure for P2P scalability */
   private addrManKey = Math.floor(Math.random() * 999999999);
   public addrManager = new AddrMan({ key: this.addrManKey }); // initialize with random key
@@ -43,9 +41,6 @@ class NodeList extends EventEmitter {
   public outbound = new Map<string, NodeInstance>();
   /** User-specified connections: no upper limit */
   public customOutbound = new Map<string, NodeInstance>();
-
-  /** A map of node ids to node instances. */
-  // private nodeIdMap = new Map<number, NodeInstance>();
   /** A map of node pub keys to aliases. */
   private pubKeyToAliasMap = new Map<string, string>();
   /** A map of aliases to node pub keys. */
@@ -56,7 +51,6 @@ class NodeList extends EventEmitter {
 
   public get count() {
     // number of nodes currently connected
-    // console.log('NL connected node count is ', this.inbound.size + this.outbound.size + this.customOutbound.size);
     return this.inbound.size + this.outbound.size + this.customOutbound.size;
   }
 
@@ -191,7 +185,6 @@ class NodeList extends EventEmitter {
     const nodes = await this.repository.getNodes();
     const reputationLoadPromises: Promise<void>[] = [];
     nodes.forEach((node) => {
-      // console.log('NL loading node', node.nodePubKey);
       this.addNode(node, 'none', true);
       const reputationLoadPromise = this.repository.getReputationEvents(node).then((events) => {
         node.reputationScore = 0;
@@ -202,7 +195,6 @@ class NodeList extends EventEmitter {
       reputationLoadPromises.push(reputationLoadPromise);
     });
     await Promise.all(reputationLoadPromises);
-    // console.log('NL done loading seed nodes');
   };
 
   /**
@@ -247,7 +239,6 @@ class NodeList extends EventEmitter {
     addresses: Address[] = [],
     lastAddress?: Address,
   ): Promise<boolean> => {
-    // console.log('NL updating addresses...');
     const node = this.get(nodePubKey);
     if (node) {
       // avoid overriding the `lastConnected` field for existing matching addresses unless a new value was set
@@ -299,7 +290,6 @@ class NodeList extends EventEmitter {
     const node = this.get(nodePubKey);
 
     if (node) {
-      // console.log('NL found node we are trying to ban');
       const promises: PromiseLike<any>[] = [];
 
       NodeList.updateReputationScore(node, event);
@@ -347,14 +337,11 @@ class NodeList extends EventEmitter {
 
   private setBanStatus = (node: NodeInstance, status: boolean) => {
     node.banned = status;
-    // console.log('NL setting ban status');
-    // console.log('NL currently connected to: ', this.outbound, this.inbound, this.customOutbound);
     return node.save();
   };
 
   private addNode = (node: NodeInstance, sourceIP: string, isSeedNode?: boolean) => {
     const { nodePubKey } = node;
-    // //console.log("NL adding node: ", node);
     const alias = pubKeyToAlias(nodePubKey);
     if (this.aliasToPubKeyMap.has(alias) && this.aliasToPubKeyMap.get(alias) !== nodePubKey) {
       this.aliasToPubKeyMap.set(alias, 'CONFLICT');

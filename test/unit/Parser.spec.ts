@@ -34,7 +34,7 @@ describe('Parser', () => {
 
   function waitForPackets(num = 1): Promise<Packet[]> {
     return new Promise((resolve, reject) => {
-      setTimeout(() => reject(timeoutError), 50);
+      setTimeout(() => reject(timeoutError), 5000);
       const parsedPackets: Packet[] = [];
       parser.on('packet', (parsedPacket: Packet) => {
         parsedPackets.push(parsedPacket);
@@ -69,9 +69,7 @@ describe('Parser', () => {
 
     it(`should parse an encrypted valid ${PacketType[packet.type]} packet`, (done) => {
       verify([packet]).then(done).catch(done);
-
       parser.setEncryptionKey(encryptionKey);
-
       framer.frame(packet, encryptionKey).then(parser.feed).catch(done);
     });
   }
