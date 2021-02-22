@@ -9,7 +9,7 @@ import { getTempDir } from '../utils';
 chai.use(chaiAsPromised);
 
 describe('API Service', () => {
-  let OpenDEX: OpenDEX;
+  let openDEX: OpenDEX;
   let service: Service;
   let orderId: string | undefined;
 
@@ -44,9 +44,9 @@ describe('API Service', () => {
       connext: { disable: true },
     };
 
-    OpenDEX = new OpenDEX();
-    await OpenDEX.start(config);
-    service = OpenDEX.service;
+    openDEX = new OpenDEX();
+    await openDEX.start(config);
+    service = openDEX.service;
   });
 
   it('should add two currencies', async () => {
@@ -109,7 +109,7 @@ describe('API Service', () => {
   });
 
   it('should remove an order', () => {
-    const tp = OpenDEX['orderBook'].tradingPairs.get('LTC/BTC')!;
+    const tp = openDEX['orderBook'].tradingPairs.get('LTC/BTC')!;
     expect(tp.ownOrders.buyMap.has(orderId!)).to.be.true;
     const args = { orderId: '1' };
     service.removeOrder(args);
@@ -206,7 +206,7 @@ describe('API Service', () => {
   it('should shutdown', async () => {
     service.shutdown();
     const shutdownPromise = new Promise((resolve) => {
-      OpenDEX.on('shutdown', () => resolve());
+      openDEX.on('shutdown', () => resolve());
     });
     await expect(shutdownPromise).to.be.fulfilled;
   });

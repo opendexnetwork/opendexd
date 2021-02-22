@@ -187,7 +187,7 @@ class AddrMan {
       console.log(k, v.node!.addressesText);
     }
     console.log('=================');
-  };*/
+  }; */
 
   public GetNodeByPubKey = (pubkey: string): NodeInstance | undefined => {
     for (const v of this.addrMap.values()) {

@@ -110,13 +110,6 @@ describe('P2P Pool Tests', async () => {
       await Promise.all([openPromise, new Promise((resolve) => pool.on('peer.active', resolve))]);
     });
 
-    it('should not reconnect upon shutdown inbound', async () => {
-      dcPeer.inbound = true;
-      dcPeer.recvDisconnectionReason = DisconnectionReason.Shutdown;
-      await pool['handlePeerClose'](dcPeer);
-      expect(tryConnectNodeStub.calledOnce).to.be.equal(false);
-    });
-
     it('should reconnect upon shutdown outbound', async () => {
       dcPeer.recvDisconnectionReason = DisconnectionReason.Shutdown;
       await pool['handlePeerClose'](dcPeer);

@@ -183,22 +183,18 @@ class Pool extends EventEmitter {
    * attempt to have 8 outbound nodes
    */
   private populateOutbound = async (): Promise<void> => {
-    console.log("populating");
     let connectPromises = [];
     const REQUIRED_OUTBOUND_NODES = 8; // guideline, since there might be less than 8 nodes in network
     let connectionAttempts = 0;
 
     while (this.nodes.outbound.size < REQUIRED_OUTBOUND_NODES && connectionAttempts < 8) {
-      console.log("while looping...");
       const connectingTo = [];
       for (let i = 0; i < REQUIRED_OUTBOUND_NODES - this.nodes.outbound.size; i += 1) {
-        console.log("for looping...");
         const node = await this.nodes.addrManager.Select(false);
         if (!node) {
           break;
         }
         if (!this.nodes.outbound.has(node.nodePubKey) && connectingTo.indexOf(node.nodePubKey) === -1) {
-
           connectingTo.push(node.nodePubKey);
           connectPromises.push(this.tryConnectNode(node)); // connection attempt will fail if already connected
         }
@@ -1084,6 +1080,31 @@ class Pool extends EventEmitter {
     }
     peer.active = false;
     this.emit('peer.close', peer.nodePubKey);
+
+    const doesDisconnectionReasonCallForReconnection =
+      (peer.sentDisconnectionReason === undefined ||
+        peer.sentDisconnectionReason === DisconnectionReason.ResponseStalling) &&
+      (peer.recvDisconnectionReason === undefined ||
+        peer.recvDisconnectionReason === DisconnectionReason.ResponseStalling ||
+        peer.recvDisconnectionReason === DisconnectionReason.AlreadyConnected ||
+        peer.recvDisconnectionReason === DisconnectionReason.Shutdown);
+    const addresses = peer.addresses || [];
+    if (
+      doesDisconnectionReasonCallForReconnection &&
+      !peer.inbound && // we don't make reconnection attempts to peers that connected to us
+      peer.nodePubKey && // we only reconnect if we know the peer's node pubkey
+      (addresses.length || peer.address) && // we only reconnect if there's an address to connect to
+      !this.disconnecting &&
+      this.connected // we don't reconnect if we're in the process of disconnecting or have disconnected the p2p pool
+    ) {
+      this.logger.debug(`attempting to reconnect to a disconnected peer ${peer.label}`);
+      const node = {
+        addresses,
+        lastAddress: peer.address,
+        nodePubKey: peer.nodePubKey,
+      };
+      await this.tryConnectWithLastAddress(node);
+    }
 
     if (!this.disconnecting && this.connected) {
       await this.populateOutbound(); // make sure that we have outbound nodes
