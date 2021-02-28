@@ -82,7 +82,6 @@ class Pool extends EventEmitter {
   /** A collection of known nodes on the XU network. */
   private nodes: NodeList;
   private loadingNodesPromise?: Promise<void>;
-  // private secondaryPeersTimeout?: NodeJS.Timeout;
   /** A collection of opened, active peers. */
   private peers = new Map<string, Peer>();
   private server?: Server;
@@ -182,7 +181,7 @@ class Pool extends EventEmitter {
   /**
    * attempt to have 8 outbound nodes
    */
-  private populateOutbound = async (): Promise<void> => {
+  /*  private populateOutbound = async (): Promise<void> => {
     let connectPromises = [];
     const REQUIRED_OUTBOUND_NODES = 8; // guideline, since there might be less than 8 nodes in network
     let connectionAttempts = 0;
@@ -204,7 +203,7 @@ class Pool extends EventEmitter {
       connectPromises = [];
     }
   };
-
+   */
   /**
    * Initialize the Pool by connecting to known nodes and listening to incoming peer connections, if configured to do so.
    */
@@ -235,7 +234,7 @@ class Pool extends EventEmitter {
         }
         if (this.nodes.addrManager.addrMap.size > 0) {
           this.logger.info('Connecting to known peers');
-          await this.populateOutbound();
+          //await this.populateOutbound();
           this.logger.info('Completed start-up outbound connections to known peers');
         }
         this.loadingNodesPromise = undefined;
@@ -406,7 +405,6 @@ class Pool extends EventEmitter {
 
   private tryConnectWithLastAddress = async (node: NodeConnectionInfo, retryConnecting = false) => {
     const { lastAddress, nodePubKey } = node;
-
     if (!lastAddress) return false;
 
     try {
@@ -521,13 +519,19 @@ class Pool extends EventEmitter {
     } finally {
       this.pendingOutboundPeers.delete(nodePubKey);
     }
+
     const nodeInstance = await this.nodes.getFromDB(nodePubKey);
-    assert(nodeInstance);
     if (nodeInstance) {
       this.nodes.outbound.set(nodePubKey, nodeInstance);
+      console.log("node in db, everything is okay");
+    } else {
+      console.log("NO NODE IN DB!!!");
     }
+
     return peer;
   };
+
+
 
   public listPeers = (): PeerInfo[] => {
     const peerInfos: PeerInfo[] = Array.from({ length: this.peers.size });
@@ -678,7 +682,7 @@ class Pool extends EventEmitter {
         {
           addresses,
           nodePubKey: peer.nodePubKey!,
-          lastAddress: peer.address, // peer.inbound ? undefined : peer.address,
+          lastAddress: peer.inbound ? undefined : peer.address,
         },
         peer.address.host,
       );
@@ -688,20 +692,19 @@ class Pool extends EventEmitter {
     }
   };
 
-  public closePeer = async (nodePubKey: string, reason?: DisconnectionReason, reasonPayload?: string) => {
+  public closePeer = (nodePubKey: string, reason?: DisconnectionReason, reasonPayload?: string) => {
     const peer = this.peers.get(nodePubKey);
     if (peer) {
       peer.close(reason, reasonPayload);
       this.logger.info(`Disconnected from ${peer.nodePubKey}@${addressUtils.toString(peer.address)} (${peer.alias})`);
-      assert(this.nodes.remove(nodePubKey)); // should always return true
       if (!this.disconnecting && this.connected) {
-        await this.populateOutbound(); // make sure we have outbound nodes
+        //await this.populateOutbound(); // make sure we have outbound nodes
       }
     } else {
       throw errors.NOT_CONNECTED(nodePubKey);
     }
   };
-
+  
   public banNode = async (nodePubKey: string): Promise<void> => {
     if (this.nodes.isBanned(nodePubKey)) {
       throw errors.NODE_ALREADY_BANNED(nodePubKey);
@@ -1107,7 +1110,7 @@ class Pool extends EventEmitter {
     }
 
     if (!this.disconnecting && this.connected) {
-      await this.populateOutbound(); // make sure that we have outbound nodes
+      //await this.populateOutbound(); // make sure that we have outbound nodes
     }
   };
 

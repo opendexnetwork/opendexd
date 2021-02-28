@@ -37,7 +37,7 @@ describe('NodeList', () => {
     p2pRepo.addReputationEvent = jest.fn();
     p2pRepo.getReputationEvents = jest.fn().mockImplementation(() => []);
 
-    await nodeList.createNode(nodeConnectionInfo);
+    await nodeList.createNode(nodeConnectionInfo, "127.0.0.1");
 
     await nodeList.ban(nodePubKey);
     expect(nodeList.get(nodePubKey)!.banned).toEqual(true);

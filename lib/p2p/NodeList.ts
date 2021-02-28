@@ -200,19 +200,21 @@ class NodeList extends EventEmitter {
   /**
    * Persists a node to the database and adds it to the address manager.
    */
+
   public createNode = async (nodeCreationAttributes: NodeCreationAttributes, sourceIP: string) => {
+    /* TODO re-add this functionality after updating mongodb
     // fetch node if already exists
     const existingNode = await this.repository.getNode(nodeCreationAttributes.nodePubKey);
     if (existingNode) {
       // duplicates are okay because nodes seen multiple times get greater representation in Address Manager
       this.addNode(existingNode, sourceIP);
-    } else {
+    } else {*/
       const node = await this.repository.addNodeIfNotExists(nodeCreationAttributes);
       if (node) {
         node.reputationScore = 0;
         this.addNode(node, sourceIP);
       }
-    }
+    //}
   };
   /**
    * Delete node from NodeList, Address Manager, and DB

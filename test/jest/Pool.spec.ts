@@ -116,7 +116,7 @@ describe('P2P Pool', () => {
       addresses: pool2.addresses,
       nodePubKey: pool2nodeKey.pubKey,
       lastAddress: pool2address,
-    });
+    }, "localhost");
   });
 
   test('should reject connecting to its own addresses', async () => {
