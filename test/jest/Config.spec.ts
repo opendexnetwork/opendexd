@@ -26,14 +26,15 @@ describe('Config', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
-
+  
   test('it uses correct default ports based on network args', async () => {
     await config.load({ mainnet: true });
+    console.log(config);
     expect(config.network).toEqual(OpenDEXnetwork.MainNet);
     expect(config.p2p.port).toEqual(MAINNET_P2P_PORT);
     expect(config.rpc.port).toEqual(MAINNET_RPC_PORT);
     expect(config.http.port).toEqual(MAINNET_HTTP_PORT);
-
+     
     const testnetConfig = new Config();
     await testnetConfig.load({ testnet: true });
     expect(testnetConfig.network).toEqual(OpenDEXnetwork.TestNet);
@@ -55,7 +56,7 @@ describe('Config', () => {
     expect(regtestConfig.rpc.port).toEqual(REGTEST_RPC_PORT);
     expect(regtestConfig.http.port).toEqual(REGTEST_HTTP_PORT);
   });
-
+  
   test('arg network value overrides config values', async () => {
     Config['readConfigProps'] = jest.fn().mockResolvedValue({ network: 'testnet' });
     await config.load({ mainnet: true });

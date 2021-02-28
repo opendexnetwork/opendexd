@@ -376,12 +376,17 @@ class AddrMan {
     let [nId, entry] = this.Find(addr);
     let host = '';
 
-    if (addr.lastAddressText !== undefined && addr.lastAddressText !== null) {
-      host = addr.lastAddressText.split(':')[0];
-    } else {
-      const parsed = JSON.parse(addr.addressesText)[0];
-      host = parsed.host;
-    }
+    try {
+      if (addr.lastAddressText !== undefined && addr.lastAddressText !== null) {
+        host = JSON.parse(addr.lastAddressText).host;//addr.lastAddressText.split(':')[0];
+      } else {
+        host = JSON.parse(addr.addressesText)[0].host;
+      }
+    } catch (err) {
+       
+        console.log("NO ADDRESSES PROVIDED?!?");
+        return false; // TODO this should never happen, should signal that bad node got through somehow
+     }
 
     if (!nTimePenalty || host === sourceIP) {
       nTimePenalty = 0;

@@ -181,7 +181,7 @@ class Pool extends EventEmitter {
   /**
    * attempt to have 8 outbound nodes
    */
-  /*  private populateOutbound = async (): Promise<void> => {
+  private populateOutbound = async (): Promise<void> => {
     let connectPromises = [];
     const REQUIRED_OUTBOUND_NODES = 8; // guideline, since there might be less than 8 nodes in network
     let connectionAttempts = 0;
@@ -203,7 +203,7 @@ class Pool extends EventEmitter {
       connectPromises = [];
     }
   };
-   */
+   
   /**
    * Initialize the Pool by connecting to known nodes and listening to incoming peer connections, if configured to do so.
    */
@@ -523,11 +523,9 @@ class Pool extends EventEmitter {
     const nodeInstance = await this.nodes.getFromDB(nodePubKey);
     if (nodeInstance) {
       this.nodes.outbound.set(nodePubKey, nodeInstance);
-      console.log("node in db, everything is okay");
     } else {
-      console.log("NO NODE IN DB!!!");
+      // TODO throw an error
     }
-
     return peer;
   };
 
@@ -682,7 +680,7 @@ class Pool extends EventEmitter {
         {
           addresses,
           nodePubKey: peer.nodePubKey!,
-          lastAddress: peer.inbound ? undefined : peer.address,
+          lastAddress: peer.address,
         },
         peer.address.host,
       );
@@ -692,13 +690,13 @@ class Pool extends EventEmitter {
     }
   };
 
-  public closePeer = (nodePubKey: string, reason?: DisconnectionReason, reasonPayload?: string) => {
+  public closePeer = async (nodePubKey: string, reason?: DisconnectionReason, reasonPayload?: string) => {
     const peer = this.peers.get(nodePubKey);
     if (peer) {
       peer.close(reason, reasonPayload);
       this.logger.info(`Disconnected from ${peer.nodePubKey}@${addressUtils.toString(peer.address)} (${peer.alias})`);
       if (!this.disconnecting && this.connected) {
-        //await this.populateOutbound(); // make sure we have outbound nodes
+        await this.populateOutbound(); // make sure we have outbound nodes
       }
     } else {
       throw errors.NOT_CONNECTED(nodePubKey);
@@ -1110,7 +1108,7 @@ class Pool extends EventEmitter {
     }
 
     if (!this.disconnecting && this.connected) {
-      //await this.populateOutbound(); // make sure that we have outbound nodes
+      await this.populateOutbound(); // make sure that we have outbound nodes
     }
   };
 

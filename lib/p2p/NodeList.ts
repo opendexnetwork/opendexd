@@ -210,9 +210,11 @@ class NodeList extends EventEmitter {
       this.addNode(existingNode, sourceIP);
     } else {*/
       const node = await this.repository.addNodeIfNotExists(nodeCreationAttributes);
-      if (node) {
+    if (node) {
+        console.log("nodelist create node okay, adding to addrman");
         node.reputationScore = 0;
         this.addNode(node, sourceIP);
+        
       }
     //}
   };

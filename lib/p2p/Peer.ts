@@ -14,7 +14,7 @@ import { pubKeyToAlias } from '../utils/aliasUtils';
 import { ms } from '../utils/utils';
 import errors, { errorCodes } from './errors';
 import Framer from './Framer';
-import Network from './Network';
+import OpenDEXnetwork from './Network';
 import { Packet, PacketDirection, PacketType } from './packets';
 import { isPacketType, isPacketTypeArray, ResponseType } from './packets/Packet';
 import * as packets from './packets/types';
@@ -113,7 +113,7 @@ class Peer extends EventEmitter {
   private nodeState?: NodeState;
   private sessionInitPacket?: packets.SessionInitPacket;
   private outEncryptionKey?: Buffer;
-  private readonly network: Network;
+  private readonly network: OpenDEXnetwork;
   private readonly framer: Framer;
   /** Interval for pinging peers. */
   private static readonly PING_INTERVAL = 30000;
@@ -195,7 +195,7 @@ class Peer extends EventEmitter {
   /**
    * @param address The socket address for the connection to this peer.
    */
-  constructor(private logger: Logger, public address: Address, network: Network) {
+  constructor(private logger: Logger, public address: Address, network: OpenDEXnetwork) {
     super();
     this.network = network;
     this.framer = new Framer(this.network);
@@ -206,7 +206,7 @@ class Peer extends EventEmitter {
   /**
    * Creates a Peer from an inbound socket connection.
    */
-  public static fromInbound = (socket: Socket, logger: Logger, network: Network): Peer => {
+  public static fromInbound = (socket: Socket, logger: Logger, network: OpenDEXnetwork): Peer => {
     const peer = new Peer(logger, addressUtils.fromSocket(socket), network);
 
     peer.inbound = true;
