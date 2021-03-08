@@ -9,6 +9,8 @@ import SwapRepository from '../../lib/swaps/SwapRepository';
 import { SwapDeal } from '../../lib/swaps/types';
 import { createOwnOrder } from '../utils';
 
+jest.setTimeout(30000);
+
 const pairId = 'LTC/BTC';
 const loggers = Logger.createLoggers(Level.Warn);
 

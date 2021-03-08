@@ -203,7 +203,7 @@ class Pool extends EventEmitter {
       connectPromises = [];
     }
   };
-   
+
   /**
    * Initialize the Pool by connecting to known nodes and listening to incoming peer connections, if configured to do so.
    */
@@ -234,7 +234,7 @@ class Pool extends EventEmitter {
         }
         if (this.nodes.addrManager.addrMap.size > 0) {
           this.logger.info('Connecting to known peers');
-          //await this.populateOutbound();
+          await this.populateOutbound();
           this.logger.info('Completed start-up outbound connections to known peers');
         }
         this.loadingNodesPromise = undefined;
@@ -498,7 +498,6 @@ class Pool extends EventEmitter {
     if (this.peers.has(nodePubKey)) {
       throw errors.NODE_ALREADY_CONNECTED(nodePubKey, address);
     }
-
     this.logger.debug(`creating new outbound socket connection to ${address.host}:${address.port}`);
 
     const pendingPeer = this.pendingOutboundPeers.get(nodePubKey);
@@ -512,7 +511,6 @@ class Pool extends EventEmitter {
 
     const peer = new Peer(this.logger, address, this.network);
     this.bindPeer(peer);
-
     this.pendingOutboundPeers.set(nodePubKey, peer);
     try {
       await this.openPeer(peer, nodePubKey, retryConnecting);
@@ -528,8 +526,6 @@ class Pool extends EventEmitter {
     }
     return peer;
   };
-
-
 
   public listPeers = (): PeerInfo[] => {
     const peerInfos: PeerInfo[] = Array.from({ length: this.peers.size });
@@ -702,7 +698,7 @@ class Pool extends EventEmitter {
       throw errors.NOT_CONNECTED(nodePubKey);
     }
   };
-  
+
   public banNode = async (nodePubKey: string): Promise<void> => {
     if (this.nodes.isBanned(nodePubKey)) {
       throw errors.NODE_ALREADY_BANNED(nodePubKey);

@@ -75,9 +75,6 @@ describe('P2P Sanity Tests', () => {
       host: 'localhost',
       port: nodeTwoPort,
     });
-    console.log("nodeOneURI: ", nodeOneUri);
-    console.log("nodeTwoURI: ", nodeTwoUri);
-
     unusedPort = await getUnusedPort();
   });
 
@@ -85,7 +82,7 @@ describe('P2P Sanity Tests', () => {
     await expect(nodeOne.service.connect({ nodeUri: nodeTwoUri, retryConnecting: false })).to.be.fulfilled;
     const listPeersResult = await nodeOne.service.listPeers();
     expect(listPeersResult.length).to.be.above(0);
-    const pubkeys = listPeersResult.map(a => a.nodePubKey);
+    const pubkeys = listPeersResult.map((a) => a.nodePubKey);
     expect(pubkeys).to.include(nodeTwoPubKey);
   });
   it('should update the node state', (done) => {
@@ -112,9 +109,9 @@ describe('P2P Sanity Tests', () => {
     await nodeOne['pool']['closePeer'](nodeTwoPubKey, DisconnectionReason.NotAcceptingConnections);
 
     const listPeersResult = nodeOne.service.listPeers();
-    const pubkeys = listPeersResult.map(a => a.nodePubKey);
+    const pubkeys = listPeersResult.map((a) => a.nodePubKey);
 
-    expect(pubkeys).to.not.include("nodeTwoPubKey");
+    expect(pubkeys).to.not.include('nodeTwoPubKey');
   });
 
   it('should fail when connecting to an unexpected node pub key', async () => {

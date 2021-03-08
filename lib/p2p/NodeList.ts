@@ -54,7 +54,7 @@ class NodeList extends EventEmitter {
     return this.inbound.size + this.outbound.size + this.customOutbound.size;
   }
 
-  constructor(private repository: P2PRepository) {
+  constructor(public repository: P2PRepository) {
     super();
   }
 
@@ -206,17 +206,15 @@ class NodeList extends EventEmitter {
     // fetch node if already exists
     const existingNode = await this.repository.getNode(nodeCreationAttributes.nodePubKey);
     if (existingNode) {
-      // duplicates are okay because nodes seen multiple times get greater representation in Address Manager
+      // duplicates are added because nodes seen multiple times should get greater representation in Address Manager
       this.addNode(existingNode, sourceIP);
-    } else {*/
-      const node = await this.repository.addNodeIfNotExists(nodeCreationAttributes);
+    } else { */
+    const node = await this.repository.addNodeIfNotExists(nodeCreationAttributes);
     if (node) {
-        console.log("nodelist create node okay, adding to addrman");
-        node.reputationScore = 0;
-        this.addNode(node, sourceIP);
-        
-      }
-    //}
+      node.reputationScore = 0;
+      this.addNode(node, sourceIP);
+    }
+    // }
   };
   /**
    * Delete node from NodeList, Address Manager, and DB
