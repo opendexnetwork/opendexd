@@ -127,8 +127,6 @@ describe('P2P Sanity Tests', () => {
     await expect(connectPromise).to.be.rejectedWith(
       `Peer ${randomPubKey}@${host}:${port} disconnected from us due to AuthFailureInvalidTarget`,
     );
-    const listPeersResult = await nodeOne.service.listPeers();
-    expect(listPeersResult).to.be.empty;
   });
 
   it('should fail when connecting to an invalid node pub key', async () => {
@@ -144,8 +142,6 @@ describe('P2P Sanity Tests', () => {
     await expect(connectPromise).to.be.rejectedWith(
       `Peer ${invalidPubKey}@${host}:${port} disconnected from us due to AuthFailureInvalidTarget`,
     );
-    const listPeersResult = await nodeOne.service.listPeers();
-    expect(listPeersResult).to.be.empty;
   });
 
   it('should fail when connecting to self', async () => {

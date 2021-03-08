@@ -184,9 +184,9 @@ class Pool extends EventEmitter {
   private populateOutbound = async (): Promise<void> => {
     let connectPromises = [];
     const REQUIRED_OUTBOUND_NODES = 8; // guideline, since there might be less than 8 nodes in network
-    let connectionAttempts = 0;
+    const start = new Date().getTime();
 
-    while (this.nodes.outbound.size < REQUIRED_OUTBOUND_NODES && connectionAttempts < 8) {
+    while (this.nodes.outbound.size < REQUIRED_OUTBOUND_NODES && new Date().getTime() - start < 30000) {
       const connectingTo = [];
       for (let i = 0; i < REQUIRED_OUTBOUND_NODES - this.nodes.outbound.size; i += 1) {
         const node = await this.nodes.addrManager.Select(false);
@@ -197,7 +197,6 @@ class Pool extends EventEmitter {
           connectingTo.push(node.nodePubKey);
           connectPromises.push(this.tryConnectNode(node)); // connection attempt will fail if already connected
         }
-        connectionAttempts += 1;
       }
       await Promise.all(connectPromises);
       connectPromises = [];
