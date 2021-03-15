@@ -490,13 +490,14 @@ class Pool extends EventEmitter {
       throw errors.NODE_TOR_ADDRESS(nodePubKey, address);
     }
 
-    if (this.nodes.isBanned(nodePubKey)) {
-      throw errors.NODE_IS_BANNED(nodePubKey);
-    }
-
     if (this.peers.has(nodePubKey)) {
       throw errors.NODE_ALREADY_CONNECTED(nodePubKey, address);
     }
+
+    if (await this.nodes.isBanned(nodePubKey)) {
+      throw errors.NODE_IS_BANNED(nodePubKey);
+    }
+
     this.logger.debug(`creating new outbound socket connection to ${address.host}:${address.port}`);
 
     const pendingPeer = this.pendingOutboundPeers.get(nodePubKey);
@@ -517,11 +518,11 @@ class Pool extends EventEmitter {
       this.pendingOutboundPeers.delete(nodePubKey);
     }
 
-    const nodeInstance = await this.nodes.getFromDB(nodePubKey);
-    if (nodeInstance) {
-      this.nodes.outbound.set(nodePubKey, nodeInstance);
-    } else {
-      // TODO throw an error
+    if (this.peers.has(nodePubKey)) {
+      const nodeInstance = await this.nodes.getFromDB(nodePubKey);
+      if (nodeInstance) {
+        this.nodes.outbound.set(nodePubKey, nodeInstance);
+      }
     }
     return peer;
   };
@@ -585,7 +586,7 @@ class Pool extends EventEmitter {
         torport: this.config.torport,
       });
 
-      this.validatePeer(peer);
+      await this.validatePeer(peer);
 
       await peer.completeOpen(this.nodeState, this.nodeKey, this.version, sessionInit);
     } catch (err) {
@@ -699,7 +700,7 @@ class Pool extends EventEmitter {
   };
 
   public banNode = async (nodePubKey: string): Promise<void> => {
-    if (this.nodes.isBanned(nodePubKey)) {
+    if (await this.nodes.isBanned(nodePubKey)) {
       throw errors.NODE_ALREADY_BANNED(nodePubKey);
     } else {
       const banned = await this.nodes.ban(nodePubKey);
@@ -710,7 +711,7 @@ class Pool extends EventEmitter {
   };
 
   public unbanNode = async (nodePubKey: string, reconnect: boolean): Promise<void> => {
-    if (this.nodes.isBanned(nodePubKey)) {
+    if (await this.nodes.isBanned(nodePubKey)) {
       const unbanned = await this.nodes.unBan(nodePubKey);
       if (!unbanned) {
         throw errors.NODE_NOT_FOUND(nodePubKey);
@@ -825,6 +826,7 @@ class Pool extends EventEmitter {
   private handleSocket = async (socket: Socket) => {
     if (this.nodes.inbound.size >= 117) {
       this.logger.debug('Ignoring inbound connection attempt because maximum inbound connection limit reached');
+      socket.destroy();
       return;
     }
     if (!socket.remoteAddress) {
@@ -834,7 +836,7 @@ class Pool extends EventEmitter {
       return;
     }
 
-    if (this.nodes.isBanned(socket.remoteAddress)) {
+    if (await this.nodes.isBanned(socket.remoteAddress)) {
       this.logger.debug(`Ignoring banned peer (${socket.remoteAddress})`);
       socket.destroy();
       return;
@@ -958,7 +960,7 @@ class Pool extends EventEmitter {
   };
 
   /** Validates a peer. If a check fails, closes the peer and throws a p2p error. */
-  private validatePeer = (peer: Peer) => {
+  private validatePeer = async (peer: Peer) => {
     assert(peer.nodePubKey);
     const peerPubKey = peer.nodePubKey;
 
@@ -984,7 +986,7 @@ class Pool extends EventEmitter {
       throw errors.POOL_CLOSED;
     }
 
-    if (this.nodes.isBanned(peerPubKey)) {
+    if (await this.nodes.isBanned(peerPubKey)) {
       // TODO: Ban IP address for this session if banned peer attempts repeated connections.
       peer.close(DisconnectionReason.Banned);
       throw errors.NODE_IS_BANNED(peerPubKey);

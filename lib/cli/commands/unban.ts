@@ -24,5 +24,5 @@ export const handler = async (argv: Arguments<any>) => {
   const request = new UnbanRequest();
   request.setNodeIdentifier(argv.node_identifier);
   request.setReconnect(argv.reconnect);
-  (await loadXudClient(argv)).unban(request, callback(argv));
+  await (await loadXudClient(argv)).unban(request, callback(argv));
 };

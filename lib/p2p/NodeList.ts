@@ -158,6 +158,14 @@ class NodeList extends EventEmitter {
    * @returns true if the node was banned, false otherwise
    */
   public ban = (nodePubKey: string): Promise<boolean> => {
+    // if is in nodelists remove it
+    if (this.outbound.has(nodePubKey)) {
+      this.outbound.delete(nodePubKey);
+    } else if (this.customOutbound.has(nodePubKey)) {
+      this.customOutbound.delete(nodePubKey);
+    } else if (this.inbound.has(nodePubKey)) {
+      this.inbound.delete(nodePubKey);
+    }
     return this.addReputationEvent(nodePubKey, ReputationEvent.ManualBan);
   };
 
@@ -169,13 +177,14 @@ class NodeList extends EventEmitter {
     return this.addReputationEvent(nodePubKey, ReputationEvent.ManualUnban);
   };
 
-  public isBanned = (nodePubKey: string): boolean => {
-    for (const v of this.addrManager.addrMap.values()) {
-      if (nodePubKey === v.node.nodePubKey) {
-        return v.node.banned;
-      }
+  public isBanned = async (nodePubKey: string): Promise<boolean> => {
+    let node;
+    if (this.has(nodePubKey)) {
+      node = this.get(nodePubKey);
+    } else {
+      node = await this.getFromDB(nodePubKey);
     }
-    return false;
+    return node?.banned || false;
   };
 
   /**
@@ -289,8 +298,13 @@ class NodeList extends EventEmitter {
    * @return true if the specified node exists and the event was added, false otherwise
    */
   public addReputationEvent = async (nodePubKey: string, event: ReputationEvent): Promise<boolean> => {
-    const node = this.get(nodePubKey);
-
+    // if it is in a nodelist, update that copy
+    let node;
+    if (this.has(nodePubKey)) {
+      node = this.get(nodePubKey);
+    } else {
+      node = await this.getFromDB(nodePubKey);
+    }
     if (node) {
       const promises: PromiseLike<any>[] = [];
 
@@ -303,7 +317,7 @@ class NodeList extends EventEmitter {
         this.emit('node.ban', nodePubKey, negativeReputationEvents);
       } else if (node.reputationScore >= NodeList.BAN_THRESHOLD && node.banned) {
         // If the reputationScore is not below the banThreshold but node.banned
-        // is true that means that the node was unbanned
+        // is true that means that the node was unbanneda
         promises.push(this.setBanStatus(node, false));
       }
 
@@ -339,6 +353,12 @@ class NodeList extends EventEmitter {
 
   private setBanStatus = (node: NodeInstance, status: boolean) => {
     node.banned = status;
+    // AddrMan's copy of node must be updated too
+    let entry = this.addrManager.GetNodeByPubKey(node.nodePubKey);
+    if (entry !== undefined) {
+      entry = node;
+    }
+
     return node.save();
   };
 

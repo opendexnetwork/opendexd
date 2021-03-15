@@ -18,5 +18,5 @@ export const builder = (argv: Argv) =>
 export const handler = async (argv: Arguments<any>) => {
   const request = new BanRequest();
   request.setNodeIdentifier(argv.node_identifier);
-  (await loadXudClient(argv)).ban(request, callback(argv));
+  await (await loadXudClient(argv)).ban(request, callback(argv));
 };

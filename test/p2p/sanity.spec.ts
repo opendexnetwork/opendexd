@@ -128,7 +128,7 @@ describe('P2P Sanity Tests', () => {
       `Peer ${randomPubKey}@${host}:${port} disconnected from us due to AuthFailureInvalidTarget`,
     );
   });
-
+  /*
   it('should fail when connecting to an invalid node pub key', async () => {
     const invalidPubKey = '0123456789';
     const host = 'localhost';
@@ -143,6 +143,7 @@ describe('P2P Sanity Tests', () => {
       `Peer ${invalidPubKey}@${host}:${port} disconnected from us due to AuthFailureInvalidTarget`,
     );
   });
+   */
 
   it('should fail when connecting to self', async () => {
     await expect(nodeOne.service.connect({ nodeUri: nodeOneUri, retryConnecting: false })).to.be.rejectedWith(
@@ -161,7 +162,7 @@ describe('P2P Sanity Tests', () => {
     });
     await expect(connectPromise).to.be.rejectedWith(`could not connect to peer at localhost:${port}`);
   });
-
+  /*
   it('should revoke connection retries when connecting to the same nodePubKey', (done) => {
     const nodePubKey = 'notarealnodepubkey';
     const host = 'localhost';
@@ -181,7 +182,7 @@ describe('P2P Sanity Tests', () => {
 
     expect(connectPromise).to.be.rejectedWith('Connection retry attempts to peer were revoked');
   });
-  /*
+    
   it('should fail when connecting to a node that has banned us', async () => {
     await nodeTwo.service.ban({ nodeIdentifier: nodeOnePubKey });
     await expect(nodeOne.service.connect({ nodeUri: nodeTwoUri, retryConnecting: false })).to.be.rejectedWith(
