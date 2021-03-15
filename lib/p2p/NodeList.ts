@@ -6,6 +6,7 @@ import { pubKeyToAlias } from '../utils/aliasUtils';
 import errors from './errors';
 import P2PRepository from './P2PRepository';
 import { Address } from './types';
+import AddrMan from './AddrMan';
 
 export const reputationEventWeight = {
   [ReputationEvent.ManualBan]: Number.NEGATIVE_INFINITY,
@@ -31,10 +32,15 @@ interface NodeList {
 
 /** Represents a list of nodes for managing network peers activity */
 class NodeList extends EventEmitter {
-  /** A map of node pub keys to node instances. */
-  private nodes = new Map<string, NodeInstance>();
-  /** A map of node ids to node instances. */
-  private nodeIdMap = new Map<number, NodeInstance>();
+  /** Stochastic data structure for P2P scalability */
+  private addrManKey = Math.floor(Math.random() * 999999999);
+  public addrManager = new AddrMan({ key: this.addrManKey }); // initialize with random key
+  /** Inbound nodes: can have at most 117 inbound connections */
+  public inbound = new Map<string, NodeInstance>();
+  /** Outbound nodes: can have at most 8 stochasically selected nodes */
+  public outbound = new Map<string, NodeInstance>();
+  /** User-specified connections: no upper limit */
+  public customOutbound = new Map<string, NodeInstance>();
   /** A map of node pub keys to aliases. */
   private pubKeyToAliasMap = new Map<string, string>();
   /** A map of aliases to node pub keys. */
@@ -43,14 +49,12 @@ class NodeList extends EventEmitter {
   private static readonly BAN_THRESHOLD = -50;
   private static readonly MAX_REPUTATION_SCORE = 100;
 
-  private static readonly PRIMARY_PEER_CONN_FAILURES_THRESHOLD = 200;
-  private static readonly SECONDARY_PEER_CONN_FAILURES_THRESHOLD = 1500;
-
   public get count() {
-    return this.nodes.size;
+    // number of nodes currently connected
+    return this.inbound.size + this.outbound.size + this.customOutbound.size;
   }
 
-  constructor(private repository: P2PRepository) {
+  constructor(public repository: P2PRepository) {
     super();
   }
 
@@ -70,36 +74,65 @@ class NodeList extends EventEmitter {
    * Check if a node with a given nodePubKey exists.
    */
   public has = (nodePubKey: string): boolean => {
-    return this.nodes.has(nodePubKey);
+    return this.inbound.has(nodePubKey) || this.outbound.has(nodePubKey) || this.customOutbound.has(nodePubKey);
+  };
+
+  /**
+   * Removes closed peer from lists of active connections
+   */
+  public remove = (nodePubKey: string): boolean => {
+    if (!this.outbound.delete(nodePubKey)) {
+      if (!this.customOutbound.delete(nodePubKey)) {
+        return this.inbound.delete(nodePubKey);
+      }
+    }
+    return true;
   };
 
   public forEach = (callback: (node: NodeInstance) => void) => {
-    this.nodes.forEach(callback);
+    this.outbound.forEach(callback);
+    this.customOutbound.forEach(callback);
+    this.inbound.forEach(callback);
   };
 
-  public rank = (): { primary: NodeInstance[]; secondary: NodeInstance[] } => {
-    const primary: NodeInstance[] = [];
-    const secondary: NodeInstance[] = [];
-
-    this.nodes.forEach((node) => {
-      if (node.consecutiveConnFailures < NodeList.PRIMARY_PEER_CONN_FAILURES_THRESHOLD) {
-        primary.push(node);
-      } else if (node.consecutiveConnFailures < NodeList.SECONDARY_PEER_CONN_FAILURES_THRESHOLD) {
-        secondary.push(node);
-      }
-    });
-
-    if (primary.length === 0) {
-      return { primary: secondary, secondary: [] };
+  /**
+   * Get the node for a given node id.
+   */
+  public getNodeById = (nodeId: number) => {
+    const entry = this.addrManager.addrMap.get(nodeId);
+    if (entry) {
+      return entry.node;
     }
-    return { primary, secondary };
+    return undefined;
   };
 
   /**
    * Get the internal node id for a given nodePubKey.
    */
-  public getNodeById = (nodeId: number) => {
-    return this.nodeIdMap.get(nodeId);
+  public getId = (nodePubKey: string) => {
+    return this.addrManager.GetNodeByPubKey(nodePubKey)?.id;
+  };
+
+  /**
+   * Get a node that is currently connected
+   */
+  public get = (nodePubKey: string) => {
+    let node = this.outbound.get(nodePubKey);
+    if (!node) {
+      node = this.customOutbound.get(nodePubKey);
+      if (!node) {
+        node = this.inbound.get(nodePubKey);
+      }
+    }
+    return node;
+  };
+
+  /**
+   * Get a node from the DB
+   */
+  public getFromDB = async (nodePubKey: string) => {
+    const node = await this.repository.getNode(nodePubKey);
+    return node;
   };
 
   /**
@@ -107,14 +140,6 @@ class NodeList extends EventEmitter {
    */
   public getAlias = (nodePubKey: string) => {
     return this.pubKeyToAliasMap.get(nodePubKey);
-  };
-
-  public getId = (nodePubKey: string) => {
-    return this.nodes.get(nodePubKey)?.id;
-  };
-
-  public get = (nodePubKey: string) => {
-    return this.nodes.get(nodePubKey);
   };
 
   public getPubKeyForAlias = (alias: string) => {
@@ -133,6 +158,14 @@ class NodeList extends EventEmitter {
    * @returns true if the node was banned, false otherwise
    */
   public ban = (nodePubKey: string): Promise<boolean> => {
+    // if is in nodelists remove it
+    if (this.outbound.has(nodePubKey)) {
+      this.outbound.delete(nodePubKey);
+    } else if (this.customOutbound.has(nodePubKey)) {
+      this.customOutbound.delete(nodePubKey);
+    } else if (this.inbound.has(nodePubKey)) {
+      this.inbound.delete(nodePubKey);
+    }
     return this.addReputationEvent(nodePubKey, ReputationEvent.ManualBan);
   };
 
@@ -144,19 +177,24 @@ class NodeList extends EventEmitter {
     return this.addReputationEvent(nodePubKey, ReputationEvent.ManualUnban);
   };
 
-  public isBanned = (nodePubKey: string): boolean => {
-    return this.nodes.get(nodePubKey)?.banned || false;
+  public isBanned = async (nodePubKey: string): Promise<boolean> => {
+    let node;
+    if (this.has(nodePubKey)) {
+      node = this.get(nodePubKey);
+    } else {
+      node = await this.getFromDB(nodePubKey);
+    }
+    return node?.banned || false;
   };
 
   /**
-   * Load this NodeList from the database.
+   * Load this NodeList from the database and initialize the 8 outbound connections.
    */
   public load = async (): Promise<void> => {
     const nodes = await this.repository.getNodes();
-
     const reputationLoadPromises: Promise<void>[] = [];
     nodes.forEach((node) => {
-      this.addNode(node);
+      this.addNode(node, 'none', true);
       const reputationLoadPromise = this.repository.getReputationEvents(node).then((events) => {
         node.reputationScore = 0;
         events.forEach(({ event }) => {
@@ -169,18 +207,42 @@ class NodeList extends EventEmitter {
   };
 
   /**
-   * Persists a node to the database and adds it to the node list.
+   * Persists a node to the database and adds it to the address manager.
    */
-  public createNode = async (nodeCreationAttributes: NodeCreationAttributes) => {
+
+  public createNode = async (nodeCreationAttributes: NodeCreationAttributes, sourceIP: string) => {
+    /* TODO re-add this functionality after updating mongodb
+    // fetch node if already exists
+    const existingNode = await this.repository.getNode(nodeCreationAttributes.nodePubKey);
+    if (existingNode) {
+      // duplicates are added because nodes seen multiple times should get greater representation in Address Manager
+      this.addNode(existingNode, sourceIP);
+    } else { */
     const node = await this.repository.addNodeIfNotExists(nodeCreationAttributes);
     if (node) {
       node.reputationScore = 0;
-      this.addNode(node);
+      this.addNode(node, sourceIP);
     }
+    // }
+  };
+  /**
+   * Delete node from NodeList, Address Manager, and DB
+   */
+  public removeNode = (pubKey: string) => {
+    if (!this.outbound.delete(pubKey)) {
+      if (!this.customOutbound.delete(pubKey)) {
+        this.inbound.delete(pubKey);
+      }
+    }
+    const nodeId = this.getId(pubKey);
+    if (nodeId) {
+      this.addrManager.Delete(nodeId);
+    }
+    this.repository.deleteNode(pubKey);
   };
 
   /**
-   * Update a node's addresses.
+   * Update a node's addresses in the db.
    * @return true if the specified node exists and was updated, false otherwise
    */
   public updateAddresses = async (
@@ -188,11 +250,12 @@ class NodeList extends EventEmitter {
     addresses: Address[] = [],
     lastAddress?: Address,
   ): Promise<boolean> => {
-    const node = this.nodes.get(nodePubKey);
+    const node = this.get(nodePubKey);
     if (node) {
       // avoid overriding the `lastConnected` field for existing matching addresses unless a new value was set
       node.addresses = addresses.map((newAddress) => {
         const oldAddress = node.addresses.find((address) => addressUtils.areEqual(address, newAddress));
+
         if (oldAddress && !newAddress.lastConnected) {
           return oldAddress;
         } else {
@@ -235,8 +298,13 @@ class NodeList extends EventEmitter {
    * @return true if the specified node exists and the event was added, false otherwise
    */
   public addReputationEvent = async (nodePubKey: string, event: ReputationEvent): Promise<boolean> => {
-    const node = this.nodes.get(nodePubKey);
-
+    // if it is in a nodelist, update that copy
+    let node;
+    if (this.has(nodePubKey)) {
+      node = this.get(nodePubKey);
+    } else {
+      node = await this.getFromDB(nodePubKey);
+    }
     if (node) {
       const promises: PromiseLike<any>[] = [];
 
@@ -249,7 +317,7 @@ class NodeList extends EventEmitter {
         this.emit('node.ban', nodePubKey, negativeReputationEvents);
       } else if (node.reputationScore >= NodeList.BAN_THRESHOLD && node.banned) {
         // If the reputationScore is not below the banThreshold but node.banned
-        // is true that means that the node was unbanned
+        // is true that means that the node was unbanneda
         promises.push(this.setBanStatus(node, false));
       }
 
@@ -263,8 +331,9 @@ class NodeList extends EventEmitter {
     return false;
   };
 
+  // Remove an address from node record stored in DB
   public removeAddress = async (nodePubKey: string, address: Address) => {
-    const node = this.nodes.get(nodePubKey);
+    const node = this.get(nodePubKey);
     if (node) {
       const index = node.addresses.findIndex((existingAddress) => addressUtils.areEqual(address, existingAddress));
       if (index > -1) {
@@ -282,38 +351,26 @@ class NodeList extends EventEmitter {
     return false;
   };
 
-  public incrementConsecutiveConnFailures = async (nodePubKey: string) => {
-    const node = this.nodes.get(nodePubKey);
-    if (node) {
-      node.consecutiveConnFailures += 1;
-      await node.save();
-    }
-  };
-
-  public resetConsecutiveConnFailures = async (nodePubKey: string) => {
-    const node = this.nodes.get(nodePubKey);
-    if (node && node.consecutiveConnFailures > 0) {
-      node.consecutiveConnFailures = 0;
-      await node.save();
-    }
-  };
-
   private setBanStatus = (node: NodeInstance, status: boolean) => {
     node.banned = status;
+    // AddrMan's copy of node must be updated too
+    let entry = this.addrManager.GetNodeByPubKey(node.nodePubKey);
+    if (entry !== undefined) {
+      entry = node;
+    }
+
     return node.save();
   };
 
-  private addNode = (node: NodeInstance) => {
+  private addNode = (node: NodeInstance, sourceIP: string, isSeedNode?: boolean) => {
     const { nodePubKey } = node;
     const alias = pubKeyToAlias(nodePubKey);
-    if (this.aliasToPubKeyMap.has(alias)) {
+    if (this.aliasToPubKeyMap.has(alias) && this.aliasToPubKeyMap.get(alias) !== nodePubKey) {
       this.aliasToPubKeyMap.set(alias, 'CONFLICT');
     } else {
       this.aliasToPubKeyMap.set(alias, nodePubKey);
     }
-
-    this.nodes.set(nodePubKey, node);
-    this.nodeIdMap.set(node.id, node);
+    this.addrManager.Add(node, sourceIP, 0, isSeedNode);
     this.pubKeyToAliasMap.set(nodePubKey, alias);
   };
 }

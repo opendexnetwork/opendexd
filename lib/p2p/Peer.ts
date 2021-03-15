@@ -319,9 +319,7 @@ class Peer extends EventEmitter {
     sessionInit: packets.SessionInitPacket,
   ) => {
     assert(this.status === PeerStatus.Opening);
-
     await this.completeHandshake(ownNodeState, ownNodeKey, ownVersion, sessionInit);
-
     this.status = PeerStatus.Open;
 
     // Setup the ping interval
